@@ -276,6 +276,7 @@ wit_bindgen::block_on(async {
 **原则**：
 
 * ✅ 生命周期函数里可以 `block_on`
+* ⚠️ 但是请无论如何都不要把 `dialog` 之类需要等待用户操作的异步操作在 `on_load` 中 `block_on`！
 * ❌ 事件回调里不要阻塞，直接返回 `FutureReader`
 
 ---

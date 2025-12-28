@@ -63,8 +63,48 @@ export default defineConfig({
                     ],
                 },
                 {
-                    label: "API 参考",
+                    label: "Host API 参考",
                     items: [
+                        {
+                            label: "Device",
+                            link: "/host-api/device"
+                        },
+                        {
+                            label: "Dialog",
+                            link: "/host-api/dialog"
+                        },
+                        {
+                            label: "Event",
+                            link: "/host-api/event"
+                        },
+                        {
+                            label: "Interconnect",
+                            link: "/host-api/interconnect"
+                        },
+                        {
+                            label: "OS",
+                            link: "/host-api/os"
+                        },
+                        {
+                            label: "Queue",
+                            link: "/host-api/queue"
+                        },
+                        {
+                            label: "Register",
+                            link: "/host-api/register"
+                        },
+                        {
+                            label: "ThirdPartyApp",
+                            link: "/host-api/thirdpartyapp"
+                        },
+                        {
+                            label: "Transport",
+                            link: "/host-api/transport"
+                        },
+                        {
+                            label: "UI",
+                            link: "/host-api/ui"
+                        },
                     ],
                 },
             ],

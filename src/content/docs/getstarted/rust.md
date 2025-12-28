@@ -93,7 +93,15 @@ Windows 用户按提示装好 MSVC 即可。
 
 ---
 
-### 2. 安装 AstroBox 插件目标
+### 2. 安装 Python 3
+
+我们在插件模板中准备了一个使用 Python 编写的脚本，方便你快速执行构建和打包等操作，你需要安装 Python 3 来使用它。
+
+👉 [https://www.python.org/downloads/](https://www.python.org/downloads/)
+
+---
+
+### 3. 安装 AstroBox 插件目标
 
 ```bash
 rustup target add wasm32-wasip2
@@ -122,6 +130,7 @@ cd AstroBox-NG-Plugin-Template-Rust
 ```text
 .
 ├── Cargo.toml
+├── scripts           # 预置的构建辅助脚本
 ├── src
 │   ├── lib.rs        # 插件入口（你主要改的地方）
 │   └── logger.rs     # tracing 日志初始化
@@ -131,6 +140,24 @@ cd AstroBox-NG-Plugin-Template-Rust
 > ⚠️ `wit/` 是 **submodule**，包含 wit 接口定义文件。详见 [WIT 文件](../general/wit-files)
 
 > AstroBox 升级时，只会 **新增接口，不会破坏旧接口**
+
+---
+
+### 尝尝编！
+
+你不是一个肉编器（~也许？~），先执行一次实实在在的编译操作应该能加深你对项目结构的理解。
+
+在上文中说过，我们在插件模板中准备了一个使用 Python 编写的脚本，方便你快速执行构建和打包等操作，这是它的用法：
+
+```shell
+# Debug 构建到 dist 文件夹
+python scripts/build_dist.py
+
+# Release 构建到 dist 文件夹并打 abp 包
+python scripts/build_dist.py --release --package
+```
+
+非常简单，不是吗？
 
 ---
 

@@ -6,6 +6,8 @@ title: 工作原理
 AstroBox v2 的插件系统基于 [WebAssembly System Interface (WASI)](https://wasi.dev/) 构建，并通过 [WIT Component](https://github.com/WebAssembly/component-model) 实现 **Host（宿主端）与 Plugin（插件端）之间的互操作接口**。
 这两项技术都是近年才趋于成熟的新兴标准，我们非常自豪地率先在 AstroBox 中集成它们，并为其带来了 **卓越的跨平台兼容性**。
 
+2025 年 12 月 22 日，openvela 微信公众号[发文](https://mp.weixin.qq.com/s/CV9iAkGPuqcLf_jhkXSUFQ)表示将使用 LWAC 为 JS 应用注入原生动力，该技术基于 WebAssembly，与 AstroBox v2 的插件系统技术栈高度相近。
+
 AstroBox 使用 [wasmtime](https://github.com/bytecodealliance/wasmtime) 运行 WASI 插件，性能几乎可与原生代码相媲美（在 iOS 上由于缺乏 JIT 支持，性能可能略有下降）。
 
 ⚠️ 注意：这是 AstroBox v2 的插件文档，如果您正在寻找 AstroBox v1 的插件文档，请访问 [这里](https://plugindoc-v1.astrobox.online)，但我们不建议继续为v1开发插件。

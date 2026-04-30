@@ -28,19 +28,16 @@ interface event {
 - 只有“已加载且未禁用”的其他插件会收到广播。
 - 宿主会把 `event-name` 和 `payload` 再包一层 JSON 后转成 `plugin-message`，并不是把 `payload` 原样直接作为 `event-payload` 广播出去。
 
-## Rust 示例
+## 示例
 
-```rust
+```rust tab="Rust"
 use crate::astrobox::psys_host;
 
 pub fn notify_ready() {
     psys_host::event::send_event("plugin-ready", r#"{"ok":true}"#);
 }
 ```
-
-## Go 示例
-
-```go
+```go tab="Go"
 package plugin
 
 import event "astroboxplugin/bindings/astrobox_psys_host_event"

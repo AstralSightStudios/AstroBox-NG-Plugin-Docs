@@ -53,9 +53,9 @@ interface watchface {
 - `set-current-watchface` 当前会先检查 `watchface-id` 非空；空字符串会直接返回 `Err(())`。
 - 真正切换表盘时，宿主当前调用的是设备侧 `WatchfaceSystem::set_watchface`。
 
-## Rust 示例
+## 示例
 
-```rust
+```rust tab="Rust"
 use crate::astrobox::psys_host;
 
 pub async fn switch_to_first_non_current(addr: &str) -> Result<(), ()> {
@@ -68,9 +68,7 @@ pub async fn switch_to_first_non_current(addr: &str) -> Result<(), ()> {
 }
 ```
 
-## Go 示例
-
-```go
+```go tab="Go"
 package plugin
 
 import (

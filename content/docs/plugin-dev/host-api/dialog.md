@@ -183,9 +183,9 @@ interface dialog {
 - 保存会话按 `(plugin-name, session-id)` 隔离，不同插件之间不会共用会话。
 - `open-url` 是 fire-and-forget；如果宿主打开浏览器失败，不会把错误回传给插件。
 
-## Rust 示例
+## 示例
 
-```rust
+```rust tab="Rust"
 use crate::astrobox::psys_host::dialog::{
     self, DialogButton, DialogInfo, DialogStyle, DialogType, FilterConfig,
 };
@@ -242,9 +242,7 @@ pub async fn export_text(default_file_name: &str, text: &str) -> Result<(), ()> 
 }
 ```
 
-## Go 示例
-
-```go
+```go tab="Go"
 package plugin
 
 import (

@@ -111,9 +111,9 @@ interface register {
 - `register-interconnect-recv` 目前是按“设备地址 + 包名”做精确匹配，不支持通配。
 - `register-deeplink-action` 只允许成功注册一次；第二次调用会返回 `Err(())`。
 
-## Rust 示例
+## 示例
 
-```rust
+```rust tab="Rust"
 use crate::astrobox::psys_host;
 
 pub async fn register_plugin_capabilities(addr: &str) -> Result<(), ()> {
@@ -128,9 +128,7 @@ pub async fn register_plugin_capabilities(addr: &str) -> Result<(), ()> {
 }
 ```
 
-## Go 示例
-
-```go
+```go tab="Go"
 package plugin
 
 import (

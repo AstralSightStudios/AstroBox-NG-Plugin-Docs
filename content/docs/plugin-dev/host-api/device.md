@@ -57,9 +57,9 @@ interface device {
 - `get-connected-device-list` 读取的是宿主运行时里当前仍然在线的 `XiaomiDevice` 实例。
 - `disconnect-device` 当前通过主窗口执行前端 `miwear_disconnect` 调用；如果主窗口不存在，或者前端脚本执行失败，会返回 `Err(())`。
 
-## Rust 示例
+## 示例
 
-```rust
+```rust tab="Rust"
 use crate::astrobox::psys_host;
 
 pub async fn disconnect_all_connected() {
@@ -74,9 +74,7 @@ pub async fn disconnect_all_connected() {
 }
 ```
 
-## Go 示例
-
-```go
+```go tab="Go"
 package plugin
 
 import (

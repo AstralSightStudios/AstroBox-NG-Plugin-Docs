@@ -2,7 +2,7 @@
 title: UI 接口
 ---
 
-`ui` 是旧版 UI Builder 接口。除非你在维护历史插件，否则优先使用 [UI V3](./ui-v3)。
+`ui` 是**旧版** UI Builder 接口。除非你在维护历史插件，否则优先使用 [UI V3](./ui-v3)。
 
 ## 接口定义
 
@@ -173,7 +173,7 @@ interface ui {
 
 ## Rust 示例
 
-```rust
+```rust tab="Rust"
 use crate::astrobox::psys_host::ui::{self, ElementType, Event, FlexDirection};
 
 pub fn render_legacy_card(element_id: &str) {
@@ -194,9 +194,7 @@ pub fn render_legacy_card(element_id: &str) {
 }
 ```
 
-## Go 示例
-
-```go
+```go tab="Go"
 package plugin
 
 import (

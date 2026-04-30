@@ -65,7 +65,7 @@ interface os {
 
 ## Rust 示例
 
-```rust
+```rust tab="Rust"
 use crate::astrobox::psys_host;
 
 pub async fn print_os_info() {
@@ -89,9 +89,7 @@ pub async fn print_os_info() {
 }
 ```
 
-## Go 示例
-
-```go
+```go tab="Go"
 package plugin
 
 import (

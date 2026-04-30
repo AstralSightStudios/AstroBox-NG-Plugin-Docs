@@ -45,9 +45,9 @@ interface queue {
 
 暂无
 
-## Rust 示例
+## 示例
 
-```rust
+```rust tab="Rust"
 use crate::astrobox::psys_host;
 
 pub fn add_firmware(path: &str) {
@@ -58,9 +58,7 @@ pub fn add_firmware(path: &str) {
 }
 ```
 
-## Go 示例
-
-```go
+```go tab="Go"
 package plugin
 
 import queue "astroboxplugin/bindings/astrobox_psys_host_queue"

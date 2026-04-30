@@ -73,9 +73,9 @@ interface transport {
 
 暂无
 
-## Rust 示例
+## 示例
 
-```rust
+```rust tab="Rust"
 use crate::astrobox::psys_host;
 
 pub async fn request_packet(addr: &str, data: Vec<u8>) -> Result<Option<Vec<u8>>, ()> {
@@ -87,9 +87,7 @@ pub async fn request_packet(addr: &str, data: Vec<u8>) -> Result<Option<Vec<u8>>
 }
 ```
 
-## Go 示例
-
-```go
+```go tab="Go"
 package plugin
 
 import (

@@ -35,9 +35,9 @@ interface interconnect {
 - 如果设备不存在、快应用不存在、或者发送底层消息失败，都会返回 `Err(())`。
 - 当你通过 `register-interconnect-recv` 注册接收后，当前宿主会按“设备地址 + 包名”做精确匹配，再把收到的字符串原样作为 `interconnect-message` 的 `event-payload` 派发给插件。
 
-## Rust 示例
+## 示例
 
-```rust
+```rust tab="Rust"
 use crate::astrobox::psys_host;
 
 pub async fn send_rpc_ping(addr: &str, pkg_name: &str) -> Result<(), ()> {
@@ -50,9 +50,7 @@ pub async fn send_rpc_ping(addr: &str, pkg_name: &str) -> Result<(), ()> {
 }
 ```
 
-## Go 示例
-
-```go
+```go tab="Go"
 package plugin
 
 import (

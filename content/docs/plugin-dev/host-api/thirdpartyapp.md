@@ -59,9 +59,9 @@ interface thirdpartyapp {
 - `launch-qa` 会优先使用你传入的 `app-info`；如果 `package-name` 有值但 `fingerprint` 为空，宿主会尝试从当前设备已安装应用里按包名补全签名信息。
 - 如果 `package-name` 为空，或者目标设备上找不到对应应用，`launch-qa` 会返回 `Err(())`。
 
-## Rust 示例
+## 示例
 
-```rust
+```rust tab="Rust"
 use crate::astrobox::psys_host;
 
 pub async fn launch_first_app(addr: &str) -> Result<(), ()> {
@@ -75,9 +75,7 @@ pub async fn launch_first_app(addr: &str) -> Result<(), ()> {
 }
 ```
 
-## Go 示例
-
-```go
+```go tab="Go"
 package plugin
 
 import (

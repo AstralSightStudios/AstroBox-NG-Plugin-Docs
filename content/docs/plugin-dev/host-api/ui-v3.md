@@ -284,9 +284,9 @@ interface ui-v3 {
 
 - 不可与旧版ui混用
 
-## Rust 示例
+## 示例
 
-```rust
+```rust tab="Rust"
 use crate::astrobox::psys_host::ui_v3::{self, ElementType, Event, FlexDirection};
 
 pub fn render_dashboard(element_id: &str) {
@@ -315,9 +315,7 @@ pub fn render_dashboard(element_id: &str) {
 }
 ```
 
-## Go 示例
-
-```go
+```go tab="Go"
 package plugin
 
 import (

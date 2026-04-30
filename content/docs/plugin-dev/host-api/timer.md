@@ -58,9 +58,9 @@ interface timer {
 - `kind`：`timeout` 或 `interval`。
 - `payload`：你在 `set-timeout` / `set-interval` 里原样传入的字符串。
 
-## Rust 示例
+## 示例
 
-```rust
+```rust tab="Rust"
 use crate::astrobox::psys_host::timer;
 
 pub async fn arm_refresh_timeout() -> u64 {
@@ -72,9 +72,7 @@ pub async fn stop_timer(timer_id: u64) {
 }
 ```
 
-## Go 示例
-
-```go
+```go tab="Go"
 package plugin
 
 import timer "astroboxplugin/bindings/astrobox_psys_host_timer"

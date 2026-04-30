@@ -1,0 +1,93 @@
+import Link from "next/link";
+import {
+  BookOpen,
+  ChevronRight,
+  Cpu,
+  Plug,
+  WandSparkles,
+} from "lucide-react";
+import { HomeLayout } from "fumadocs-ui/layouts/home";
+import { baseOptions } from "@/lib/layout.shared";
+import { HomeHeroBackground } from "@/components/home-hero-background";
+import { HeroTyping } from "@/components/hero-typing";
+
+const docEntries = [
+  {
+    title: "使用教程",
+    desc: "AstroBox 软件安装、多平台设备连接与基础功能使用指南。",
+    icon: BookOpen,
+    href: "/docs/usage",
+  },
+  {
+    title: "插件开发文档",
+    desc: "探索基于 WIT + WASI 的多语言、原生级插件开发与极速分发。",
+    icon: Plug,
+    href: "/docs/plugin-dev",
+  },
+  {
+    title: "创作者工具使用文档",
+    desc: "学习表盘、快应用等第三方资源的上传、发布，以及接入外部平台实现资源售卖的全流程。",
+    icon: WandSparkles,
+    href: "/docs/creator-tools",
+  },
+];
+
+export default function HomePage() {
+  return (
+    <HomeLayout
+      {...baseOptions()}
+      searchToggle={{ enabled: true }}
+      nav={{
+        transparentMode: "top",
+        title: <span className="font-semibold tracking-tight">AstroBox 文档</span>,
+      }}
+      links={[
+        { text: "使用教程", url: "/docs/usage", active: "nested-url" },
+        { text: "插件开发", url: "/docs/plugin-dev", active: "nested-url" },
+        { text: "创作者工具", url: "/docs/creator-tools", active: "nested-url" },
+      ]}
+      className="bg-fd-background"
+    >
+      <div className="pb-16 pt-8 md:pb-24">
+        {/* Hero Section */}
+        <section className="relative mx-auto flex min-h-[80%] w-full max-w-[95%] flex-col items-center justify-center overflow-hidden rounded-[2rem] border border-fd-border/60 bg-fd-card/30 px-6 py-24 text-center shadow-2xl md:px-12">
+          <HomeHeroBackground />
+          <div className="relative z-10 flex max-w-5xl flex-col items-center">
+            {/* 大标题与打字机效果 */}
+            <h1 className="text-4xl font-extrabold tracking-tight text-fd-foreground sm:text-5xl md:text-6xl md:leading-[1.25]">
+              下一代 <HeroTyping words={["高扩展性的", "跨平台的", "由 Rust 驱动的"]} className="text-fd-primary" /> <br className="hidden sm:block" />
+              可穿戴多功能工具箱
+            </h1>
+
+            {/* 三大入口模块 */}
+            <div className="mt-16 grid w-full gap-6 text-left md:grid-cols-3">
+              {docEntries.map((entry) => {
+                const Icon = entry.icon;
+                return (
+                  <Link
+                    key={entry.title}
+                    href={entry.href}
+                    className="group relative flex flex-col rounded-2xl border border-fd-border/60 bg-fd-background/60 p-6 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-fd-primary/50 hover:bg-fd-primary/5 hover:shadow-xl hover:shadow-fd-primary/10"
+                  >
+                    <div className="mb-4 inline-flex size-12 items-center justify-center rounded-xl bg-fd-primary/10 text-fd-primary transition-colors group-hover:bg-fd-primary group-hover:text-primary-foreground">
+                      <Icon className="size-6" />
+                    </div>
+                    <h3 className="mb-2 text-xl font-bold tracking-tight text-fd-foreground transition-colors group-hover:text-fd-primary">
+                      {entry.title}
+                    </h3>
+                    <p className="flex-1 text-sm leading-relaxed text-fd-muted-foreground">
+                      {entry.desc}
+                    </p>
+                    <div className="mt-6 flex items-center text-sm font-medium text-fd-primary opacity-80 transition-opacity group-hover:opacity-100">
+                      浏览文档 <ChevronRight className="ml-1 size-4 transition-transform group-hover:translate-x-1" />
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      </div>
+    </HomeLayout>
+  );
+}

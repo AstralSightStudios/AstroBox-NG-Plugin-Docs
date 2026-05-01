@@ -256,6 +256,7 @@ export function DownloadCards() {
                     { name: "REDMI Watch 5 eSIM", status: "supported" as const, note: "—" },
                     { name: "REDMI Watch 5", status: "supported" as const, note: "—" },
                     { name: "REDMI Watch 4 及更老机型", status: "unsupported" as const, note: "过时设备" },
+                    { name: "小米 Watch S5", status: "supported" as const, note: "—" },
                     { name: "小米 Watch S4", status: "supported" as const, note: "—" },
                     { name: "小米 Watch S3", status: "supported" as const, note: "—" },
                     { name: "小米 Watch S2 及更老机型", status: "unsupported" as const, note: "协议版本不支持" },

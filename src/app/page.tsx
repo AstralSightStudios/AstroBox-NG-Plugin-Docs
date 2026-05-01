@@ -10,6 +10,7 @@ import { HomeLayout } from "fumadocs-ui/layouts/home";
 import { baseOptions } from "@/lib/layout.shared";
 import { HomeHeroBackground } from "@/components/home-hero-background";
 import { HeroTyping } from "@/components/hero-typing";
+import { DownloadCards } from "@/components/download-cards";
 
 const docEntries = [
   {
@@ -50,13 +51,13 @@ export default function HomePage() {
     >
       <div className="pb-16 pt-8 md:pb-24">
         {/* Hero Section */}
-        <section className="relative mx-auto flex min-h-[80%] w-full max-w-[95%] flex-col items-center justify-center overflow-hidden rounded-[2rem] border border-fd-border/60 bg-fd-card/30 px-6 py-24 text-center shadow-2xl md:px-12">
+        <section className="relative mx-auto flex min-h-[80%] w-full max-w-[95%] flex-col items-center justify-center overflow-hidden rounded-[2rem] border border-fd-border/60 px-6 py-24 text-center shadow-2xl md:px-12">
           <HomeHeroBackground />
           <div className="relative z-10 flex max-w-5xl flex-col items-center">
             {/* 大标题与打字机效果 */}
             <h1 className="text-4xl font-extrabold tracking-tight text-fd-foreground sm:text-5xl md:text-6xl md:leading-[1.25]">
-              下一代 <HeroTyping words={["高扩展性的", "跨平台的", "由 Rust 驱动的"]} className="text-fd-primary" /> <br className="hidden sm:block" />
-              可穿戴多功能工具箱
+              AstroBox 是 <HeroTyping words={["业界领先的", "高扩展性的", "跨平台的", "由 Rust 驱动的"]} className="text-fd-primary" /> <br className="hidden sm:block" />
+              穿戴设备第三方工具箱
             </h1>
 
             {/* 三大入口模块 */}
@@ -87,6 +88,11 @@ export default function HomePage() {
             </div>
           </div>
         </section>
+
+        {/* 下载平台卡片 */}
+        <div className="mt-12 md:mt-16">
+          <DownloadCards />
+        </div>
       </div>
     </HomeLayout>
   );

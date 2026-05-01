@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Watch, CheckCircle2, XCircle, ChevronDown, ChevronUp } from "lucide-react";
 import "@fontsource/maple-mono/400.css";
 import { DownloadDialog, type DownloadItem } from "./download-dialog";
 import { PostDownloadDialog } from "./post-download-dialog";
@@ -178,6 +178,7 @@ export function DownloadCards() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [postDialogOpen, setPostDialogOpen] = useState(false);
   const [activePlatform, setActivePlatform] = useState<Platform | null>(null);
+  const [deviceListOpen, setDeviceListOpen] = useState(true);
 
   const handleDownloadClick = (platform: Platform) => {
     if (!platform.hasDownload) return;
@@ -192,7 +193,7 @@ export function DownloadCards() {
 
   return (
     <section
-      className="mx-auto w-full max-w-[95%]"
+      className="mx-auto w-full max-w-4xl"
       style={{ fontFamily: "'Maple Mono', 'MiSans', monospace" }}
     >
       <div className="mb-10 text-center">
@@ -205,6 +206,84 @@ export function DownloadCards() {
           从下载最新版 AstroBox 开始
         </p>
       </div>
+
+      {/* 设备兼容性提示 */}
+      <div className="mb-8 rounded-2xl border border-fd-border/60 bg-fd-background p-5 md:p-6">
+        <button
+          onClick={() => setDeviceListOpen((v) => !v)}
+          className="flex w-full items-center justify-between gap-3 text-left"
+        >
+          <div className="flex items-center gap-3">
+            <div className="inline-flex shrink-0 items-center justify-center rounded-xl bg-fd-primary/10 p-2.5 text-fd-primary">
+              <Watch className="size-5" />
+            </div>
+            <div>
+              <h3 className="text-base font-semibold text-fd-foreground">
+                下载前，先确认你的设备是否受支持
+              </h3>
+              <p className="text-sm text-fd-muted-foreground">
+                AstroBox 支持多种主流穿戴设备，但不同型号的功能适配情况可能存在差异。
+              </p>
+            </div>
+          </div>
+          <div className="inline-flex shrink-0 items-center justify-center rounded-lg p-2 text-fd-muted-foreground transition-colors hover:bg-fd-accent/50 hover:text-fd-foreground">
+            {deviceListOpen ? <ChevronUp className="size-5" /> : <ChevronDown className="size-5" />}
+          </div>
+        </button>
+
+        <div
+          className={`grid transition-all duration-300 ease-in-out ${deviceListOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}
+        >
+          <div className="overflow-hidden">
+            <div className="mt-4 overflow-hidden rounded-xl border border-fd-border/60">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="bg-fd-accent/50">
+                    <th className="px-4 py-2.5 font-medium text-fd-foreground">型号</th>
+                    <th className="px-4 py-2.5 font-medium text-fd-foreground">状态</th>
+                    <th className="hidden px-4 py-2.5 font-medium text-fd-foreground md:table-cell">备注</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-fd-border/60">
+                  {[
+                    { name: "小米手环 9 Pro", status: "supported" as const, note: "—" },
+                    { name: "小米手环 10 系列", status: "supported" as const, note: "—" },
+                    { name: "小米手环 9 系列", status: "supported" as const, note: "—" },
+                    { name: "小米手环 8 系列", status: "unsupported" as const, note: "过时设备" },
+                    { name: "REDMI Watch 6", status: "supported" as const, note: "—" },
+                    { name: "REDMI Watch 5 eSIM", status: "supported" as const, note: "—" },
+                    { name: "REDMI Watch 5", status: "supported" as const, note: "—" },
+                    { name: "REDMI Watch 4 及更老机型", status: "unsupported" as const, note: "过时设备" },
+                    { name: "小米 Watch S4", status: "supported" as const, note: "—" },
+                    { name: "小米 Watch S3", status: "supported" as const, note: "—" },
+                    { name: "小米 Watch S2 及更老机型", status: "unsupported" as const, note: "协议版本不支持" },
+                    { name: "REDMI 手环 / Active 系列", status: "unsupported" as const, note: "协议版本不支持" },
+                  ].map((device) => (
+                    <tr key={device.name} className="transition-colors hover:bg-fd-accent/30">
+                      <td className="px-4 py-2.5 text-fd-foreground">{device.name}</td>
+                      <td className="px-4 py-2.5">
+                        {device.status === "supported" ? (
+                          <span className="inline-flex items-center gap-1 rounded-md bg-green-500/10 px-2 py-0.5 text-xs font-medium text-green-600 dark:text-green-400">
+                            <CheckCircle2 className="size-3" />
+                            完整支持
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1 rounded-md bg-fd-muted/20 px-2 py-0.5 text-xs font-medium text-fd-muted-foreground">
+                            <XCircle className="size-3" />
+                            不支持
+                          </span>
+                        )}
+                      </td>
+                      <td className="hidden px-4 py-2.5 text-fd-muted-foreground md:table-cell">{device.note}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="grid grid-cols-2 gap-px bg-fd-border/70 md:grid-cols-3">
         {platforms.map((p) => {
           const Icon = p.icon;

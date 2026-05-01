@@ -7,7 +7,7 @@ type AstroBoxBrandIconProps = {
 export function AstroBoxBrandIcon({ className }: AstroBoxBrandIconProps) {
   return (
     <Image
-      src="/brand-icon.png"
+      src="/assets/brand/brand-icon.png"
       alt=""
       aria-hidden="true"
       width={28}

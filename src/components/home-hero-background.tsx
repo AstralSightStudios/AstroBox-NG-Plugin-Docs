@@ -87,7 +87,7 @@ function BrandDitherIcon() {
             height="560"
             style={{ maskType: "alpha" }}
           >
-            <image href="/brand-icon.png" x="0" y="0" width="560" height="560" preserveAspectRatio="xMidYMid meet" />
+            <image href="/assets/brand/brand-icon.png" x="0" y="0" width="560" height="560" preserveAspectRatio="xMidYMid meet" />
           </mask>
         </defs>
         <g mask="url(#hero-brand-mask)">

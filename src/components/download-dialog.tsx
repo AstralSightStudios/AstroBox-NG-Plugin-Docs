@@ -15,6 +15,7 @@ interface DownloadDialogProps {
   title?: string;
   description?: string;
   downloads?: DownloadItem[];
+  onConfirm?: () => void;
 }
 
 function CopyButton({ text }: { text: string }) {
@@ -60,9 +61,11 @@ function CopyButton({ text }: { text: string }) {
 function DownloadItemCard({
   item,
   showGoButton,
+  onGo,
 }: {
   item: DownloadItem;
   showGoButton?: boolean;
+  onGo?: () => void;
 }) {
   return (
     <div className="rounded-xl border border-fd-border/60 bg-fd-accent/30 p-4">
@@ -112,10 +115,7 @@ function DownloadItemCard({
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => {
-              // 让父级对话框也关闭
-              setTimeout(() => {
-                window.dispatchEvent(new CustomEvent("download-dialog-close"));
-              }, 50);
+              onGo?.();
             }}
             className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-fd-primary px-3 py-1.5 text-xs font-medium text-fd-primary-foreground transition-colors hover:bg-fd-primary/90"
           >
@@ -134,6 +134,7 @@ export function DownloadDialog({
   title = "下载确认",
   description = "目标页面由第三方提供，请确认链接地址后再继续访问。",
   downloads = [],
+  onConfirm,
 }: DownloadDialogProps) {
   useEffect(() => {
     if (!isOpen) return;
@@ -182,6 +183,7 @@ export function DownloadDialog({
                   key={item.label}
                   item={item}
                   showGoButton
+                  onGo={onConfirm}
                 />
               ))}
             </div>
@@ -213,6 +215,7 @@ export function DownloadDialog({
               <button
                 onClick={() => {
                   window.open(single.href, "_blank", "noopener,noreferrer");
+                  onConfirm?.();
                   onClose();
                 }}
                 className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-fd-primary px-4 py-2 text-sm font-medium text-fd-primary-foreground transition-colors hover:bg-fd-primary/90"

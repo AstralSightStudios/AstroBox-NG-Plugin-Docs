@@ -4,6 +4,7 @@ import { useState } from "react";
 import { ChevronRight } from "lucide-react";
 import "@fontsource/maple-mono/400.css";
 import { DownloadDialog, type DownloadItem } from "./download-dialog";
+import { PostDownloadDialog } from "./post-download-dialog";
 
 function WinIcon({ className }: { className?: string }) {
   return (
@@ -99,6 +100,8 @@ interface Platform {
   version: string;
   hasDownload: boolean;
   downloads: DownloadItem[];
+  docHref?: string;
+  docLabel?: string;
 }
 
 const platforms: Platform[] = [
@@ -110,6 +113,8 @@ const platforms: Platform[] = [
     downloads: [
       { label: "Windows", href: "https://www.123pan.com/s/astrobox-win", password: "abxw" },
     ],
+    docHref: "/docs/usage",
+    docLabel: "查看 Windows 使用教程",
   },
   {
     icon: MacIcon,
@@ -119,6 +124,8 @@ const platforms: Platform[] = [
     downloads: [
       { label: "macOS", href: "https://www.123pan.com/s/astrobox-mac", password: "abxm" },
     ],
+    docHref: "/docs/usage",
+    docLabel: "查看 macOS 使用教程",
   },
   {
     icon: LinuxIcon,
@@ -129,6 +136,8 @@ const platforms: Platform[] = [
       { label: "Debian (.deb)", href: "https://www.123pan.com/s/astrobox-deb", password: "abxd" },
       { label: "RedHat (.rpm)", href: "https://www.123pan.com/s/astrobox-rpm", password: "abxr" },
     ],
+    docHref: "/docs/usage",
+    docLabel: "查看 Linux 使用教程",
   },
   {
     icon: IosIcon,
@@ -138,6 +147,8 @@ const platforms: Platform[] = [
     downloads: [
       { label: "iOS / iPadOS", href: "https://apps.apple.com/app/astrobox" },
     ],
+    docHref: "/docs/usage",
+    docLabel: "查看 iOS 使用教程",
   },
   {
     icon: AndroidIcon,
@@ -147,6 +158,8 @@ const platforms: Platform[] = [
     downloads: [
       { label: "Android", href: "https://www.123pan.com/s/astrobox-android", password: "abxa" },
     ],
+    docHref: "/docs/usage",
+    docLabel: "查看 Android 使用教程",
   },
   {
     icon: ChromiumIcon,
@@ -156,17 +169,25 @@ const platforms: Platform[] = [
     downloads: [
       { label: "Chromium", href: "https://chrome.google.com/webstore/detail/astrobox" },
     ],
+    docHref: "/docs/usage",
+    docLabel: "查看 Chromium 使用教程",
   },
 ];
 
 export function DownloadCards() {
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [postDialogOpen, setPostDialogOpen] = useState(false);
   const [activePlatform, setActivePlatform] = useState<Platform | null>(null);
 
   const handleDownloadClick = (platform: Platform) => {
     if (!platform.hasDownload) return;
     setActivePlatform(platform);
     setDialogOpen(true);
+  };
+
+  const handleConfirm = () => {
+    setDialogOpen(false);
+    setPostDialogOpen(true);
   };
 
   return (
@@ -220,9 +241,17 @@ export function DownloadCards() {
       <DownloadDialog
         isOpen={dialogOpen}
         onClose={() => setDialogOpen(false)}
-        title="即将离开 AstroBox 文档"
+        title="即将离开 AstroBox 官网"
         description="目标页面由第三方提供，请确认链接地址后再继续访问。"
         downloads={activePlatform?.downloads}
+        onConfirm={handleConfirm}
+      />
+
+      <PostDownloadDialog
+        isOpen={postDialogOpen}
+        onClose={() => setPostDialogOpen(false)}
+        docHref={activePlatform?.docHref}
+        docLabel={activePlatform?.docLabel}
       />
     </section>
   );

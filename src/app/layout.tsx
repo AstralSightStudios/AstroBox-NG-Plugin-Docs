@@ -16,7 +16,7 @@ const mono = Geist_Mono({
 export default function Layout({ children }: { children: ReactNode }) {
   return (
     <html lang="zh-CN" className={`${geist.variable} ${mono.variable}`} suppressHydrationWarning>
-      <body className="relative flex min-h-screen flex-col">
+      <body className="relative flex min-h-screen flex-col" suppressHydrationWarning>
         <RootProvider>{children}</RootProvider>
       </body>
     </html>

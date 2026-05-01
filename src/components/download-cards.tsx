@@ -1,6 +1,9 @@
-import Link from "next/link";
+"use client";
+
+import { useState } from "react";
 import { ChevronRight } from "lucide-react";
 import "@fontsource/maple-mono/400.css";
+import { DownloadDialog, type DownloadItem } from "./download-dialog";
 
 function WinIcon({ className }: { className?: string }) {
   return (
@@ -90,47 +93,82 @@ function ChromiumIcon({ className }: { className?: string }) {
   );
 }
 
-const platforms = [
+interface Platform {
+  icon: React.FC<{ className?: string }>;
+  name: string;
+  version: string;
+  hasDownload: boolean;
+  downloads: DownloadItem[];
+}
+
+const platforms: Platform[] = [
   {
     icon: WinIcon,
     name: "WINDOWS 10 20H2+",
     version: "V1.5.5",
-    href: "#download-windows",
     hasDownload: true,
+    downloads: [
+      { label: "Windows", href: "https://www.123pan.com/s/astrobox-win", password: "abxw" },
+    ],
   },
   {
     icon: MacIcon,
     name: "MACOS SONOMA (14)+",
-    href: "#download-macos",
+    version: "V1.5.5",
     hasDownload: true,
+    downloads: [
+      { label: "macOS", href: "https://www.123pan.com/s/astrobox-mac", password: "abxm" },
+    ],
   },
   {
     icon: LinuxIcon,
     name: "DEBIAN/REDHAT",
-    href: "#download-linux",
+    version: "V1.5.5",
     hasDownload: true,
+    downloads: [
+      { label: "Debian (.deb)", href: "https://www.123pan.com/s/astrobox-deb", password: "abxd" },
+      { label: "RedHat (.rpm)", href: "https://www.123pan.com/s/astrobox-rpm", password: "abxr" },
+    ],
   },
   {
     icon: IosIcon,
     name: "IOS/IPADOS 14+",
-    href: "#download-ios",
+    version: "V1.5.5",
     hasDownload: true,
+    downloads: [
+      { label: "iOS / iPadOS", href: "https://apps.apple.com/app/astrobox" },
+    ],
   },
   {
     icon: AndroidIcon,
     name: "Android 10+",
-    href: "#download-android",
+    version: "V1.5.5",
     hasDownload: true,
+    downloads: [
+      { label: "Android", href: "https://www.123pan.com/s/astrobox-android", password: "abxa" },
+    ],
   },
   {
     icon: ChromiumIcon,
     name: "CHROMIUM 117+",
-    href: "#download-chromium",
+    version: "V1.5.5",
     hasDownload: true,
+    downloads: [
+      { label: "Chromium", href: "https://chrome.google.com/webstore/detail/astrobox" },
+    ],
   },
 ];
 
 export function DownloadCards() {
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [activePlatform, setActivePlatform] = useState<Platform | null>(null);
+
+  const handleDownloadClick = (platform: Platform) => {
+    if (!platform.hasDownload) return;
+    setActivePlatform(platform);
+    setDialogOpen(true);
+  };
+
   return (
     <section
       className="mx-auto w-full max-w-[95%]"
@@ -166,18 +204,26 @@ export function DownloadCards() {
                 </span>
               )}
               {p.hasDownload && (
-                <Link
-                  href={p.href}
+                <button
+                  onClick={() => handleDownloadClick(p)}
                   className="mt-2 inline-flex items-center text-sm tracking-wide text-fd-foreground transition-colors hover:text-fd-primary"
                 >
                   下载
                   <ChevronRight className="ml-0.5 size-4" />
-                </Link>
+                </button>
               )}
             </div>
           );
         })}
       </div>
+
+      <DownloadDialog
+        isOpen={dialogOpen}
+        onClose={() => setDialogOpen(false)}
+        title="即将离开 AstroBox 文档"
+        description="目标页面由第三方提供，请确认链接地址后再继续访问。"
+        downloads={activePlatform?.downloads}
+      />
     </section>
   );
 }

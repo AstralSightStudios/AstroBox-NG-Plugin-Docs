@@ -15,5 +15,8 @@ export const docs = defineDocs({
 });
 
 export default defineConfig({
-  mdxOptions: {},
+  mdxOptions: {
+    // 禁用默认的 rehype 插件，确保 img 标签能被正确替换
+    rehypePlugins: [],
+  },
 });

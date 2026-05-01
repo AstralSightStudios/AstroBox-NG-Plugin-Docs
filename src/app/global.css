@@ -4,6 +4,11 @@
 
 @theme {
   --color-primary-foreground: var(--color-fd-primary-foreground);
+  --font-sans: "Geist", "Geist Fallback", "MiSans Chinese", "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+html.font-setting {
+  --font-sans: "Geist", "Geist Fallback", "MiSans Chinese", "PingFang SC", "Microsoft YaHei", sans-serif;
 }
 
 :root {

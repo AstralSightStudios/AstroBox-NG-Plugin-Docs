@@ -7,5 +7,8 @@ export function baseOptions(): BaseLayoutProps {
       title: <AstroBoxBrandTitle />,
     },
     githubUrl: "https://github.com/AstralSightStudios/AstroBox-NG-Plugin-Template-Rust",
+    themeSwitch: {
+      mode: "light-dark-system",
+    },
   };
 }

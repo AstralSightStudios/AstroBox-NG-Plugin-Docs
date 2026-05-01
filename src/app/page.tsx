@@ -55,7 +55,7 @@ export default function HomePage() {
           <HomeHeroBackground />
           <div className="relative z-10 flex max-w-5xl flex-col items-center">
             {/* 大标题与打字机效果 */}
-            <h1 className="text-4xl font-extrabold tracking-tight text-fd-foreground leading-[1.25] sm:text-5xl md:text-6xl">
+            <h1 className="text-4xl font-semibold tracking-tight text-fd-foreground leading-[1.25] sm:text-5xl md:text-6xl">
               <span className="block md:inline">AstroBox 是</span>{" "}
               <span className="hero-typing-wrapper block md:inline" style={{ minHeight: "1.25em" }}>
                 <HeroTyping words={["业界领先的", "高扩展性的", "跨平台的", "由 Rust 驱动的"]} className="text-fd-primary" />

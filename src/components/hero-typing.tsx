@@ -53,6 +53,21 @@ export function HeroTyping({
   });
   const frameRef = useRef<FrameState>(frame);
   const [charWidthsByWord, setCharWidthsByWord] = useState<number[][]>([]);
+  const [ready, setReady] = useState(false);
+  const [isMd, setIsMd] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setReady(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useLayoutEffect(() => {
+    const mql = window.matchMedia("(min-width: 768px)");
+    setIsMd(mql.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMd(e.matches);
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
+  }, []);
 
   const rootRef = useRef<HTMLSpanElement | null>(null);
   const measureRefs = useRef<(HTMLSpanElement | null)[][]>([]);
@@ -142,6 +157,15 @@ export function HeroTyping({
   const fallbackWidth =
     allWidths.length > 0 ? allWidths.reduce((sum, width) => sum + width, 0) / allWidths.length : 9;
 
+  const maxWordWidth = useMemo(() => {
+    if (!charWidthsByWord.length) return 0;
+    return Math.max(
+      ...charWidthsByWord.map((widths) =>
+        widths.reduce((sum, w) => sum + (w > 0 ? w : fallbackWidth), 0),
+      ),
+    );
+  }, [charWidthsByWord, fallbackWidth]);
+
   const getCharWidth = (index: number) => {
     const width = currentCharWidths[index];
     return width && width > 0 ? width : fallbackWidth;
@@ -168,7 +192,7 @@ export function HeroTyping({
   const isDeleting = frame.phase === "deleting";
 
   return (
-    <span ref={rootRef} className={className}>
+    <span ref={rootRef} className={className} data-ready={ready ? "true" : undefined}>
       <span className="relative inline-flex items-baseline whitespace-nowrap">
         <span aria-hidden="true" className="pointer-events-none absolute -left-[9999px] top-0 whitespace-nowrap opacity-0">
           {charsByWord.map((chars, wi) => (
@@ -188,7 +212,7 @@ export function HeroTyping({
           ))}
         </span>
 
-        <span className="inline-flex items-baseline whitespace-nowrap" style={{ width: `${Math.max(0.5, dynamicWidth)}px` }}>
+        <span className={`hero-typing-container inline-flex items-baseline whitespace-nowrap ${isMd ? "justify-start" : "justify-center"}`} style={{ width: `${Math.max(0.5, dynamicWidth)}px`, minWidth: isMd ? undefined : `${maxWordWidth}px` }}>
           {currentChars.map((char, i) => {
             const eased = smoothstep(getCharProgress(i));
             const baseSlotWidth = getCharWidth(i) * getWidthProgress(i);

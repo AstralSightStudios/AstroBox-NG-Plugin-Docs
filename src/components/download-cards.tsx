@@ -102,6 +102,7 @@ interface Platform {
   downloads: DownloadItem[];
   docHref?: string;
   docLabel?: string;
+  actionLabel?: string;
 }
 
 const platforms: Platform[] = [
@@ -166,8 +167,9 @@ const platforms: Platform[] = [
     name: "CHROMIUM 117+",
     version: "V1.5.5",
     hasDownload: true,
+    actionLabel: "前往",
     downloads: [
-      { label: "Chromium", href: "https://chrome.google.com/webstore/detail/astrobox" },
+      { label: "Chromium", href: "https://chrome.google.com/webstore/detail/astrobox", linkLabel: "链接" },
     ],
     docHref: "/docs/usage",
     docLabel: "查看 Chromium 使用教程",
@@ -208,7 +210,7 @@ export function DownloadCards() {
       </div>
 
       {/* 设备兼容性提示 */}
-      <div className="mb-8 rounded-2xl border border-fd-border/60 bg-fd-background p-5 md:p-6">
+      <div className="mx-2.5 mb-8 rounded-2xl border border-fd-border/60 bg-fd-background p-5 md:p-6">
         <button
           onClick={() => setDeviceListOpen((v) => !v)}
           className="flex w-full items-center justify-between gap-3 text-left"
@@ -238,7 +240,7 @@ export function DownloadCards() {
             <div className="mt-4 overflow-hidden rounded-xl border border-fd-border/60">
               <table className="w-full text-left text-sm">
                 <thead>
-                  <tr className="bg-fd-accent/50">
+                  <tr className="hidden bg-fd-accent/50 sm:table-row">
                     <th className="px-4 py-2.5 font-medium text-fd-foreground">型号</th>
                     <th className="px-4 py-2.5 font-medium text-fd-foreground">状态</th>
                     <th className="hidden px-4 py-2.5 font-medium text-fd-foreground md:table-cell">备注</th>
@@ -259,16 +261,16 @@ export function DownloadCards() {
                     { name: "小米 Watch S2 及更老机型", status: "unsupported" as const, note: "协议版本不支持" },
                     { name: "REDMI 手环 / Active 系列", status: "unsupported" as const, note: "协议版本不支持" },
                   ].map((device) => (
-                    <tr key={device.name} className="transition-colors hover:bg-fd-accent/30">
-                      <td className="px-4 py-2.5 text-fd-foreground">{device.name}</td>
-                      <td className="px-4 py-2.5">
+                    <tr key={device.name} className="block transition-colors hover:bg-fd-accent/30 sm:table-row">
+                      <td className="block px-4 pt-4 pb-1 text-fd-foreground sm:table-cell sm:py-2.5">{device.name}</td>
+                      <td className="block px-4 pt-1 pb-4 sm:table-cell sm:py-2.5">
                         {device.status === "supported" ? (
-                          <span className="inline-flex items-center gap-1 rounded-md bg-green-500/10 px-2 py-0.5 text-xs font-medium text-green-600 dark:text-green-400">
+                          <span className="inline-flex items-center gap-1 rounded-md bg-green-500/10 px-2 py-0.5 text-xs font-medium whitespace-nowrap text-green-600 dark:text-green-400">
                             <CheckCircle2 className="size-3" />
                             完整支持
                           </span>
                         ) : (
-                          <span className="inline-flex items-center gap-1 rounded-md bg-fd-muted/20 px-2 py-0.5 text-xs font-medium text-fd-muted-foreground">
+                          <span className="inline-flex items-center gap-1 rounded-md bg-fd-muted/20 px-2 py-0.5 text-xs font-medium whitespace-nowrap text-fd-muted-foreground">
                             <XCircle className="size-3" />
                             不支持
                           </span>
@@ -308,7 +310,7 @@ export function DownloadCards() {
                   onClick={() => handleDownloadClick(p)}
                   className="mt-2 inline-flex items-center text-sm tracking-wide text-fd-foreground transition-colors hover:text-fd-primary"
                 >
-                  下载
+                  {p.actionLabel ?? "下载"}
                   <ChevronRight className="ml-0.5 size-4" />
                 </button>
               )}
@@ -320,7 +322,7 @@ export function DownloadCards() {
       <DownloadDialog
         isOpen={dialogOpen}
         onClose={() => setDialogOpen(false)}
-        title="即将离开 AstroBox 官网"
+        title="即将离开 AstroBox 文档"
         description="目标页面由第三方提供，请确认链接地址后再继续访问。"
         downloads={activePlatform?.downloads}
         onConfirm={handleConfirm}

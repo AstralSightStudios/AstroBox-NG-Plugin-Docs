@@ -7,6 +7,7 @@ export interface DownloadItem {
   label: string;
   href: string;
   password?: string;
+  linkLabel?: string;
 }
 
 interface DownloadDialogProps {
@@ -74,18 +75,12 @@ function DownloadItemCard({
 
       {/* 下载链接 */}
       <div className="mt-2">
-        <div className="text-xs text-fd-muted-foreground">下载链接</div>
+        <div className="text-xs text-fd-muted-foreground">
+          {item.linkLabel ?? "下载链接"}
+        </div>
         <div className="mt-1 flex items-center gap-2">
           <span className="truncate text-sm text-fd-foreground">
             {item.href}
-          </span>
-        </div>
-        <div className="mt-2 flex flex-wrap gap-2">
-          <span className="inline-flex items-center rounded-md bg-fd-background px-2 py-1 text-[11px] font-medium text-fd-muted-foreground">
-            第三方站点
-          </span>
-          <span className="inline-flex items-center rounded-md bg-fd-primary/10 px-2 py-1 text-[11px] font-medium text-fd-primary">
-            将在新标签页打开
           </span>
         </div>
       </div>

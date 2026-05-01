@@ -98,7 +98,7 @@ function BrandDitherIcon() {
               y={dot.y}
               width={dot.size}
               height={dot.size}
-              fill="#0B4DB8"
+              fill="#1781FF"
               fillOpacity={dot.opacity}
             />
           ))}
@@ -133,8 +133,8 @@ export function HomeHeroBackground() {
           className="absolute inset-0 animate-fd-fade-in duration-800"
           colors={
             resolvedTheme === "dark"
-              ? ["#6CC6FF", "#1C6BFF", "#0B1F5E00"]
-              : ["#A9DDFF", "#3E9DFF", "#1764D022"]
+              ? ["#5cafff", "#1781FF", "#05132700"]
+              : ["#A9DDFF", "#1781FF", "#1781FF22"]
           }
           colorBack="#00000000"
           softness={1}

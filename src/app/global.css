@@ -101,4 +101,6 @@ html.font-setting {
   }
 }
 
-
+:root {
+  --fd-layout-width: 1920px;
+}

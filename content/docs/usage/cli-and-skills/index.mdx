@@ -1,0 +1,32 @@
+---
+title: 概览
+description: 通过命令行或 Agent 与 AstroBox 交互的完整指南
+---
+
+import { Terminal, Download, Zap, Search, Monitor, Wrench, Bot } from 'lucide-react';
+
+AstroBox CLI (`astrobox-cli`) 是 AstroBox 的官方命令行工具。无需打开图形界面，你就可以在终端中完成设备管理、资源搜索、下载与安装等操作。CLI Skills 则是专为 AI Agent 设计的结构化能力封装，让 Agent 能够准确、安全地调用 CLI 完成 AstroBox 相关任务。
+
+<Cards>
+  <Card icon={<Download className="text-blue-400" strokeWidth={2}/>} title="安装与环境准备" href="./cli-and-skills/install">
+    安装 CLI 并检查运行环境
+  </Card>
+  <Card icon={<Zap className="text-yellow-400" strokeWidth={2}/>} title="快速上手" href="./cli-and-skills/quickstart">
+    5 分钟掌握最常用的命令
+  </Card>
+  <Card icon={<Monitor className="text-emerald-400" strokeWidth={2}/>} title="设备管理" href="./cli-and-skills/device">
+    连接、查看和管理你的穿戴设备
+  </Card>
+  <Card icon={<Search className="text-purple-400" strokeWidth={2}/>} title="资源搜索与安装" href="./cli-and-skills/resource">
+    在提供方中搜索资源并安装到设备
+  </Card>
+  <Card icon={<Terminal className="text-orange-400" strokeWidth={2}/>} title="队列管理" href="./cli-and-skills/queue">
+    管理安装队列，查看任务进度
+  </Card>
+  <Card icon={<Bot className="text-cyan-400" strokeWidth={2}/>} title="CLI Skills" href="./cli-and-skills/skills">
+    在 AI Agent 中使用 AstroBox CLI Skills
+  </Card>
+  <Card icon={<Wrench className="text-red-400" strokeWidth={2}/>} title="常见问题" href="./cli-and-skills/troubleshooting">
+    排查错误、恢复运行
+  </Card>
+</Cards>

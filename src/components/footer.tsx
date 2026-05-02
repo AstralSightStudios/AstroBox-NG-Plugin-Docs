@@ -9,11 +9,18 @@ export function Footer() {
         <div className="flex flex-col items-center gap-4 md:items-start">
           <div className="inline-flex items-center">
             <Image
+              src="/assets/brand/teamlogo-black.svg"
+              alt="AstroBox"
+              width={140}
+              height={20}
+              className="h-5 w-auto dark:hidden"
+            />
+            <Image
               src="/assets/brand/teamlogo.svg"
               alt="AstroBox"
               width={140}
               height={20}
-              className="h-5 w-auto"
+              className="hidden h-5 w-auto dark:block"
             />
           </div>
 

@@ -9,8 +9,12 @@ AstroBox CLI 提供完整的设备生命周期管理能力，包括查看已保�
 
 列出所有已保存的设备及其连接状态：
 
-```bash
+```bash tab="通过 npx 运行"
 npx astrobox-cli device list
+```
+
+```bash tab="全局安装"
+astrobox-cli device list
 ```
 
 输出示例：
@@ -31,8 +35,12 @@ Devices: 2
 
 通过 MAC 地址查看某个设备的完整信息：
 
-```bash
+```bash tab="通过 npx 运行"
 npx astrobox-cli device show 3C:AF:B7:ED:C6:92
+```
+
+```bash tab="全局安装"
+astrobox-cli device show 3C:AF:B7:ED:C6:92
 ```
 
 输出示例：
@@ -63,8 +71,15 @@ Type:     SPP
 
 ## 连接新设备
 
-```bash
+```bash tab="通过 npx 运行"
 npx astrobox-cli device connect \
+  --name "Xiaomi Smart Band 9 Pro C692" \
+  --addr "3C:AF:B7:ED:C6:92" \
+  --authkey "your-authkey"
+```
+
+```bash tab="全局安装"
+astrobox-cli device connect \
   --name "Xiaomi Smart Band 9 Pro C692" \
   --addr "3C:AF:B7:ED:C6:92" \
   --authkey "your-authkey"
@@ -95,10 +110,3 @@ npx astrobox-cli device connect \
 - 名称、地址或 AuthKey 不正确
 - AstroBox 正在进行其他设备连接
 - 设备未处于配对模式
-
-## 连接类型说明
-
-- **SPP**（Serial Port Profile）：经典蓝牙串口连接，兼容性较好
-- **BLE**（Bluetooth Low Energy）：低功耗蓝牙连接，部分新设备支持
-
-如果默认的 `SPP` 无法连接，可以尝试指定 `--connectType BLE`。

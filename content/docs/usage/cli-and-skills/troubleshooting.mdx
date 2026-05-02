@@ -1,5 +1,5 @@
 ---
-title: 常见问题与故障排除
+title: 常见问题
 description: 排查 AstroBox CLI 使用中的常见错误
 ---
 
@@ -42,13 +42,22 @@ Install error: 没有已连接的设备，请先连接设备
 ### 解决方法
 
 1. 检查设备状态：
-   ```bash
+   ```bash tab="通过 npx 运行"
    npx astrobox-cli status
    ```
+
+   ```bash tab="全局安装"
+   astrobox-cli status
+   ```
 2. 如果设备已保存但断开，获取 authkey 并重新连接：
-   ```bash
+   ```bash tab="通过 npx 运行"
    npx astrobox-cli device show <addr>
    npx astrobox-cli device connect --name "..." --addr "..." --authkey "..."
+   ```
+
+   ```bash tab="全局安装"
+   astrobox-cli device show <addr>
+   astrobox-cli device connect --name "..." --addr "..." --authkey "..."
    ```
 3. 提示用户在物理设备上点击确认
 4. 重新执行安装命令
@@ -85,13 +94,21 @@ python scripts/run_abcli.py <command> [options]
 ### 解决方法
 
 1. **先刷新提供方缓存**：
-   ```bash
+   ```bash tab="通过 npx 运行"
    npx astrobox-cli provider refresh OfficialV2
+   ```
+
+   ```bash tab="全局安装"
+   astrobox-cli provider refresh OfficialV2
    ```
 2. 检查关键词是否正确，尝试更通用的关键词
 3. 确认提供方状态为 `Ready`：
-   ```bash
+   ```bash tab="通过 npx 运行"
    npx astrobox-cli provider state OfficialV2
+   ```
+
+   ```bash tab="全局安装"
+   astrobox-cli provider state OfficialV2
    ```
 
 ## 连接类型错误

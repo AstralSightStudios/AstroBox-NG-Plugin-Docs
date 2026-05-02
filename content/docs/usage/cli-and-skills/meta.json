@@ -3,12 +3,15 @@
   "description": "使用 AstroBox CLI 与 Skills 在终端或通过 Agent 进行 AstroBox 操作",
   "pages": [
     "index",
+    "---CLI---",
     "install",
     "quickstart",
     "device",
     "resource",
     "queue",
-    "skills",
-    "troubleshooting"
+    "commands",
+    "troubleshooting",
+    "---CLI Skills---",
+    "skills"
   ]
 }

@@ -46,6 +46,45 @@ html.font-setting {
   font-weight: 500;
 }
 
+header+div:has(aside#nd-sidebar) {
+  display: flex;
+  padding: 8px;
+}
+
+#nd-sidebar {
+  width: calc(100% - 16px);
+  height: calc(100% - 16px);
+  margin: 8px;
+  border: 1px solid var(--color-fd-border) !important;
+  border-radius: 20px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+}
+
+header+div:has(aside#nd-sidebar) {
+  display: flex;
+  padding: 8px;
+}
+
+#nd-sidebar>div {
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+#nd-sidebar>div.p-4,
+#nd-sidebar>div>div.p-4 {
+  padding: 14px;
+}
+
+#nd-sidebar>div.pb-2 {
+  padding-bottom: 6px;
+}
+
+#nd-sidebar .size-9.shrink-0.empty\:hidden.md\:size-5,
+#nd-sidebar svg.lucide.lucide-book-open {
+  width: 16px;
+  height: 16px;
+}
+
 #nd-sidebar a[data-active="true"]::before {
   background-color: var(--color-fd-primary) !important;
   border-radius: 4px;
@@ -65,8 +104,13 @@ html.font-setting {
 
 /* 保留你原有的 Hero 动画效果 */
 @keyframes astro-marquee {
-  0% { transform: translate3d(0, 0, 0); }
-  100% { transform: translate3d(-50%, 0, 0); }
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
 }
 
 .pause-anim:hover {
@@ -89,12 +133,12 @@ html.font-setting {
 /* 三行模式下，底部标题从第二行位置下滑入场 */
 .hero-bottom-line {
   transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-              filter 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-              opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    filter 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @media (max-width: 767px) {
-  .hero-typing-wrapper:not(:has([data-ready="true"])) ~ .hero-bottom-line {
+  .hero-typing-wrapper:not(:has([data-ready="true"]))~.hero-bottom-line {
     transform: translateY(-1.25em);
     filter: blur(5px);
     opacity: 0.35;

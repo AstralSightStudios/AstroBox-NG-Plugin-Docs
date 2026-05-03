@@ -5,6 +5,7 @@ export function baseOptions(): BaseLayoutProps {
   return {
     nav: {
       title: <AstroBoxBrandTitle />,
+      transparentMode: 'top',
     },
     githubUrl: "https://github.com/AstralSightStudios/AstroBox-NG-Plugin-Template-Rust",
     themeSwitch: {

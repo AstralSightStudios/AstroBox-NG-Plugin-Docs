@@ -8,7 +8,7 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     ...defaultMdxComponents,
     img: (props) => <ImageZoom {...(props as any)} />,
     pre: ({ ref: _ref, ...props }) => (
-      <CodeBlock {...props}>
+      <CodeBlock {...props} className="shadow-none">
         <Pre>{props.children}</Pre> 
       </CodeBlock>
     ),

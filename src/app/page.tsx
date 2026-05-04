@@ -1,11 +1,10 @@
 import Link from "next/link";
 import {
-  BookOpen,
-  ChevronRight,
-  Cpu,
-  Plug,
-  WandSparkles,
-} from "lucide-react";
+  BookOpenIcon,
+  CaretRightIcon,
+  MagicWandIcon,
+  PlugIcon,
+} from "@phosphor-icons/react/dist/ssr";
 import { HomeLayout } from "fumadocs-ui/layouts/home";
 import { baseOptions } from "@/lib/layout.shared";
 import { AstroBoxBrandTitle } from "@/components/brand";
@@ -17,19 +16,19 @@ const docEntries = [
   {
     title: "使用教程",
     desc: "AstroBox 软件安装、多平台设备连接与基础功能使用指南。",
-    icon: BookOpen,
+    icon: BookOpenIcon,
     href: "/docs/usage",
   },
   {
     title: "插件开发文档",
     desc: "探索基于 WIT + WASI 的多语言、原生级插件开发与极速分发。",
-    icon: Plug,
+    icon: PlugIcon,
     href: "/docs/plugin-dev",
   },
   {
     title: "创作者工具使用文档",
     desc: "学习表盘、快应用等第三方资源的上传、发布，以及接入外部平台实现资源售卖的全流程。",
-    icon: WandSparkles,
+    icon: MagicWandIcon,
     href: "/docs/creator-tools",
   },
 ];
@@ -85,7 +84,7 @@ export default function HomePage() {
                       {entry.desc}
                     </p>
                     <div className="mt-6 flex items-center text-sm font-medium text-fd-primary opacity-80 transition-opacity group-hover:opacity-100">
-                      浏览文档 <ChevronRight className="ml-1 size-4 transition-transform group-hover:translate-x-1" />
+                      浏览文档 <CaretRightIcon className="ml-1 size-4 transition-transform group-hover:translate-x-1" />
                     </div>
                   </Link>
                 );

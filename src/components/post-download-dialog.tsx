@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { BookOpen, X } from "lucide-react";
+import { BookOpenIcon, XIcon } from "@phosphor-icons/react";
 import Link from "next/link";
 
 interface PostDownloadDialogProps {
@@ -49,12 +49,12 @@ export function PostDownloadDialog({
           className="absolute right-4 top-4 inline-flex items-center justify-center rounded-md p-1 text-fd-muted-foreground transition-colors hover:bg-fd-accent hover:text-fd-foreground"
           aria-label="关闭"
         >
-          <X className="size-4" />
+          <XIcon className="size-4" />
         </button>
 
         {/* 图标 */}
         <div className="mx-auto flex size-14 items-center justify-center rounded-2xl bg-fd-primary/10 text-fd-primary">
-          <BookOpen className="size-7" />
+          <BookOpenIcon className="size-7" />
         </div>
 
         {/* 标题 */}
@@ -74,7 +74,7 @@ export function PostDownloadDialog({
             onClick={onClose}
             className="inline-flex items-center justify-center gap-2 rounded-lg bg-fd-primary px-6 py-2.5 text-sm font-medium text-fd-primary-foreground transition-colors hover:bg-fd-primary/90"
           >
-            <BookOpen className="size-4" />
+            <BookOpenIcon className="size-4" />
             {docLabel}
           </Link>
         </div>

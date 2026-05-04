@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronRight, Watch, CheckCircle2, XCircle, ChevronDown, ChevronUp } from "lucide-react";
+import { CaretDownIcon, CaretRightIcon, CaretUpIcon, CheckCircleIcon, WatchIcon, XCircleIcon } from "@phosphor-icons/react";
 import { DownloadDialog, type DownloadItem } from "./download-dialog";
 import { PostDownloadDialog } from "./post-download-dialog";
 
@@ -215,7 +215,7 @@ export function DownloadCards() {
         >
           <div className="flex items-center gap-3">
             <div className="inline-flex shrink-0 items-center justify-center rounded-xl bg-fd-primary/10 p-2.5 text-fd-primary">
-              <Watch className="size-5" />
+              <WatchIcon className="size-5" />
             </div>
             <div>
               <h3 className="text-base font-semibold text-fd-foreground">
@@ -227,7 +227,7 @@ export function DownloadCards() {
             </div>
           </div>
           <div className="inline-flex shrink-0 items-center justify-center rounded-lg p-2 text-fd-muted-foreground transition-colors hover:bg-fd-accent/50 hover:text-fd-foreground">
-            {deviceListOpen ? <ChevronUp className="size-5" /> : <ChevronDown className="size-5" />}
+            {deviceListOpen ? <CaretUpIcon className="size-5" /> : <CaretDownIcon className="size-5" />}
           </div>
         </button>
 
@@ -267,12 +267,12 @@ export function DownloadCards() {
                           <span className="shrink-0 md:hidden">
                             {device.status === "supported" ? (
                               <span className="inline-flex items-center gap-1 rounded-md bg-green-500/10 px-2 py-0.5 text-xs font-medium whitespace-nowrap text-green-600 dark:text-green-400">
-                                <CheckCircle2 className="size-3" />
+                                <CheckCircleIcon className="size-3" />
                                 完整支持
                               </span>
                             ) : (
                               <span className="inline-flex items-center gap-1 rounded-md bg-fd-muted/20 px-2 py-0.5 text-xs font-medium whitespace-nowrap text-fd-muted-foreground">
-                                <XCircle className="size-3" />
+                                <XCircleIcon className="size-3" />
                                 不支持
                               </span>
                             )}
@@ -282,12 +282,12 @@ export function DownloadCards() {
                       <td className="hidden px-4 py-2.5 md:table-cell">
                         {device.status === "supported" ? (
                           <span className="inline-flex items-center gap-1 rounded-md bg-green-500/10 px-2 py-0.5 text-xs font-medium whitespace-nowrap text-green-600 dark:text-green-400">
-                            <CheckCircle2 className="size-3" />
+                            <CheckCircleIcon className="size-3" />
                             完整支持
                           </span>
                         ) : (
                           <span className="inline-flex items-center gap-1 rounded-md bg-fd-muted/20 px-2 py-0.5 text-xs font-medium whitespace-nowrap text-fd-muted-foreground">
-                            <XCircle className="size-3" />
+                            <XCircleIcon className="size-3" />
                             不支持
                           </span>
                         )}
@@ -329,7 +329,7 @@ export function DownloadCards() {
                   className="mt-2 inline-flex items-center text-sm tracking-wide text-fd-foreground transition-colors hover:text-fd-primary"
                 >
                   {p.actionLabel ?? "下载"}
-                  <ChevronRight className="ml-0.5 size-4" />
+                  <CaretRightIcon className="ml-0.5 size-4" />
                 </button>
               )}
             </div>

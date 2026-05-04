@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { RootProvider } from "fumadocs-ui/provider/next";
+import { Banner } from "fumadocs-ui/components/banner";
 import { Footer } from "@/components/footer";
 import "./global.css";
 
@@ -17,6 +18,9 @@ export default function Layout({ children }: { children: ReactNode }) {
         <link rel="stylesheet" href="https://i02.appmifile.com/i18n/fonts/MiSansChinese/index.css" />
       </head>
       <body className="relative flex min-h-screen flex-col" suppressHydrationWarning>
+        <Banner height="2.5rem" className="bg-[#1781ff] text-white z-50">
+          临时测试内容，非最终链接，不代表最终质量
+        </Banner>
         <RootProvider>{children}</RootProvider>
         <Footer />
       </body>

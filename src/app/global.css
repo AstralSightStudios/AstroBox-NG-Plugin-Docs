@@ -23,6 +23,11 @@ html.font-setting {
   --font-sans: "Google Sans Flex", "MiSans Chinese", "PingFang SC", "Microsoft YaHei", sans-serif;
 }
 
+/* 全局公告 Banner 偏移：让首页导航栏固定在 Banner 下方 */
+#nd-nav {
+  top: var(--fd-banner-height, 0px) !important;
+}
+
 :root {
   /* 基础主色调 */
   --color-fd-primary: #1781ff;

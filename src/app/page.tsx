@@ -50,7 +50,7 @@ export default function HomePage() {
       ]}
       className="bg-fd-background"
     >
-      <div className="pb-16 pt-8 md:pb-24">
+      <div className="pb-16 pt-8 md:pb-24 *:font-sans">
         {/* Hero Section */}
         <section className="relative mx-auto flex min-h-[80%] w-full max-w-[95%] flex-col items-center justify-center overflow-hidden rounded-[2rem] border border-fd-border/60 px-6 py-24 text-center md:px-12">
           <HomeHeroBackground />

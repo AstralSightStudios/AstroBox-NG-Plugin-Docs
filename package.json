@@ -11,7 +11,6 @@
     "postinstall": "fumadocs-mdx"
   },
   "dependencies": {
-    "@fontsource/maple-mono": "^5.2.6",
     "@paper-design/shaders-react": "^0.0.71",
     "@phosphor-icons/react": "^2.1.10",
     "fumadocs-core": "16.6.10",

@@ -2,13 +2,25 @@
 @import "fumadocs-ui/css/neutral.css";
 @import "fumadocs-ui/css/preset.css";
 
+@font-face {
+  font-family: "Sarasa Mono";
+  src: url("public/assets/fonts/SarasaMonoSC-Regular.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Google Sans Flex";
+  src: url("public/assets/fonts/GoogleSansFlex-VariableFont.ttf");
+}
+
 @theme {
   --color-primary-foreground: var(--color-fd-primary-foreground);
-  --font-sans: "Geist", "Geist Fallback", "MiSans Chinese", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-sans: "Google Sans Flex", "MiSans Chinese", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-mono: "Sarasa Mono", "MiSans Chinese", "PingFang SC", "Microsoft YaHei", monospace, sans-serif;
 }
 
 html.font-setting {
-  --font-sans: "Geist", "Geist Fallback", "MiSans Chinese", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-sans: "Google Sans Flex", "MiSans Chinese", "PingFang SC", "Microsoft YaHei", sans-serif;
 }
 
 :root {

@@ -24,7 +24,7 @@ html.font-setting {
 }
 
 /* 全局公告 Banner 偏移：让首页导航栏固定在 Banner 下方 */
-#nd-nav {
+[data-nav-header] {
   top: var(--fd-banner-height, 0px) !important;
 }
 
@@ -34,6 +34,11 @@ html.font-setting {
   --color-fd-primary-foreground: #ffffff;
   --color-fd-accent: rgba(23, 129, 255, 0.08);
   --color-fd-ring: #1781ff;
+  --fd-nav-height: 72px !important;
+  --color-main-background: var(--color-fd-background);
+  --color-text: var(--color-fd-foreground);
+  --font-family-serif: Georgia, "Times New Roman", "Songti SC", serif;
+  --radius-root: var(--radius-2xl);
 }
 
 .dark {
@@ -42,6 +47,14 @@ html.font-setting {
   --color-fd-primary-foreground: #051327;
   --color-fd-accent: rgba(92, 175, 255, 0.15);
   --color-fd-ring: #5cafff;
+}
+
+#nd-home-layout {
+  padding-top: var(--fd-nav-height);
+}
+
+#nd-docs-layout {
+  --fd-header-height: var(--fd-nav-height);
 }
 
 /* 富文本内链样式优化 */

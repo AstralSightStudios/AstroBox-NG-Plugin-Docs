@@ -7,7 +7,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   return (
     <DocsLayout
       tree={source.pageTree}
-      {...baseOptions()}
+      {...baseOptions({ showNav: false })}
       searchToggle={{ enabled: true }}
       sidebar={{
         defaultOpenLevel: 1,

@@ -7,7 +7,6 @@ import {
 } from "@phosphor-icons/react/dist/ssr";
 import { HomeLayout } from "fumadocs-ui/layouts/home";
 import { baseOptions } from "@/lib/layout.shared";
-import { AstroBoxBrandTitle } from "@/components/brand";
 import { HomeHeroBackground } from "@/components/home-hero-background";
 import { HeroTyping } from "@/components/hero-typing";
 import { DownloadCards } from "@/components/download-cards";
@@ -38,15 +37,6 @@ export default function HomePage() {
     <HomeLayout
       {...baseOptions()}
       searchToggle={{ enabled: true }}
-      nav={{
-        transparentMode: "top",
-        title: <AstroBoxBrandTitle />,
-      }}
-      links={[
-        { text: "使用教程", url: "/docs/usage", active: "nested-url" },
-        { text: "插件开发", url: "/docs/plugin-dev", active: "nested-url" },
-        { text: "创作者工具", url: "/docs/creator-tools", active: "nested-url" },
-      ]}
       className="bg-fd-background"
     >
       <div className="pb-16 pt-8 md:pb-24 *:font-sans">

@@ -16,7 +16,16 @@ export function FumadocsSearchToggle({ className }: FumadocsSearchToggleProps) {
   return (
     <button
       type="button"
-      className={[buttonVariants({ color: "ghost", size: "icon-sm" }), className].filter(Boolean).join(" ")}
+      className={[
+        buttonVariants({ color: "ghost", size: "icon-sm" }).replace(
+          "rounded-md",
+          "",
+        ),
+        "rounded-full size-8",
+        className,
+      ]
+        .filter(Boolean)
+        .join(" ")}
       aria-label="打开搜索"
       data-search=""
       onClick={() => setOpenSearch(true)}

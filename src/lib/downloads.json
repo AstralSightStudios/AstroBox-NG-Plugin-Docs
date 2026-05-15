@@ -1,0 +1,114 @@
+{
+  "platforms": [
+    {
+      "icon": "WinIcon",
+      "name": "WINDOWS 10 20H2+",
+      "version": "V1.5.5",
+      "hasDownload": true,
+      "downloads": [
+        {
+          "label": "Windows",
+          "href": "https://www.123pan.com/s/astrobox-win111",
+          "password": "abx111w"
+        }
+      ],
+      "docHref": "/docs/usage",
+      "docLabel": "查看 Windows 使用教程"
+    },
+    {
+      "icon": "MacIcon",
+      "name": "MACOS SONOMA (14)+",
+      "version": "V1.5.5",
+      "hasDownload": true,
+      "downloads": [
+        {
+          "label": "macOS",
+          "href": "https://www.123pan.com/s/astrobox-mac",
+          "password": "abxm"
+        }
+      ],
+      "docHref": "/docs/usage",
+      "docLabel": "查看 macOS 使用教程"
+    },
+    {
+      "icon": "LinuxIcon",
+      "name": "DEBIAN/REDHAT",
+      "version": "V1.5.5",
+      "hasDownload": true,
+      "downloads": [
+        {
+          "label": "Debian (.deb)",
+          "href": "https://www.123pan.com/s/astrobox-deb",
+          "password": "abxd"
+        },
+        {
+          "label": "RedHat (.rpm)",
+          "href": "https://www.123pan.com/s/astrobox-rpm",
+          "password": "abxr"
+        }
+      ],
+      "docHref": "/docs/usage",
+      "docLabel": "查看 Linux 使用教程"
+    },
+    {
+      "icon": "IosIcon",
+      "name": "IOS/IPADOS 14+",
+      "version": "V1.5.5",
+      "hasDownload": true,
+      "downloads": [
+        {
+          "label": "iOS / iPadOS",
+          "href": "https://apps.apple.com/app/astrobox"
+        }
+      ],
+      "docHref": "/docs/usage",
+      "docLabel": "查看 iOS 使用教程"
+    },
+    {
+      "icon": "AndroidIcon",
+      "name": "Android 10+",
+      "version": "V1.5.5",
+      "hasDownload": true,
+      "downloads": [
+        {
+          "label": "Android",
+          "href": "https://www.123pan.com/s/astrobox-android",
+          "password": "abxa"
+        }
+      ],
+      "docHref": "/docs/usage",
+      "docLabel": "查看 Android 使用教程"
+    },
+    {
+      "icon": "ChromiumIcon",
+      "name": "CHROMIUM 117+",
+      "version": "V1.5.5",
+      "hasDownload": true,
+      "actionLabel": "前往",
+      "downloads": [
+        {
+          "label": "Chromium",
+          "href": "https://chrome.google.com/webstore/detail/astrobox",
+          "linkLabel": "链接"
+        }
+      ],
+      "docHref": "/docs/usage",
+      "docLabel": "查看 Chromium 使用教程"
+    }
+  ],
+  "supportedDevices": [
+    { "name": "小米手环 9 Pro", "status": "supported", "note": "—" },
+    { "name": "小米手环 10 系列", "status": "supported", "note": "—" },
+    { "name": "小米手环 9 系列", "status": "supported", "note": "—" },
+    { "name": "小米手环 8 系列", "status": "unsupported", "note": "过时设备" },
+    { "name": "REDMI Watch 6", "status": "supported", "note": "—" },
+    { "name": "REDMI Watch 5 eSIM", "status": "supported", "note": "—" },
+    { "name": "REDMI Watch 5", "status": "supported", "note": "—" },
+    { "name": "REDMI Watch 4 及更老机型", "status": "unsupported", "note": "过时设备" },
+    { "name": "小米 Watch S5", "status": "supported", "note": "—" },
+    { "name": "小米 Watch S4", "status": "supported", "note": "—" },
+    { "name": "小米 Watch S3", "status": "supported", "note": "—" },
+    { "name": "小米 Watch S2 及更老机型", "status": "unsupported", "note": "协议版本不支持" },
+    { "name": "REDMI 手环 / Active 系列", "status": "unsupported", "note": "协议版本不支持" }
+  ]
+}

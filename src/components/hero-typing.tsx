@@ -34,6 +34,14 @@ const easeInCubic = (x: number) => {
   return v * v * v;
 };
 
+/** 统一 CSS 数值精度，避免不同 JS 引擎（V8 vs JSC）toString() 差异导致 hydration mismatch */
+const cssNum = (n: number, digits = 6): string => {
+  const s = n.toFixed(digits);
+  // 去除末尾无意义的 0，但保留至少一位数字
+  const trimmed = s.replace(/\.?0+$/, "");
+  return trimmed || "0";
+};
+
 export function HeroTyping({
   words,
   className,
@@ -42,8 +50,14 @@ export function HeroTyping({
   deleteSpeed = 700,
 }: HeroTypingProps) {
   const wordsSafe = useMemo(() => (words.length > 0 ? words : [""]), [words]);
-  const charsByWord = useMemo(() => wordsSafe.map((word) => Array.from(word)), [wordsSafe]);
-  const lengthsByWord = useMemo(() => charsByWord.map((chars) => Math.max(chars.length, 1)), [charsByWord]);
+  const charsByWord = useMemo(
+    () => wordsSafe.map((word) => Array.from(word)),
+    [wordsSafe],
+  );
+  const lengthsByWord = useMemo(
+    () => charsByWord.map((chars) => Math.max(chars.length, 1)),
+    [charsByWord],
+  );
 
   const [frame, setFrame] = useState<FrameState>({
     wordIndex: 0,
@@ -126,11 +140,16 @@ export function HeroTyping({
   }, [deleteSpeed, lengthsByWord, pauseMs, typingSpeed, wordsSafe.length]);
 
   useLayoutEffect(() => {
-    measureRefs.current = charsByWord.map((chars, wi) => chars.map((_, ci) => measureRefs.current[wi]?.[ci] ?? null));
+    measureRefs.current = charsByWord.map((chars, wi) =>
+      chars.map((_, ci) => measureRefs.current[wi]?.[ci] ?? null),
+    );
 
     const updateWidths = () => {
       const measured = charsByWord.map((chars, wi) =>
-        chars.map((_, ci) => measureRefs.current[wi]?.[ci]?.getBoundingClientRect().width ?? 0),
+        chars.map(
+          (_, ci) =>
+            measureRefs.current[wi]?.[ci]?.getBoundingClientRect().width ?? 0,
+        ),
       );
       setCharWidthsByWord(measured);
     };
@@ -155,7 +174,9 @@ export function HeroTyping({
   const currentCharWidths = charWidthsByWord[frame.wordIndex] ?? [];
   const allWidths = charWidthsByWord.flat().filter((w) => w > 0);
   const fallbackWidth =
-    allWidths.length > 0 ? allWidths.reduce((sum, width) => sum + width, 0) / allWidths.length : 9;
+    allWidths.length > 0
+      ? allWidths.reduce((sum, width) => sum + width, 0) / allWidths.length
+      : 9;
 
   const maxWordWidth = useMemo(() => {
     if (!charWidthsByWord.length) return 0;
@@ -192,9 +213,16 @@ export function HeroTyping({
   const isDeleting = frame.phase === "deleting";
 
   return (
-    <span ref={rootRef} className={className} data-ready={ready ? "true" : undefined}>
+    <span
+      ref={rootRef}
+      className={className}
+      data-ready={ready ? "true" : undefined}
+    >
       <span className="relative inline-flex items-baseline whitespace-nowrap">
-        <span aria-hidden="true" className="pointer-events-none absolute -left-[9999px] top-0 whitespace-nowrap opacity-0">
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute -left-[9999px] top-0 whitespace-nowrap opacity-0"
+        >
           {charsByWord.map((chars, wi) => (
             <span key={`measure-word-${wi}`} className="mr-4 inline-block">
               {chars.map((char, ci) => (
@@ -212,7 +240,13 @@ export function HeroTyping({
           ))}
         </span>
 
-        <span className={`hero-typing-container inline-flex items-baseline whitespace-nowrap ${isMd ? "justify-start" : "justify-center"}`} style={{ width: `${Math.max(0.5, dynamicWidth)}px`, minWidth: isMd ? undefined : `${maxWordWidth}px` }}>
+        <span
+          className={`hero-typing-container inline-flex items-baseline whitespace-nowrap ${isMd ? "justify-start" : "justify-center"}`}
+          style={{
+            width: `${cssNum(Math.max(0.5, dynamicWidth))}px`,
+            minWidth: isMd ? undefined : `${cssNum(maxWordWidth)}px`,
+          }}
+        >
           {currentChars.map((char, i) => {
             const eased = smoothstep(getCharProgress(i));
             const baseSlotWidth = getCharWidth(i) * getWidthProgress(i);
@@ -225,10 +259,10 @@ export function HeroTyping({
                 key={`char-${i}`}
                 className="inline-flex items-baseline justify-start will-change-[transform,opacity,filter,width]"
                 style={{
-                  width: `${slotWidth}px`,
-                  opacity: eased,
-                  transform: `translate3d(0, ${y}px, 0) scale(${0.988 + eased * 0.012})`,
-                  filter: `blur(${blur}px)`,
+                  width: `${cssNum(slotWidth)}px`,
+                  opacity: cssNum(eased),
+                  transform: `translate3d(0px, ${cssNum(y)}px, 0px) scale(${cssNum(0.988 + eased * 0.012)})`,
+                  filter: `blur(${cssNum(blur)}px)`,
                 }}
               >
                 {char === " " ? "\u00A0" : char}

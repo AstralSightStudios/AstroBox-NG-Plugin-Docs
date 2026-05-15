@@ -166,8 +166,13 @@ header + div:has(aside#nd-sidebar) {
     border-radius: 4px;
 }
 
+/* Sidebar 收缩时浮动按钮组位置修正：紧贴 Banner 下方 */
+#nd-docs-layout [data-sidebar-panel] {
+    top: calc(var(--fd-banner-height, 0px) + 1rem) !important;
+}
+
 :root {
-  --fd-layout-width: 19200px;
+    --fd-layout-width: 19200px;
 }
 
 /* 目录激活状态优化 */

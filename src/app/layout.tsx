@@ -19,7 +19,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       </head>
       <body className="relative flex min-h-screen flex-col" suppressHydrationWarning>
         <Banner height="2.5rem" className="bg-[#1781ff] text-white z-50">
-          临时测试内容，非最终链接，不代表最终质量
+          未完成内容，不代表最终质量
         </Banner>
         <RootProvider>{children}</RootProvider>
         <Footer />

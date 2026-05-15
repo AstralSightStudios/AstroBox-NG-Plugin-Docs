@@ -7,21 +7,28 @@ type BaseOptionsConfig = {
   showNav?: boolean;
 };
 
-export function baseOptions({ showNav = true }: BaseOptionsConfig = {}): BaseLayoutProps {
+export function baseOptions({
+  showNav = true,
+}: BaseOptionsConfig = {}): BaseLayoutProps {
   return {
     links: topNavLinks,
-    nav: showNav
-      ? {
-          enabled: true,
-          component: <FumadocsNavbar />,
-          title: <AstroBoxBrandTitle />,
-          url: siteHomeHref,
-          transparentMode: "top",
-        }
-      : {
-          enabled: false,
-        },
-    githubUrl: "https://github.com/AstralSightStudios/AstroBox-NG-Plugin-Template-Rust",
+    nav: {
+      enabled: showNav,
+      ...(showNav
+        ? {
+            component: <FumadocsNavbar />,
+            transparentMode: "top",
+          }
+        : {}),
+      title: (
+        <span className="inline-flex items-center rounded-full py-1 transition-all duration-200 hover:bg-fd-foreground/10 active:scale-[0.96] active:opacity-[0.55]">
+          <AstroBoxBrandTitle className="mx-0" />
+        </span>
+      ),
+      url: siteHomeHref,
+    },
+    githubUrl:
+      "https://github.com/AstralSightStudios/AstroBox-NG-Plugin-Template-Rust",
     themeSwitch: {
       mode: "light-dark-system",
     },

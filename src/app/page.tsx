@@ -39,7 +39,7 @@ export default function HomePage() {
       searchToggle={{ enabled: true }}
       className="bg-fd-background"
     >
-      <div className="pb-16 pt-8 md:pb-24 *:font-sans">
+      <div className="pb-16 pt-2 md:pb-24 *:font-sans">
         {/* Hero Section */}
         <section className="relative mx-auto flex min-h-[80%] w-full max-w-[95%] flex-col items-center justify-center overflow-hidden rounded-[2rem] border border-fd-border/60 px-6 py-24 text-center md:px-12">
           <HomeHeroBackground />
@@ -47,11 +47,24 @@ export default function HomePage() {
             {/* 大标题与打字机效果 */}
             <h1 className="text-4xl font-semibold tracking-tight text-fd-foreground leading-[1.25] sm:text-5xl md:text-6xl">
               <span className="block md:inline">AstroBox 是</span>{" "}
-              <span className="hero-typing-wrapper block md:inline" style={{ minHeight: "1.25em" }}>
-                <HeroTyping words={["业界领先的", "高扩展性的", "跨平台的", "由 Rust 驱动的"]} className="text-fd-primary" />
+              <span
+                className="hero-typing-wrapper block md:inline"
+                style={{ minHeight: "1.25em" }}
+              >
+                <HeroTyping
+                  words={[
+                    "业界领先的",
+                    "高扩展性的",
+                    "跨平台的",
+                    "由 Rust 驱动的",
+                  ]}
+                  className="text-fd-primary"
+                />
               </span>
               <br className="hidden md:block" />
-              <span className="hero-bottom-line block md:inline">穿戴设备第三方工具箱</span>
+              <span className="hero-bottom-line block md:inline">
+                穿戴设备第三方工具箱
+              </span>
             </h1>
 
             {/* 三大入口模块 */}
@@ -74,7 +87,8 @@ export default function HomePage() {
                       {entry.desc}
                     </p>
                     <div className="mt-6 flex items-center text-sm font-medium text-fd-primary opacity-80 transition-opacity group-hover:opacity-100">
-                      浏览文档 <CaretRightIcon className="ml-1 size-4 transition-transform group-hover:translate-x-1" />
+                      浏览文档{" "}
+                      <CaretRightIcon className="ml-1 size-4 transition-transform group-hover:translate-x-1" />
                     </div>
                   </Link>
                 );

@@ -90,9 +90,7 @@ function DownloadItemCard({
         <div className="mt-3 border-t border-fd-border/50 pt-3">
           <div className="flex items-center justify-between gap-3">
             <div className="min-w-0 flex-1">
-              <div className="text-xs text-fd-muted-foreground">
-                网盘提取码
-              </div>
+              <div className="text-xs text-fd-muted-foreground">网盘提取码</div>
               <div className="mt-1 text-lg font-mono font-semibold tracking-widest text-fd-foreground">
                 {item.password}
               </div>
@@ -153,7 +151,7 @@ export function DownloadDialog({
   const multiple = downloads.length > 1;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-[1100] flex items-center justify-center p-4">
       {/* 背景遮罩 */}
       <div
         className="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity"

@@ -17,11 +17,10 @@ export function FumadocsSearchToggle({ className }: FumadocsSearchToggleProps) {
     <button
       type="button"
       className={[
-        buttonVariants({ color: "ghost", size: "icon-sm" }).replace(
-          "rounded-md",
-          "",
-        ),
-        "rounded-full size-8",
+        buttonVariants({ color: "ghost", size: "icon-sm" })
+          .replace("rounded-md", "")
+          .replace("[&_svg]:size-4.5", ""),
+        "rounded-full size-9",
         className,
       ]
         .filter(Boolean)
@@ -30,7 +29,7 @@ export function FumadocsSearchToggle({ className }: FumadocsSearchToggleProps) {
       data-search=""
       onClick={() => setOpenSearch(true)}
     >
-      <Search className="size-4" />
+      <Search className="size-3.5" />
     </button>
   );
 }

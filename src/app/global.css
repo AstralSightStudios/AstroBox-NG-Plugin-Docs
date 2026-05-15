@@ -231,3 +231,12 @@ header + div:has(aside#nd-sidebar) {
         opacity: 0.35;
     }
 }
+
+/* 修复搜索弹窗等 Radix Dialog 被自定义 nav 遮挡的问题 */
+.fixed.bg-fd-overlay {
+    z-index: 1100 !important;
+}
+
+[role="dialog"] {
+    z-index: 1100 !important;
+}

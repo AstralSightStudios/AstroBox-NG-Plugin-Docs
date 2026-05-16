@@ -47,6 +47,7 @@ html.font-setting {
     --radius-root: var(--radius-2xl);
 
     /* Section 主题色变量 */
+    --usage-color: #1781ff;
     --plugin-color: #8b5cf6;
     --creator-color: #f59e0b;
 }
@@ -59,6 +60,7 @@ html.font-setting {
     --color-fd-ring: #5cafff;
 
     /* Section 主题色变量（暗黑模式） */
+    --usage-color: #5cafff;
     --plugin-color: #a78bfa;
     --creator-color: #fbbf24;
 }

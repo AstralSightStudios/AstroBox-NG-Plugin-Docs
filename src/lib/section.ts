@@ -11,12 +11,12 @@ export function getSection(path: string | undefined): string | undefined {
 
   switch (dir) {
     case "plugin-dev":
-    case "plugin-v1":
       return "plugin";
     case "creator-tools":
       return "creator";
     case "usage":
+      return "usage";
     default:
-      return undefined; // usage 和默认情况不返回 class，保留原主题色
+      return undefined;
   }
 }

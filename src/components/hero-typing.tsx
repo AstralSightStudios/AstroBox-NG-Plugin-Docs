@@ -1,6 +1,13 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import {
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
 
 type HeroTypingProps = {
   words: string[];
@@ -68,19 +75,22 @@ export function HeroTyping({
   const frameRef = useRef<FrameState>(frame);
   const [charWidthsByWord, setCharWidthsByWord] = useState<number[][]>([]);
   const [ready, setReady] = useState(false);
-  const [isMd, setIsMd] = useState(false);
+  const isMd = useSyncExternalStore(
+    (callback) => {
+      const mql = window.matchMedia("(min-width: 768px)");
+      mql.addEventListener("change", callback);
+      return () => mql.removeEventListener("change", callback);
+    },
+    () =>
+      typeof window !== "undefined"
+        ? window.matchMedia("(min-width: 768px)").matches
+        : false,
+    () => false,
+  );
 
   useEffect(() => {
     const timer = setTimeout(() => setReady(true), 100);
     return () => clearTimeout(timer);
-  }, []);
-
-  useLayoutEffect(() => {
-    const mql = window.matchMedia("(min-width: 768px)");
-    setIsMd(mql.matches);
-    const handler = (e: MediaQueryListEvent) => setIsMd(e.matches);
-    mql.addEventListener("change", handler);
-    return () => mql.removeEventListener("change", handler);
   }, []);
 
   const rootRef = useRef<HTMLSpanElement | null>(null);

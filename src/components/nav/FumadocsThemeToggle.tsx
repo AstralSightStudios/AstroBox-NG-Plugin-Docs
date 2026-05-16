@@ -2,7 +2,15 @@
 
 import { Airplay, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
+
+function useMounted() {
+  return useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
+}
 
 type ThemeMode = "light-dark" | "light-dark-system";
 
@@ -30,17 +38,13 @@ export function FumadocsThemeToggle({
   mode = "light-dark-system",
 }: FumadocsThemeToggleProps) {
   const { resolvedTheme, setTheme, theme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+  const mounted = useMounted();
   const containerClassName = [
     "inline-flex items-center rounded-full border p-1",
     className,
   ]
     .filter(Boolean)
     .join(" ");
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   // 避免 hydration mismatch：未挂载前使用中性样式
   const itemClassName = (key: string) => {

@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
 import { RootProvider } from "fumadocs-ui/provider/next";
 import { Banner } from "fumadocs-ui/components/banner";
-import { Footer } from "@/components/footer";
 import { Body } from "./layout.client";
 import "./global.css";
 
@@ -30,7 +29,6 @@ export default function Layout({ children }: { children: ReactNode }) {
           未完成内容，不代表最终质量
         </Banner>
         <RootProvider>{children}</RootProvider>
-        <Footer />
       </Body>
     </html>
   );

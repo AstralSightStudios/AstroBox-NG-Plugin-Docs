@@ -1,8 +1,14 @@
 import { notFound } from "next/navigation";
-import { DocsBody, DocsDescription, DocsPage, DocsTitle } from "fumadocs-ui/layouts/docs/page";
+import {
+  DocsBody,
+  DocsDescription,
+  DocsPage,
+  DocsTitle,
+} from "fumadocs-ui/layouts/docs/page";
 import { createRelativeLink } from "fumadocs-ui/mdx";
 import { getMDXComponents } from "@/mdx-components";
 import { source } from "@/lib/source";
+import { Footer } from "@/components/footer";
 
 export default async function DocPage({
   params,
@@ -24,6 +30,7 @@ export default async function DocPage({
       full={page.data.full}
       tableOfContent={{ style: "clerk" }}
       tableOfContentPopover={{ style: "clerk" }}
+      footer={{ children: <Footer /> }}
     >
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription>{page.data.description}</DocsDescription>

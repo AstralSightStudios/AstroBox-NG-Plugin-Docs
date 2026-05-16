@@ -1,6 +1,7 @@
 import Link from "next/link";
 import {
   BookOpenIcon,
+  ArrowRight,
   CaretRightIcon,
   MagicWandIcon,
   PlugIcon,
@@ -68,6 +69,30 @@ export default function HomePage() {
                   穿戴设备第三方工具箱
                 </span>
               </h1>
+
+              {/* CTA 按钮 */}
+              <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+                <Link
+                  href="/docs/usage"
+                  className="group inline-flex items-center justify-center rounded-full border border-transparent bg-fd-primary px-6 py-3 text-sm font-medium text-fd-primary-foreground transition-all hover:brightness-110"
+                >
+                  <span className="flex items-center gap-2">
+                    从此开始
+                    <ArrowRight
+                      weight="bold"
+                      className="size-4 transition-transform group-hover:translate-x-1"
+                    />
+                  </span>
+                </Link>
+                <a
+                  href="https://www.astrobox.online"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center rounded-full border border-fd-border bg-fd-secondary px-6 py-3 text-sm font-medium text-fd-secondary-foreground transition-all hover:brightness-95"
+                >
+                  产品官网
+                </a>
+              </div>
 
               {/* 三大入口模块 */}
               <div className="mt-16 grid w-full gap-6 text-left md:grid-cols-3">

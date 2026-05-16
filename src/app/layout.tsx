@@ -28,7 +28,9 @@ export default function Layout({ children }: { children: ReactNode }) {
         <Banner height="2.5rem" className="bg-[#1781ff] text-white z-50">
           未完成内容，不代表最终质量
         </Banner>
-        <RootProvider>{children}</RootProvider>
+        <RootProvider i18n={{ locale: "zh-CN", translations: { toc: "大纲" } }}>
+          {children}
+        </RootProvider>
       </Body>
     </html>
   );

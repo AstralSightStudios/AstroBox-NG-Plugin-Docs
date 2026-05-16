@@ -85,7 +85,7 @@ export default function HomePage() {
                   </span>
                 </Link>
                 <a
-                  href="https://www.astrobox.online"
+                  href="https://astrobox.online"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center rounded-full border border-fd-border bg-fd-secondary px-6 py-3 text-sm font-medium text-fd-secondary-foreground transition-all hover:brightness-95"

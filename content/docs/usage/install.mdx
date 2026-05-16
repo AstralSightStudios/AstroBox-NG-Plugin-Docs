@@ -3,28 +3,71 @@ title: 适用条件与安装
 icon: Download
 description: 了解支持的设备及如何安装 AstroBox
 ---
-import { AndroidLogo, DeviceMobile, WindowsLogo, Desktop, LinuxLogo } from '@phosphor-icons/react/dist/ssr';
+import { AndroidLogo, AppleLogo, WindowsLogo, LinuxLogo } from '@phosphor-icons/react/dist/ssr';
+import { MacIcon } from '@/components/mac-icon';
+import { PlatformDownloadButton } from '@/components/platform-download-button';
 
 
 在开始之前，你可以点击选择你的设备，快速定位问题。
 
 <Cards>
   <Card icon={<AndroidLogo className="text-green-500" weight="duotone" />} title="安卓设备" href="#android" />
-  <Card icon={<DeviceMobile className="text-slate-500" weight="duotone" />} title="iOS / iPadOS设备" href="#ios" />
+  <Card icon={<AppleLogo className="text-slate-500" weight="duotone" />} title="iOS / iPadOS设备" href="#ios" />
   <Card icon={<WindowsLogo className="text-blue-500" weight="duotone" />} title="Windows 电脑" href="#windows" />
-  <Card icon={<Desktop className="text-slate-600" weight="duotone" />} title="Mac 电脑" href="#mac" />
+  <Card icon={<MacIcon className="text-fd-muted-foreground" />} title="Mac 电脑" href="#mac" />
   <Card icon={<LinuxLogo className="text-yellow-500" weight="duotone" />} title="Linux 电脑" href="#linux" />
 </Cards>
 
 ## 安卓设备 [#android]
 
+你可以前往官网下载 AstroBox 安装包，或是直接点击下方按钮前往下载。
+
+<PlatformDownloadButton platform="android" label="下载 Android 版 AstroBox" showPostDialog={false} />
+
 ## iOS / iPadOS 设备 [#ios]
 
+你可以前往 App Store 搜索并下载 AstroBox，或是直接点击下方按钮前往下载。
+
+<PlatformDownloadButton platform="ios" label="前往 App Store 下载 AstroBox" showPostDialog={false} />
+
 ## Windows 电脑 [#windows]
+
+你可以前往官网下载 AstroBox 安装包，或是直接点击下方按钮前往下载。
+
+<PlatformDownloadButton platform="windows" label="下载 Windows 版 AstroBox" showPostDialog={false} />
 
 ## Mac 电脑 [#mac]
 
 ### 1. 下载安装包
+你可以前往官网下载 AstroBox 安装包，或是直接点击下方按钮前往下载。
 
+下载前请确定与你的设备是否一致，我们提供了 `ARM` 设备的版本和 `x86` 设备的版本。属于 M 系列或 A 系列，那么请选择下载 `ARM` 设备的版本；如果不是，请下载 `x86` 版本。
+
+<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+  <PlatformDownloadButton platform="macOS" label="下载 macOS(x86) 版 AstroBox" showPostDialog={false} />
+  <PlatformDownloadButton platform="macOS" label="下载 macOS(ARM) 版 AstroBox" showPostDialog={false} />
+</div>
+
+### 2. 安装 AstroBox
+
+双击打开 `dmg` 文件，按住 AstroBox 图标，将其从上往下拖动到 `Applications` 文件夹中。
+
+![](/assets/images/docs/usage/install/mac-installdmg.png)
+
+随后按下键盘上的 `Command+空格` 键（空格键左边的就是 Command 按键），打开搜索窗口，输入 `终端`，打开系统终端应用。
+
+在终端中输入下方指令，并在按回车后输入密码。输入密码的过程不会有任何显示，请你在输入好密码之后直接按下回车。
+
+```bash
+sudo xattr -r -d com.apple.quarantine /Applications/AstroBox.app
+```
+
+### 3. 打开 AstroBox
+
+接下来你可以打开 `访达-应用程序`，找到 AstroBox，首次打开时建议 **右键-点击打开** 开启 AstroBox。
 
 ## Linux 电脑 [#linux]
+
+你可以前往官网下载 AstroBox 安装包，或是直接点击下方按钮前往下载。
+
+<PlatformDownloadButton platform="linux" label="下载 Linux 版 AstroBox" showPostDialog={false} />

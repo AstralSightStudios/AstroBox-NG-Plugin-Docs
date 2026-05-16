@@ -1,0 +1,132 @@
+"use client";
+
+import { useState } from "react";
+import { CaretRightIcon } from "@phosphor-icons/react";
+import { DownloadDialog, type DownloadItem } from "./download-dialog";
+import { PostDownloadDialog } from "./post-download-dialog";
+import rawDownloads from "@/lib/downloads.json";
+
+import {
+  WindowsLogo,
+  LinuxLogo,
+  AppleLogo,
+  AndroidLogo,
+  GoogleChromeLogo,
+} from "@phosphor-icons/react";
+import { MacIcon } from "./mac-icon";
+
+const iconMap: Record<string, React.FC<{ className?: string }>> = {
+  WinIcon: ({ className }) => (
+    <WindowsLogo
+      className={[className, "opacity-50"].filter(Boolean).join(" ")}
+      weight="fill"
+    />
+  ),
+  MacIcon,
+  LinuxIcon: ({ className }) => (
+    <LinuxLogo
+      className={[className, "opacity-50"].filter(Boolean).join(" ")}
+      weight="fill"
+    />
+  ),
+  IosIcon: ({ className }) => (
+    <AppleLogo
+      className={[className, "opacity-50"].filter(Boolean).join(" ")}
+      weight="fill"
+    />
+  ),
+  AndroidIcon: ({ className }) => (
+    <AndroidLogo
+      className={[className, "opacity-50"].filter(Boolean).join(" ")}
+      weight="fill"
+    />
+  ),
+  ChromiumIcon: ({ className }) => (
+    <GoogleChromeLogo
+      className={[className, "opacity-50"].filter(Boolean).join(" ")}
+      weight="fill"
+    />
+  ),
+};
+interface PlatformDownloadButtonProps {
+  platform: string;
+  label?: string;
+  showPostDialog?: boolean;
+}
+
+export function PlatformDownloadButton({
+  platform,
+  label,
+  showPostDialog = true,
+}: PlatformDownloadButtonProps) {
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [postDialogOpen, setPostDialogOpen] = useState(false);
+
+  const platformData = rawDownloads.platforms.find(
+    (p) =>
+      p.name.toLowerCase() === platform.toLowerCase() ||
+      p.icon.toLowerCase() === `${platform.toLowerCase()}icon` ||
+      p.icon.toLowerCase().startsWith(platform.toLowerCase()) ||
+      p.name.toLowerCase().includes(platform.toLowerCase()),
+  );
+
+  if (!platformData || !platformData.hasDownload) return null;
+
+  const Icon = iconMap[platformData.icon] ?? MacIcon;
+
+  const handleConfirm = () => {
+    setDialogOpen(false);
+    if (showPostDialog) {
+      setPostDialogOpen(true);
+    }
+  };
+
+  const downloads: DownloadItem[] = platformData.downloads.map((d) => ({
+    label: d.label,
+    href: d.href,
+    password: (d as { password?: string }).password,
+    linkLabel: (d as { linkLabel?: string }).linkLabel,
+  }));
+
+  return (
+    <>
+      <button
+        onClick={() => setDialogOpen(true)}
+        className="group flex w-full cursor-pointer items-center justify-between rounded-2xl border border-fd-border/60 bg-fd-background p-4 text-left transition-all hover:border-fd-primary/50 hover:bg-fd-accent/30 hover:shadow-lg hover:shadow-fd-primary/5"
+      >
+        <div className="flex items-center gap-4">
+          <div className="inline-flex size-10 items-center justify-center rounded-full border border-fd-border/60 text-fd-muted-foreground transition-colors group-hover:border-fd-primary/50 group-hover:text-fd-primary">
+            <Icon className="size-6" />
+          </div>
+          <div>
+            <div className="text-sm font-medium text-fd-foreground">
+              {label ?? `下载 ${platformData.name}`}
+            </div>
+            <div className="text-xs text-fd-muted-foreground">
+              {platformData.version}
+            </div>
+          </div>
+        </div>
+        <div className="inline-flex shrink-0 items-center justify-center rounded-full bg-fd-primary/10 p-2 text-fd-primary transition-all group-hover:bg-fd-primary group-hover:text-fd-primary-foreground">
+          <CaretRightIcon className="size-5" />
+        </div>
+      </button>
+
+      <DownloadDialog
+        isOpen={dialogOpen}
+        onClose={() => setDialogOpen(false)}
+        title="即将离开 AstroBox 文档"
+        description="目标页面由第三方提供，请确认链接地址后再继续访问。"
+        downloads={downloads}
+        onConfirm={handleConfirm}
+      />
+
+      <PostDownloadDialog
+        isOpen={postDialogOpen}
+        onClose={() => setPostDialogOpen(false)}
+        docHref={platformData.docHref}
+        docLabel={platformData.docLabel}
+      />
+    </>
+  );
+}

@@ -252,7 +252,7 @@ export function RoundedTableOfContentPopover() {
         <RoundedTableOfContentPopoverTrigger open={open} />
         <CollapsibleContent
           data-toc-popover-content=""
-          className="flex max-h-[50vh] flex-col px-4 md:px-6"
+          className="flex max-h-[50vh] flex-col px-6 md:px-6"
         >
           <TOCScrollArea>
             <RoundedTocItems />

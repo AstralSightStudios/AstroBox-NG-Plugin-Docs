@@ -11,7 +11,7 @@
     "postinstall": "fumadocs-mdx"
   },
   "dependencies": {
-    "@claralight-design/abweb-navbar": "^0.2.0",
+    "@claralight-design/abweb-navbar": "^0.2.3",
     "@paper-design/shaders-react": "^0.0.71",
     "@phosphor-icons/react": "^2.1.10",
     "fumadocs-core": "16.6.10",

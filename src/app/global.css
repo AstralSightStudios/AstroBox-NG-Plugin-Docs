@@ -34,6 +34,10 @@ html.font-setting {
     top: var(--fd-banner-height, 0px) !important;
 }
 
+.ab-docs-mobile-nav {
+    z-index: 20 !important;
+}
+
 :root {
     /* 基础主色调 */
     --color-fd-primary: #1781ff;

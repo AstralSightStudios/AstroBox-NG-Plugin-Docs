@@ -9,6 +9,10 @@ import { createRelativeLink } from "fumadocs-ui/mdx";
 import { getMDXComponents } from "@/mdx-components";
 import { source } from "@/lib/source";
 import { Footer } from "@/components/footer";
+import {
+  RoundedTableOfContent,
+  RoundedTableOfContentPopover,
+} from "@/components/rounded-toc";
 
 export default async function DocPage({
   params,
@@ -28,8 +32,8 @@ export default async function DocPage({
     <DocsPage
       toc={page.data.toc}
       full={page.data.full}
-      tableOfContent={{ style: "clerk" }}
-      tableOfContentPopover={{ style: "clerk" }}
+      tableOfContent={{ component: <RoundedTableOfContent /> }}
+      tableOfContentPopover={{ component: <RoundedTableOfContentPopover /> }}
       footer={{ children: <Footer /> }}
     >
       <DocsTitle>{page.data.title}</DocsTitle>

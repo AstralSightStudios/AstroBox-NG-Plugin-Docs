@@ -9,6 +9,7 @@ import type {
 } from "react";
 import { useState } from "react";
 import { NavHeader as BaseNavHeader, type NavHeaderItem } from "@claralight-design/abweb-navbar";
+import { MagnifyingGlassIcon } from "@phosphor-icons/react";
 import { PanelLeft, Search } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { SidebarTrigger } from "fumadocs-ui/components/sidebar/base";
@@ -81,7 +82,7 @@ export function FumadocsNavbar() {
   const router = useRouter();
   const pathname = usePathname() ?? "/";
   const isDocsRoute = pathname.startsWith("/docs");
-  const { enabled: searchEnabled, setOpenSearch } = useSearchContext();
+  const { enabled: searchEnabled, hotKey = [], setOpenSearch } = useSearchContext();
   const [sidebarButtonHovered, setSidebarButtonHovered] = useState(false);
   const [sidebarButtonPressed, setSidebarButtonPressed] = useState(false);
 
@@ -120,9 +121,19 @@ export function FumadocsNavbar() {
       hideInMobileMenu: true,
       onClick: () => setOpenSearch(true),
       label: (
-        <span className="inline-flex items-center gap-1.5">
-          <Search className="size-4" />
+        <span className="inline-flex items-center gap-2">
+          <MagnifyingGlassIcon size={18} weight="bold" />
           <span>搜索</span>
+          <span className="inline-flex gap-0.5">
+            {hotKey.map((key, index) => (
+              <kbd
+                key={index}
+                className="rounded-md border border-fd-border/60 bg-fd-background px-1.5 text-[11px] leading-5 text-fd-muted-foreground"
+              >
+                {key.display}
+              </kbd>
+            ))}
+          </span>
         </span>
       ),
     });

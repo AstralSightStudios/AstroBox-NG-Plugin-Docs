@@ -25,7 +25,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         />
       </head>
       <Body>
-        <Banner height="2.5rem" className="bg-[#1781ff] text-white z-50">
+        <Banner height="2.5rem" className="fixed! w-screen bg-[#1781ff] text-white z-50">
           未完成内容，不代表最终质量
         </Banner>
         <RootProvider i18n={{ locale: "zh-CN", translations: { toc: "大纲" } }}>

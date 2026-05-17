@@ -1,10 +1,16 @@
 "use client";
 
-import type { ComponentProps, MouseEvent as ReactMouseEvent, ReactNode } from "react";
+import type {
+  ComponentProps,
+  CSSProperties,
+  MouseEvent as ReactMouseEvent,
+  PointerEvent as ReactPointerEvent,
+  ReactNode,
+} from "react";
+import { useState } from "react";
 import { NavHeader as BaseNavHeader, type NavHeaderItem } from "@claralight-design/abweb-navbar";
 import { PanelLeft, Search } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
-import { buttonVariants } from "fumadocs-ui/components/ui/button";
 import { SidebarTrigger } from "fumadocs-ui/components/sidebar/base";
 import { useSearchContext } from "fumadocs-ui/contexts/search";
 import { AstroBoxBrandTitle } from "@/components/brand";
@@ -47,6 +53,22 @@ const isModifiedEvent = (event: ReactMouseEvent<HTMLAnchorElement | HTMLButtonEl
 
 const navToolButtonClassName =
   "rounded-full border border-fd-border/60 bg-fd-background/80 text-fd-foreground backdrop-blur-sm";
+const mobileIconButtonClassName = "ab-mobile-icon-button";
+const mobileIconButtonStyle: CSSProperties = {
+  width: "40px",
+  height: "40px",
+  borderRadius: "999px",
+  border: "none",
+  background: "transparent",
+  color: "var(--color-text)",
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+  boxShadow: "none",
+  cursor: "pointer",
+  transition: "transform 0.15s ease, background 0.2s ease, color 0.2s ease",
+  padding: 0,
+};
 
 type ExtendedNavHeaderProps = ComponentProps<typeof BaseNavHeader> & {
   showMobileMenuButton?: boolean;
@@ -60,6 +82,8 @@ export function FumadocsNavbar() {
   const pathname = usePathname() ?? "/";
   const isDocsRoute = pathname.startsWith("/docs");
   const { enabled: searchEnabled, setOpenSearch } = useSearchContext();
+  const [sidebarButtonHovered, setSidebarButtonHovered] = useState(false);
+  const [sidebarButtonPressed, setSidebarButtonPressed] = useState(false);
 
   const navItems: NavHeaderItem[] = topNavLinks.flatMap((item) => {
     if (!("text" in item) || !("url" in item)) return [];
@@ -104,6 +128,24 @@ export function FumadocsNavbar() {
     });
   }
 
+  const sidebarButtonStyle: CSSProperties = {
+    ...mobileIconButtonStyle,
+    background: sidebarButtonHovered
+      ? "color-mix(in srgb, var(--color-text) 10%, transparent)"
+      : "transparent",
+    transform: sidebarButtonPressed ? "scale(0.9)" : "scale(1)",
+  };
+
+  const handleSidebarPointerDown = () => setSidebarButtonPressed(true);
+  const handleSidebarPointerUp = () => setSidebarButtonPressed(false);
+  const handleSidebarPointerEnter = (event: ReactPointerEvent<HTMLButtonElement>) => {
+    if (event.pointerType !== "touch") setSidebarButtonHovered(true);
+  };
+  const handleSidebarPointerLeave = () => {
+    setSidebarButtonHovered(false);
+    setSidebarButtonPressed(false);
+  };
+
   return (
     <NavHeader
       className={isDocsRoute ? "ab-docs-mobile-nav md:hidden" : undefined}
@@ -114,13 +156,16 @@ export function FumadocsNavbar() {
       mobileMenuSlot={
         isDocsRoute ? (
           <SidebarTrigger
-            className={[
-              buttonVariants({ color: "ghost", size: "icon-sm" }),
-              navToolButtonClassName,
-              "md:hidden",
-            ].join(" ")}
+            className={[mobileIconButtonClassName, "md:hidden"].join(" ")}
+            style={sidebarButtonStyle}
+            data-ab-mobile-icon-button=""
+            onPointerDown={handleSidebarPointerDown}
+            onPointerUp={handleSidebarPointerUp}
+            onPointerCancel={handleSidebarPointerLeave}
+            onPointerEnter={handleSidebarPointerEnter}
+            onPointerLeave={handleSidebarPointerLeave}
           >
-            <PanelLeft className="size-4" />
+            <PanelLeft className="size-[18px]" />
           </SidebarTrigger>
         ) : undefined
       }
@@ -135,7 +180,10 @@ export function FumadocsNavbar() {
         />
       }
       leftSlotMobile={
-        <FumadocsSearchToggle className={navToolButtonClassName} />
+        <FumadocsSearchToggle
+          className={mobileIconButtonClassName}
+          style={mobileIconButtonStyle}
+        />
       }
     />
   );

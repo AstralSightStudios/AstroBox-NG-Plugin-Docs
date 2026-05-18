@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import {
   BookOpenIcon,
@@ -12,6 +13,32 @@ import { HomeHeroBackground } from "@/components/home-hero-background";
 import { HeroTyping } from "@/components/hero-typing";
 import { DownloadCards } from "@/components/download-cards";
 import { Footer } from "@/components/footer";
+import {
+  siteDescription,
+  siteKeywords,
+  siteTitle,
+} from "@/lib/site-config";
+
+export const metadata: Metadata = {
+  title: siteTitle,
+  description: siteDescription,
+  keywords: siteKeywords,
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    url: "/",
+    title: siteTitle,
+    description: siteDescription,
+    siteName: siteTitle,
+  },
+  twitter: {
+    card: "summary",
+    title: siteTitle,
+    description: siteDescription,
+  },
+};
 
 const docEntries = [
   {

@@ -63,7 +63,7 @@ samp {
 #nd-toc,
 #nd-docs-layout [data-toc-popover],
 [data-search-full],
-body > [role="dialog"][data-state]:has(> h2.hidden + div > input) {
+body>[role="dialog"][data-state]:has(> h2.hidden + div > input) {
     font-family: var(--font-sans);
 }
 
@@ -207,11 +207,6 @@ header+div:has(aside#nd-sidebar) {
     border-radius: 4px;
 }
 
-/* Sidebar 收缩时浮动按钮组位置修正：紧贴 Banner 下方 */
-#nd-docs-layout [data-sidebar-panel] {
-    top: calc(var(--fd-banner-height, 0px) + 1rem) !important;
-}
-
 :root {
     --fd-layout-width: 19200px;
 }
@@ -264,10 +259,26 @@ header+div:has(aside#nd-sidebar) {
         opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+#nd-docs-layout [data-sidebar-panel] {
+    top: calc(var(--fd-banner-height, 0px) + 1rem) !important;
+    background:
+        color-mix(in srgb, var(--color-fd-background) 88%, transparent);
+    margin: 16px 12px;
+    z-index: 999;
+}
 
 #nd-docs-layout [data-toc-popover] {
     z-index: 25;
     padding-top: 10px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+@media not all and (max-width: 1280px) {
+    #nd-docs-layout [data-toc-popover] {
+        visibility: hidden;
+    }
 }
 
 #nd-docs-layout [data-toc-popover]>header {
@@ -279,6 +290,8 @@ header+div:has(aside#nd-sidebar) {
     margin: 1px 12px;
     position: relative;
     box-shadow: 0 4px 28px rgba(0, 0, 0, 0.15);
+    max-width: 900px;
+    width: 100%;
 }
 
 [style="color-scheme: dark;"] #nd-docs-layout [data-toc-popover]>header {
@@ -318,7 +331,7 @@ header+div:has(aside#nd-sidebar) {
     }
 }
 
-@media (min-width: 768px) and (max-width: 1279px) {
+@media (min-width: 768px) and (max-width: 1280px) {
     #nd-docs-layout [data-toc-popover] {
         padding-top: 0;
         top: 96px;
@@ -326,6 +339,10 @@ header+div:has(aside#nd-sidebar) {
 
     #nd-page {
         margin-top: 96px;
+    }
+
+    #nd-docs-layout [data-toc-popover] > header{
+        margin: 1px 12px;
     }
 }
 
@@ -370,39 +387,36 @@ header+div:has(aside#nd-sidebar) {
     z-index: 1100 !important;
 }
 
-body > [role="dialog"][data-state]:has(> h2.hidden + div > input):has(> div[data-empty]) {
+body>[role="dialog"][data-state]:has(> h2.hidden + div > input):has(> div[data-empty]) {
     border-color: var(--color-fd-border);
     background: var(--color-fd-background);
     box-shadow: 0 24px 64px rgba(0, 0, 0, 0.24);
     border-radius: calc(68px / 2);
 }
 
-body > [role="dialog"][data-state]:has(> h2.hidden + div > input):has(> div[data-empty]) > div:first-of-type {
+body>[role="dialog"][data-state]:has(> h2.hidden + div > input):has(> div[data-empty])>div:first-of-type {
     padding: 12px 18px;
     background: var(--color-fd-border);
     border-radius: calc(62px / 2);
     border: 4px var(--color-fd-background) solid;
 }
 
-body > [role="dialog"][data-state]:has(> h2.hidden + div > input):has(> div[data-empty]) > div:first-of-type input {
+body>[role="dialog"][data-state]:has(> h2.hidden + div > input):has(> div[data-empty])>div:first-of-type input {
     font-size: 16px;
     line-height: 24px;
     font-family: var(--font-sans);
 }
 
-body > [role="dialog"][data-state]:has(> h2.hidden + div > input):has(> div[data-empty]) button[aria-selected] {
+body>[role="dialog"][data-state]:has(> h2.hidden + div > input):has(> div[data-empty]) button[aria-selected] {
     border-radius: 14px;
     overflow: visible;
 }
 
-body > [role="dialog"][data-state]:has(> h2.hidden + div > input):has(> div[data-empty]) > div[data-empty] > div {
-padding-bottom: 54px;
+body>[role="dialog"][data-state]:has(> h2.hidden + div > input):has(> div[data-empty])>div[data-empty]>div {
+    padding-bottom: 54px;
 }
 
-body > [role="dialog"][data-state]:has(> h2.hidden + div > input):has(> div[data-empty="false"])
-    > div[data-empty="false"]
-    > div
-    > button:last-child::after {
+body>[role="dialog"][data-state]:has(> h2.hidden + div > input):has(> div[data-empty="false"])>div[data-empty="false"]>div>button:last-child::after {
     content: "没有更多搜索结果了";
     display: block;
     margin-top: 12px;
@@ -412,10 +426,10 @@ body > [role="dialog"][data-state]:has(> h2.hidden + div > input):has(> div[data
     line-height: 20px;
     text-align: center;
     pointer-events: none;
-    position:absolute;
+    position: absolute;
 }
 
-body > [role="dialog"][data-state]:has(> h2.hidden + div > input):has(> div[data-empty]) > div:first-of-type > input + button {
+body>[role="dialog"][data-state]:has(> h2.hidden + div > input):has(> div[data-empty])>div:first-of-type>input+button {
     border-radius: 999px;
     font-family: var(--font-sans);
     margin-right: -4px;

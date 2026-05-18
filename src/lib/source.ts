@@ -5,5 +5,9 @@ import { lucideIconsPlugin } from "fumadocs-core/source/lucide-icons";
 export const source = loader({
   baseUrl: "/docs",
   source: docs.toFumadocsSource(),
+  i18n: {
+    defaultLanguage: "zh-CN",
+    languages: ["zh-CN"],
+  },
   plugins: [lucideIconsPlugin()],
 });

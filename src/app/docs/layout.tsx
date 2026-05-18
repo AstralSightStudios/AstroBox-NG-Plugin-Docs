@@ -4,10 +4,12 @@ import { baseOptions } from "@/lib/layout.shared";
 import { source } from "@/lib/source";
 import { getSection } from "@/lib/section";
 
+const locale = "zh-CN";
+
 export default function Layout({ children }: { children: ReactNode }) {
   return (
     <DocsLayout
-      tree={source.pageTree}
+      tree={source.getPageTree(locale)}
       {...baseOptions()}
       links={[]}
       searchToggle={{ enabled: true }}
@@ -15,7 +17,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         defaultOpenLevel: 1,
         tabs: {
           transform(option, node) {
-            const meta = source.getNodeMeta(node);
+            const meta = source.getNodeMeta(node, locale);
             if (!meta || !node.icon) return option;
 
             const section = getSection(meta.path);

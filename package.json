@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@claralight-design/abweb-navbar": "^0.2.4",
+    "@orama/tokenizers": "^3.1.18",
     "@paper-design/shaders-react": "^0.0.71",
     "@phosphor-icons/react": "^2.1.10",
     "fumadocs-core": "16.6.10",

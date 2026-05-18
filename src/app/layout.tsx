@@ -23,7 +23,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           rel="stylesheet"
           href="https://i02.appmifile.com/i18n/fonts/MiSansChinese/index.css"
         />
-        <meta name="theme-color" content="#1781ff">
+        <meta name="theme-color" content="#1781ff" />
       </head>
       <Body>
         <Banner height="2.5rem" className="fixed! w-screen bg-[#1781ff] text-white z-50">

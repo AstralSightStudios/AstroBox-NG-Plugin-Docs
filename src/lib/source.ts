@@ -8,6 +8,7 @@ export const source = loader({
   i18n: {
     defaultLanguage: "zh-CN",
     languages: ["zh-CN"],
+    hideLocale: "always",
   },
   plugins: [lucideIconsPlugin()],
 });

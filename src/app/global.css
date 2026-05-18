@@ -245,6 +245,11 @@ header+div:has(aside#nd-sidebar) {
     box-sizing: border-box;
     margin: 1px 12px;
     position: relative;
+    box-shadow: 0 4px 28px rgba(0, 0, 0, 0.15);
+}
+
+[style="color-scheme: dark;"] #nd-docs-layout [data-toc-popover]>header {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
 }
 
 #nd-docs-layout [data-toc-popover]>header>button {
@@ -330,4 +335,57 @@ header+div:has(aside#nd-sidebar) {
 
 [role="dialog"] {
     z-index: 1100 !important;
+}
+
+body > [role="dialog"][data-state]:has(> h2.hidden + div > input):has(> div[data-empty]) {
+    border-color: var(--color-fd-border);
+    background: var(--color-fd-background);
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.24);
+    border-radius: calc(68px / 2);
+}
+
+body > [role="dialog"][data-state]:has(> h2.hidden + div > input):has(> div[data-empty]) > div:first-of-type {
+    padding: 12px 18px;
+    background: var(--color-fd-border);
+    border-radius: calc(62px / 2);
+    border: 4px var(--color-fd-background) solid;
+}
+
+body > [role="dialog"][data-state]:has(> h2.hidden + div > input):has(> div[data-empty]) > div:first-of-type input {
+    font-size: 16px;
+    line-height: 24px;
+    font-family: "Google Sans Flex","MiSans",sans-serif;
+}
+
+body > [role="dialog"][data-state]:has(> h2.hidden + div > input):has(> div[data-empty]) button[aria-selected] {
+    border-radius: 14px;
+    overflow: visible;
+}
+
+body > [role="dialog"][data-state]:has(> h2.hidden + div > input):has(> div[data-empty]) > div[data-empty] > div {
+padding-bottom: 54px;
+}
+
+body > [role="dialog"][data-state]:has(> h2.hidden + div > input):has(> div[data-empty="false"])
+    > div[data-empty="false"]
+    > div
+    > button:last-child::after {
+    content: "没有更多搜索结果了";
+    display: block;
+    margin-top: 12px;
+    padding-top: 12px;
+    color: var(--color-fd-muted-foreground);
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center;
+    pointer-events: none;
+    position:absolute;
+}
+
+body > [role="dialog"][data-state]:has(> h2.hidden + div > input):has(> div[data-empty]) > div:first-of-type > input + button {
+    border-radius: 999px;
+    font-family: "Google Sans Flex";
+    margin-right: -4px;
+    padding: 6px 8px 6px 9px;
+    border-width: 2px;
 }

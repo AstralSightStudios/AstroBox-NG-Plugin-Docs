@@ -256,7 +256,7 @@ header+div:has(aside#nd-sidebar) {
 }
 
 #nd-page {
-        margin-top: 32px;
+    margin-top: 32px;
 }
 
 @media (max-width: 767px) {
@@ -296,6 +296,31 @@ header+div:has(aside#nd-sidebar) {
         top: 64px;
         padding-top: 0;
     }
+}
+
+[data-search-full] kbd,
+[class*="desktopLabel"] kbd {
+    justify-content: center;
+    align-items: center;
+    min-width: 20px;
+    max-width: 42px;
+    height: 20px;
+    padding: 1px 3px 0px;
+    font-family: Google Sans Flex;
+    display: flex;
+    background:
+        color-mix(in srgb, var(--color-fd-foreground) 10%, transparent);
+    border: none;
+    margin-left: 2px;
+    mix-blend-mode: darken;
+    font-size: 13px;
+    border-radius: 3px;
+    font-weight: normal !important;
+}
+
+[style="color-scheme: dark;"] [data-search-full] kbd,
+[style="color-scheme: dark;"] [class*="desktopLabel"] kbd {
+    mix-blend-mode: hard-light;
 }
 
 /* 修复搜索弹窗等 Radix Dialog 被自定义 nav 遮挡的问题 */

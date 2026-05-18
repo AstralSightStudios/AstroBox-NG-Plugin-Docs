@@ -1,18 +1,21 @@
-import Image from "next/image";
-
 type AstroBoxBrandIconProps = {
   className?: string;
 };
 
 export function AstroBoxBrandIcon({ className }: AstroBoxBrandIconProps) {
   return (
-    <Image
-      src="/assets/brand/brand-icon.png"
-      alt=""
-      aria-hidden="true"
-      width={28}
-      height={28}
-      className={className}
+    <span
+      className={`inline-block max-w-[28px] max-h-[28px] ${className ?? ""}`}
+      style={{
+        WebkitMaskImage: "url('/assets/brand/brand-icon.png')",
+        maskImage: "url('/assets/brand/brand-icon.png')",
+        WebkitMaskRepeat: "no-repeat",
+        maskRepeat: "no-repeat",
+        WebkitMaskSize: "contain",
+        maskSize: "contain",
+        WebkitMaskPosition: "center",
+        maskPosition: "center",
+      }}
     />
   );
 }
@@ -20,7 +23,7 @@ export function AstroBoxBrandIcon({ className }: AstroBoxBrandIconProps) {
 export function AstroBoxBrandTitle({ className }: { className?: string }) {
   return (
     <span className={`inline-flex items-center gap-2 mx-1 ${className ?? ""}`}>
-      <AstroBoxBrandIcon className="size-5 shrink-0" />
+      <AstroBoxBrandIcon className="size-5 shrink-0 bg-[var(--color-fd-primary)]" />
       <svg
         width="62"
         height="16"

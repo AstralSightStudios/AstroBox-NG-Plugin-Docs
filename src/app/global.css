@@ -4,13 +4,16 @@
 
 @font-face {
     font-family: "Sarasa Mono";
-    src: url("public/assets/fonts/SarasaMonoSC-Regular.woff2") format("woff2");
+    src: url("/assets/fonts/SarasaMonoSC-Regular.woff2") format("woff2");
     font-display: swap;
 }
 
 @font-face {
     font-family: "Google Sans Flex";
-    src: url("public/assets/fonts/GoogleSansFlex-VariableFont.ttf");
+    src: url("/assets/fonts/GoogleSansFlex-VariableFont.ttf") format("truetype");
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap;
 }
 
 @theme {
@@ -29,9 +32,39 @@ html.font-setting {
         sans-serif;
 }
 
+:root {
+    --default-font-family: var(--font-sans);
+    --default-mono-font-family: var(--font-mono);
+}
+
+html,
+body,
+button,
+input,
+select,
+textarea {
+    font-family: var(--font-sans);
+}
+
+code,
+kbd,
+pre,
+samp {
+    font-family: var(--font-mono);
+}
+
 /* 全局公告 Banner 偏移：让首页导航栏固定在 Banner 下方 */
 [data-nav-header] {
     top: var(--fd-banner-height, 0px) !important;
+}
+
+[data-nav-header],
+#nd-sidebar,
+#nd-toc,
+#nd-docs-layout [data-toc-popover],
+[data-search-full],
+body > [role="dialog"][data-state]:has(> h2.hidden + div > input) {
+    font-family: var(--font-sans);
 }
 
 .ab-docs-mobile-nav {
@@ -311,7 +344,7 @@ header+div:has(aside#nd-sidebar) {
     max-width: 42px;
     height: 20px;
     padding: 1px 3px 0px;
-    font-family: Google Sans Flex;
+    font-family: var(--font-sans);
     display: flex;
     background:
         color-mix(in srgb, var(--color-fd-foreground) 10%, transparent);
@@ -354,7 +387,7 @@ body > [role="dialog"][data-state]:has(> h2.hidden + div > input):has(> div[data
 body > [role="dialog"][data-state]:has(> h2.hidden + div > input):has(> div[data-empty]) > div:first-of-type input {
     font-size: 16px;
     line-height: 24px;
-    font-family: "Google Sans Flex","MiSans",sans-serif;
+    font-family: var(--font-sans);
 }
 
 body > [role="dialog"][data-state]:has(> h2.hidden + div > input):has(> div[data-empty]) button[aria-selected] {
@@ -384,7 +417,7 @@ body > [role="dialog"][data-state]:has(> h2.hidden + div > input):has(> div[data
 
 body > [role="dialog"][data-state]:has(> h2.hidden + div > input):has(> div[data-empty]) > div:first-of-type > input + button {
     border-radius: 999px;
-    font-family: "Google Sans Flex";
+    font-family: var(--font-sans);
     margin-right: -4px;
     padding: 6px 8px 6px 9px;
     border-width: 2px;

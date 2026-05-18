@@ -90,7 +90,7 @@ export function DownloadCards() {
   };
 
   return (
-    <section className="mx-auto w-full max-w-4xl font-mono">
+    <section className="mx-auto w-full max-w-4xl">
       <div className="mb-10 text-center">
         <h2 className="text-3xl font-bold tracking-wide text-fd-foreground md:text-4xl">
           快速开始

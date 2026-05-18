@@ -77,6 +77,15 @@ export default function Layout({ children }: { children: ReactNode }) {
           rel="stylesheet"
           href="https://i02.appmifile.com/i18n/fonts/MiSansChinese/index.css"
         />
+        <style>{`
+          html, body, button, input, select, textarea {
+            font-family: var(--font-sans) !important;
+          }
+
+          code, kbd, pre, samp {
+            font-family: var(--font-mono) !important;
+          }
+        `}</style>
         <meta name="theme-color" content="#1781ff" />
       </head>
       <Body>

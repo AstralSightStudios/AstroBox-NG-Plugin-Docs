@@ -9,8 +9,7 @@ import type {
 } from "react";
 import { useState } from "react";
 import { NavHeader as BaseNavHeader, type NavHeaderItem } from "@claralight-design/abweb-navbar";
-import { MagnifyingGlassIcon } from "@phosphor-icons/react";
-import { PanelLeft, Search } from "lucide-react";
+import { MagnifyingGlassIcon, SidebarSimpleIcon } from "@phosphor-icons/react";
 import { usePathname, useRouter } from "next/navigation";
 import { SidebarTrigger } from "fumadocs-ui/components/sidebar/base";
 import { useSearchContext } from "fumadocs-ui/contexts/search";
@@ -176,7 +175,7 @@ export function FumadocsNavbar() {
             onPointerEnter={handleSidebarPointerEnter}
             onPointerLeave={handleSidebarPointerLeave}
           >
-            <PanelLeft className="size-[18px]" />
+            <SidebarSimpleIcon className="size-[18px]" />
           </SidebarTrigger>
         ) : undefined
       }

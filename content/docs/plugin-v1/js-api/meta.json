@@ -1,6 +1,6 @@
 {
   "title": "JS 接口参考",
-  "icon": "Braces",
+  "icon": "BracketsCurly",
   "pages": [
     "config",
     "debug",

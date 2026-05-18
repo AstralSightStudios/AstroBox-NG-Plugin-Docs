@@ -164,7 +164,7 @@ header+div:has(aside#nd-sidebar) {
 }
 
 #nd-sidebar .size-9.shrink-0.empty\:hidden.md\:size-5,
-#nd-sidebar svg.lucide.lucide-book-open {
+#nd-sidebar svg.ab-doc-icon {
     width: 16px;
     height: 16px;
 }

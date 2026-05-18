@@ -15,7 +15,7 @@ import {
   CollapsibleTrigger,
 } from "fumadocs-ui/components/ui/collapsible";
 import { TOCItem, useActiveAnchor } from "fumadocs-core/toc";
-import { ChevronDown, Text } from "lucide-react";
+import { CaretDownIcon, TextTIcon } from "@phosphor-icons/react";
 
 interface TocLine {
   path: string;
@@ -204,7 +204,7 @@ export function RoundedTableOfContent() {
         id="toc-title"
         className="inline-flex items-center gap-1.5 text-sm text-fd-muted-foreground"
       >
-        <Text className="size-4" />
+        <TextTIcon className="size-4" />
         <I18nLabel label="toc" />
       </h3>
       <TOCScrollArea>
@@ -302,7 +302,7 @@ function RoundedTableOfContentPopoverTrigger({ open }: { open: boolean }) {
           {items[selected]?.title}
         </span>
       </span>
-      <ChevronDown
+      <CaretDownIcon
         className={`mx-0.5 shrink-0 transition-transform ${
           open ? "rotate-180" : ""
         }`}

@@ -2,7 +2,7 @@
 
 import type { CSSProperties, PointerEvent as ReactPointerEvent } from "react";
 import { useState } from "react";
-import { Search } from "lucide-react";
+import { MagnifyingGlassIcon } from "@phosphor-icons/react";
 import { useSearchContext } from "fumadocs-ui/contexts/search";
 
 type FumadocsSearchToggleProps = {
@@ -50,7 +50,7 @@ export function FumadocsSearchToggle({ className, style }: FumadocsSearchToggleP
       onPointerLeave={handlePointerLeave}
       onClick={() => setOpenSearch(true)}
     >
-      <Search className="size-[18px]" />
+      <MagnifyingGlassIcon className="size-[18px]" />
     </button>
   );
 }

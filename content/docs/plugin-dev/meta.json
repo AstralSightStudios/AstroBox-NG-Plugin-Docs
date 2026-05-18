@@ -1,6 +1,6 @@
 {
   "title": "V2 插件开发文档",
-  "icon": "SquareCode",
+  "icon": "FileCode",
   "description": "AstroBox v2 插件开发指南与 API 参考",
   "root": true,
   "pages": ["index", "framework", "general", "getstarted", "host-api"]

@@ -1,6 +1,6 @@
 "use client";
 
-import { Airplay, Moon, Sun } from "lucide-react";
+import { DesktopIcon, MoonIcon, SunIcon } from "@phosphor-icons/react";
 import { useTheme } from "next-themes";
 import { useSyncExternalStore } from "react";
 
@@ -20,9 +20,9 @@ type FumadocsThemeToggleProps = {
 };
 
 const themeItems = [
-  ["light", Sun],
-  ["dark", Moon],
-  ["system", Airplay],
+  ["light", SunIcon],
+  ["dark", MoonIcon],
+  ["system", DesktopIcon],
 ] as const;
 
 const getItemClassName = (active: boolean) =>

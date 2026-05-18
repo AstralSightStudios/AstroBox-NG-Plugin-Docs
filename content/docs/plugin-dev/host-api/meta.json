@@ -1,6 +1,6 @@
 {
   "title": "Host API 参考",
-  "icon": "Plug2",
+  "icon": "Plug",
   "pages": [
     "device",
     "dialog",

@@ -141,7 +141,7 @@ html[data-theme-transition="active"] #nd-page .prose :where(
     --color-fd-primary-foreground: #ffffff;
     --color-fd-accent: rgba(23, 129, 255, 0.08);
     --color-fd-ring: #1781ff;
-    --fd-nav-height: 72px !important;
+    --fd-nav-height: 118px !important;
     --color-main-background: var(--color-fd-background);
     --color-text: var(--color-fd-foreground);
     --font-family-serif: Georgia, "Times New Roman", "Songti SC", serif;

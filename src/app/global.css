@@ -67,6 +67,64 @@ body>[role="dialog"][data-state]:has(> h2.hidden + div > input) {
     font-family: var(--font-sans);
 }
 
+html[data-theme-transition="active"],
+html[data-theme-transition="active"] body,
+html[data-theme-transition="active"] *,
+html[data-theme-transition="active"] *::before,
+html[data-theme-transition="active"] *::after {
+    transition-property:
+        color,
+        background-color,
+        border-color,
+        fill,
+        stroke,
+        text-decoration-color !important;
+    transition-duration: 150ms !important;
+    transition-delay: 0s !important;
+    transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+html[data-theme-transition="active"],
+html[data-theme-transition="active"] body,
+html[data-theme-transition="active"] main,
+html[data-theme-transition="active"] #nd-page,
+html[data-theme-transition="active"] #nd-home-layout,
+html[data-theme-transition="active"] #nd-docs-layout {
+    transition-duration: 220ms !important;
+}
+
+html[data-theme-transition="active"] #nd-page .prose,
+html[data-theme-transition="active"] #nd-page .prose :where(
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        li,
+        dt,
+        dd,
+        th,
+        td,
+        blockquote,
+        code,
+        pre,
+        span,
+        strong,
+        em,
+        small,
+        a
+    ) {
+    transition-duration: 220ms !important;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation-duration: 220ms;
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 .ab-docs-mobile-nav {
     z-index: 20 !important;
 }

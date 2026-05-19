@@ -5,6 +5,7 @@ import { buttonVariants } from "fumadocs-ui/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "fumadocs-ui/components/ui/popover";
 import { useTheme } from "next-themes";
 import { useEffect, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import { applyThemeTransition } from "@/components/theme-transition";
 
 type ThemeMode = "light-dark" | "light-dark-system";
 type ThemeSwitcherVariant = "slider" | "dropdown";
@@ -62,7 +63,6 @@ export function ThemeSwitcher({
   const indicatorRef = useRef<HTMLDivElement>(null);
   const buttonRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const hasInitializedIndicatorRef = useRef(false);
-  const hasHydratedVisualThemeRef = useRef(false);
   const options = useMemo(() => getVisibleOptions(mode), [mode]);
   const currentTheme = mounted ? (mode === "light-dark" ? resolvedTheme : theme) : null;
   const displayedTheme =
@@ -75,14 +75,22 @@ export function ThemeSwitcher({
   useEffect(() => {
     if (!mounted || !currentTheme || !isThemeKey(currentTheme)) return;
 
-    const delay = variant === "slider" && hasHydratedVisualThemeRef.current ? 48 : 0;
     const timeoutId = window.setTimeout(() => {
-      setVisualTheme(currentTheme);
-      hasHydratedVisualThemeRef.current = true;
-    }, delay);
+      setVisualTheme((previousTheme) =>
+        previousTheme === currentTheme ? previousTheme : currentTheme,
+      );
+    }, 0);
 
     return () => window.clearTimeout(timeoutId);
   }, [currentTheme, mounted, variant]);
+
+  const handleThemeChange = (target: ThemeKey) => {
+    if (variant === "slider") {
+      setVisualTheme(target);
+    }
+
+    applyThemeTransition(target, setTheme);
+  };
 
   useLayoutEffect(() => {
     const indicator = indicatorRef.current;
@@ -91,7 +99,7 @@ export function ThemeSwitcher({
     if (!indicator || !activeButton) return;
 
     const transitionValue =
-      "transform 460ms cubic-bezier(0.22,1,0.36,1), width 460ms cubic-bezier(0.22,1,0.36,1), opacity 220ms ease";
+      "transform 360ms cubic-bezier(0.34,1.56,0.64,1), width 320ms cubic-bezier(0.22,1,0.36,1), opacity 180ms ease";
 
     const updateIndicator = (animate: boolean) => {
       const nextButton = buttonRefs.current[activeIndex];
@@ -168,7 +176,7 @@ export function ThemeSwitcher({
                   aria-label={item.label}
                   className="inline-flex items-center justify-between gap-2 rounded-xl px-2.5 py-2 text-left text-sm transition-colors hover:bg-fd-accent/70 hover:text-fd-accent-foreground"
                   onClick={() => {
-                    setTheme(item.key);
+                    handleThemeChange(item.key);
                     setOpen(false);
                   }}
                 >
@@ -216,7 +224,7 @@ export function ThemeSwitcher({
           width: "1.75rem",
           transform: "translate3d(0, 0, 0)",
           transition:
-            "transform 460ms cubic-bezier(0.22,1,0.36,1), width 460ms cubic-bezier(0.22,1,0.36,1), opacity 220ms ease",
+            "transform 360ms cubic-bezier(0.34,1.56,0.64,1), width 320ms cubic-bezier(0.22,1,0.36,1), opacity 180ms ease",
         }}
       />
       {options.map((item, index) => {
@@ -232,12 +240,12 @@ export function ThemeSwitcher({
             type="button"
             aria-label={item.label}
             className={joinClassName(
-              "relative z-10 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-sm transition-[color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
+              "relative z-10 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-sm transition-[color] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)]",
               isActive
                 ? "text-fd-primary-foreground"
                 : "text-fd-muted-foreground hover:text-fd-foreground",
             )}
-            onClick={() => setTheme(item.key)}
+            onClick={() => handleThemeChange(item.key)}
           >
             <Icon className="size-4 shrink-0" />
           </button>

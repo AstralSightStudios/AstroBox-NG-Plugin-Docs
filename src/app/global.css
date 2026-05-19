@@ -453,7 +453,7 @@ body>[role="dialog"][data-state]:has(> h2.hidden + div > input):has(> div[data-e
     border-color: var(--color-fd-border);
     background: var(--color-fd-background);
     box-shadow: 0 24px 64px rgba(0, 0, 0, 0.24);
-    border-radius: calc(68px / 2);
+    border-radius: calc(66px / 2);
 }
 
 body>[role="dialog"][data-state]:has(> h2.hidden + div > input):has(> div[data-empty])>div:first-of-type {
@@ -495,6 +495,6 @@ body>[role="dialog"][data-state]:has(> h2.hidden + div > input):has(> div[data-e
     border-radius: 999px;
     font-family: var(--font-sans);
     margin-right: -4px;
-    padding: 6px 8px 6px 9px;
+    padding: 6px 9px 5px;
     border-width: 2px;
 }

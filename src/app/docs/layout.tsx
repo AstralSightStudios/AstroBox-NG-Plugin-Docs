@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { DocsLayout } from "fumadocs-ui/layouts/docs";
+import { ThemeSwitcher } from "@/components/theme-switcher";
 import { baseOptions } from "@/lib/layout.shared";
 import { source } from "@/lib/source";
 import { getSection } from "@/lib/section";
@@ -7,12 +8,24 @@ import { getSection } from "@/lib/section";
 const locale = "zh-CN";
 
 export default function Layout({ children }: { children: ReactNode }) {
+  const options = baseOptions();
+
   return (
     <DocsLayout
       tree={source.getPageTree(locale)}
-      {...baseOptions()}
+      {...options}
       links={[]}
       searchToggle={{ enabled: true }}
+      themeSwitch={{
+        ...options.themeSwitch,
+        component: (
+          <ThemeSwitcher
+            mode="light-dark-system"
+            variant="slider"
+            className="ms-auto"
+          />
+        ),
+      }}
       sidebar={{
         defaultOpenLevel: 1,
         tabs: {

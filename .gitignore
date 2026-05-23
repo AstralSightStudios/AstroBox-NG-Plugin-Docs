@@ -22,3 +22,6 @@ pnpm-debug.log*
 .DS_Store
 tsconfig.tsbuildinfo
 *.tsbuildinfo
+
+# generated sitemap (auto-generated during build)
+public/sitemap.xml

@@ -4,11 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "pnpm sitemap:generate && next build",
     "start": "next start",
     "lint": "eslint .",
     "types:check": "fumadocs-mdx && next typegen && tsc --noEmit",
-    "postinstall": "fumadocs-mdx"
+    "postinstall": "fumadocs-mdx",
+    "sitemap:generate": "tsx scripts/generate-sitemap.ts"
   },
   "dependencies": {
     "@claralight-design/abweb-navbar": "^0.2.4",
@@ -37,6 +38,7 @@
     "postcss": "^8.5.8",
     "react-medium-image-zoom": "^5.4.4",
     "tailwindcss": "^4.2.1",
+    "tsx": "^4.19.0",
     "typescript": "^5.9.3"
   }
 }

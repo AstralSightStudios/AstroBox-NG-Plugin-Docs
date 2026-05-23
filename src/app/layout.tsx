@@ -93,6 +93,8 @@ export default function Layout({ children }: { children: ReactNode }) {
             __html: `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, document, "clarity", "script", "wvq04i133x");`,
           }}
         />
+        <meta name="baidu-site-verification" content="codeva-iBhfHrcAtx" />
+        <meta name="google-site-verification" content="sNHpAbOCDMylrieI_PT-NbFXxpjsYgUGkL5sexF4ncE" />
       </head>
       <Body>
         <Banner height="2.5rem" className="fixed! w-screen bg-[#1781ff] text-white z-50">

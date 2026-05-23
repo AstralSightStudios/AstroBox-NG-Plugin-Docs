@@ -87,6 +87,12 @@ export default function Layout({ children }: { children: ReactNode }) {
           }
         `}</style>
         <meta name="theme-color" content="#1781ff" />
+        <script
+          type="text/javascript"
+          dangerouslySetInnerHTML={{
+            __html: `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, document, "clarity", "script", "wvq04i133x");`,
+          }}
+        />
       </head>
       <Body>
         <Banner height="2.5rem" className="fixed! w-screen bg-[#1781ff] text-white z-50">

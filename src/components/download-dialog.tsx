@@ -160,8 +160,8 @@ export function DownloadDialog({
       />
 
       {/* 对话框卡片 */}
-      <div className="relative w-full max-w-[460px] rounded-2xl border border-fd-border bg-fd-background shadow-2xl">
-        <div className="p-6">
+      <div className="relative w-full max-w-[460px] rounded-2xl border border-fd-border bg-fd-background shadow-2xl not-prose">
+        <div className="!pt-6 px-6 pb-6">
           {/* 标题 */}
           <h3 className="text-lg font-semibold text-fd-foreground">{title}</h3>
           <p className="mt-1.5 text-sm text-fd-muted-foreground">

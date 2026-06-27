@@ -116,7 +116,7 @@ function DownloadItemCard({
             onClick={() => {
               onGo?.();
             }}
-            className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-fd-primary px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-fd-primary/90"
+            className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-fd-primary px-3 py-1.5 text-xs font-medium text-fd-primary-foreground dark:!text-[#051327] transition-colors hover:bg-fd-primary/90"
           >
             立即前往
             <ArrowSquareOutIcon className="size-3" />
@@ -268,7 +268,7 @@ export function DownloadDialog({
                   onConfirm?.();
                   onClose();
                 }}
-                className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-fd-primary px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-fd-primary/90"
+                className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-fd-primary px-4 py-2 text-sm font-medium text-fd-primary-foreground dark:!text-[#051327] transition-colors hover:bg-fd-primary/90"
               >
                 立即前往
                 <ArrowSquareOutIcon className="size-3.5" />

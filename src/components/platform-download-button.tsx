@@ -63,6 +63,7 @@ export function PlatformDownloadButton({
 }: PlatformDownloadButtonProps) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [postDialogOpen, setPostDialogOpen] = useState(false);
+  const [toast, setToast] = useState<{ show: boolean; message: string }>({ show: false, message: "" });
 
   const productData = rawDownloads.products.find(
     (p) => p.id.toLowerCase() === product.toLowerCase(),
@@ -76,9 +77,14 @@ export function PlatformDownloadButton({
       p.name.toLowerCase().includes(platform.toLowerCase()),
   );
 
-  if (!platformData || !platformData.hasDownload) return null;
+  if (!platformData) return null;
 
   const Icon = iconMap[platformData.icon] ?? MacIcon;
+
+  const showToast = (message: string) => {
+    setToast({ show: true, message });
+    setTimeout(() => setToast({ show: false, message: "" }), 2500);
+  };
 
   const handleConfirm = () => {
     setDialogOpen(false);
@@ -88,6 +94,43 @@ export function PlatformDownloadButton({
   };
 
   const sources: DownloadSource[] = (platformData as any).sources ?? [];
+
+  if (!platformData.hasDownload) {
+    return (
+      <>
+        <button
+          onClick={() => showToast("暂时不可下载")}
+          className="group flex w-full cursor-not-allowed items-center justify-between rounded-2xl border border-fd-border/60 bg-fd-background p-4 text-left opacity-60"
+        >
+          <div className="flex items-center gap-4">
+            <div className="inline-flex size-10 items-center justify-center rounded-full border border-fd-border/60 text-fd-muted-foreground">
+              <Icon className="size-6" />
+            </div>
+            <div>
+              <div className="text-sm font-medium text-fd-muted-foreground">
+                {label ?? platformData.name}
+              </div>
+              <div className="text-xs text-fd-muted-foreground">
+                {platformData.version}
+              </div>
+            </div>
+          </div>
+          <div className="inline-flex shrink-0 items-center justify-center rounded-full bg-fd-muted/10 p-2 text-fd-muted-foreground">
+            <CaretRightIcon className="size-5" />
+          </div>
+        </button>
+
+        {/* Toast */}
+        <div
+          className={`fixed top-6 left-1/2 z-[1200] -translate-x-1/2 transition-all duration-300 ${toast.show ? "translate-y-0 opacity-100" : "-translate-y-4 opacity-0 pointer-events-none"}`}
+        >
+          <div className="rounded-xl border border-fd-border bg-fd-background px-5 py-3 text-sm font-medium text-fd-foreground shadow-xl">
+            {toast.message}
+          </div>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>

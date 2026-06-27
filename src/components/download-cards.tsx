@@ -87,12 +87,21 @@ export function DownloadCards() {
   const [postDialogOpen, setPostDialogOpen] = useState(false);
   const [activePlatform, setActivePlatform] = useState<Platform | null>(null);
   const [deviceListOpen, setDeviceListOpen] = useState(true);
+  const [toast, setToast] = useState<{ show: boolean; message: string }>({ show: false, message: "" });
 
   const activeProduct = products.find((p) => p.id === activeProductId) ?? products[0];
   const supportedDevices = activeProduct?.supportedDevices ?? [];
 
+  const showToast = (message: string) => {
+    setToast({ show: true, message });
+    setTimeout(() => setToast({ show: false, message: "" }), 2500);
+  };
+
   const handleDownloadClick = (platform: Platform) => {
-    if (!platform.hasDownload) return;
+    if (!platform.hasDownload) {
+      showToast("暂时不可下载");
+      return;
+    }
     setActivePlatform(platform);
     setDialogOpen(true);
   };
@@ -259,7 +268,7 @@ export function DownloadCards() {
                   {p.version}
                 </span>
               )}
-              {p.hasDownload && (
+              {p.hasDownload ? (
                 <button
                   onClick={() => handleDownloadClick(p)}
                   className="mt-2 inline-flex items-center text-sm tracking-wide text-fd-foreground transition-colors hover:text-fd-primary"
@@ -267,6 +276,10 @@ export function DownloadCards() {
                   {p.actionLabel ?? "下载"}
                   <CaretRightIcon className="ml-0.5 size-4" />
                 </button>
+              ) : (
+                <span className="mt-2 inline-flex items-center text-sm tracking-wide text-fd-muted-foreground/50 cursor-not-allowed">
+                  暂不可下载
+                </span>
               )}
             </div>
           );
@@ -288,6 +301,15 @@ export function DownloadCards() {
         docHref={activePlatform?.docHref}
         docLabel={activePlatform?.docLabel}
       />
+
+      {/* Toast */}
+      <div
+        className={`fixed top-6 left-1/2 z-[1200] -translate-x-1/2 transition-all duration-300 ${toast.show ? "translate-y-0 opacity-100" : "-translate-y-4 opacity-0 pointer-events-none"}`}
+      >
+        <div className="rounded-xl border border-fd-border bg-fd-background px-5 py-3 text-sm font-medium text-fd-foreground shadow-xl">
+          {toast.message}
+        </div>
+      </div>
     </section>
   );
 }

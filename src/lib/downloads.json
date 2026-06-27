@@ -9,7 +9,7 @@
           "icon": "WinIcon",
           "name": "WINDOWS 10 20H2+",
           "version": "V1.5.5",
-          "hasDownload": true,
+          "hasDownload": false,
           "sources": [
             {
               "name": "123云盘",
@@ -42,7 +42,7 @@
           "icon": "MacIcon",
           "name": "MACOS SONOMA (14)+",
           "version": "V1.5.91",
-          "hasDownload": true,
+          "hasDownload": false,
           "sources": [
             {
               "name": "123云盘",
@@ -62,7 +62,7 @@
           "icon": "LinuxIcon",
           "name": "DEBIAN/REDHAT",
           "version": "V1.5.5",
-          "hasDownload": true,
+          "hasDownload": false,
           "sources": [
             {
               "name": "123云盘",
@@ -87,7 +87,7 @@
           "icon": "IosIcon",
           "name": "IOS/IPADOS 14+",
           "version": "V1.5.5",
-          "hasDownload": true,
+          "hasDownload": false,
           "sources": [
             {
               "name": "App Store",
@@ -106,7 +106,7 @@
           "icon": "AndroidIcon",
           "name": "Android 10+",
           "version": "V1.5.5",
-          "hasDownload": true,
+          "hasDownload": false,
           "sources": [
             {
               "name": "123云盘",
@@ -126,7 +126,7 @@
           "icon": "ChromiumIcon",
           "name": "CHROMIUM 117+",
           "version": "V1.5.5",
-          "hasDownload": true,
+          "hasDownload": false,
           "actionLabel": "前往",
           "sources": [
             {
@@ -145,8 +145,9 @@
         }
       ],
       "supportedDevices": [
-        { "name": "小米手环 9 Pro", "status": "supported", "note": "—" },
+        { "name": "小米手环 10 Pro", "status": "supported", "note": "—" },
         { "name": "小米手环 10 系列", "status": "supported", "note": "—" },
+        { "name": "小米手环 9 Pro", "status": "supported", "note": "—" },
         { "name": "小米手环 9 系列", "status": "supported", "note": "—" },
         { "name": "小米手环 8 系列", "status": "unsupported", "note": "过时设备" },
         { "name": "REDMI Watch 6", "status": "supported", "note": "—" },
@@ -169,7 +170,7 @@
           "icon": "WinIcon",
           "name": "WINDOWS 10 20H2+",
           "version": "V1.2.0",
-          "hasDownload": true,
+          "hasDownload": false,
           "sources": [
             {
               "name": "123云盘",
@@ -198,7 +199,7 @@
           "icon": "MacIcon",
           "name": "MACOS SONOMA (14)+",
           "version": "V1.2.0",
-          "hasDownload": true,
+          "hasDownload": false,
           "sources": [
             {
               "name": "123云盘",
@@ -218,7 +219,7 @@
           "icon": "LinuxIcon",
           "name": "DEBIAN/REDHAT",
           "version": "V1.2.0",
-          "hasDownload": true,
+          "hasDownload": false,
           "sources": [
             {
               "name": "123云盘",
@@ -243,7 +244,7 @@
           "icon": "AndroidIcon",
           "name": "Android 10+",
           "version": "V1.2.0",
-          "hasDownload": true,
+          "hasDownload": false,
           "sources": [
             {
               "name": "123云盘",
@@ -263,7 +264,7 @@
           "icon": "IosIcon",
           "name": "IOS/IPADOS 14+",
           "version": "V1.2.0",
-          "hasDownload": true,
+          "hasDownload": false,
           "sources": [
             {
               "name": "App Store",

@@ -10,11 +10,17 @@ export interface DownloadItem {
   linkLabel?: string;
 }
 
+export interface DownloadSource {
+  name: string;
+  downloads: DownloadItem[];
+}
+
 interface DownloadDialogProps {
   isOpen: boolean;
   onClose: () => void;
   title?: string;
   description?: string;
+  sources?: DownloadSource[];
   downloads?: DownloadItem[];
   onConfirm?: () => void;
 }
@@ -110,7 +116,7 @@ function DownloadItemCard({
             onClick={() => {
               onGo?.();
             }}
-            className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-fd-primary px-3 py-1.5 text-xs font-medium text-fd-primary-foreground transition-colors hover:bg-fd-primary/90"
+            className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-fd-primary px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-fd-primary/90"
           >
             立即前往
             <ArrowSquareOutIcon className="size-3" />
@@ -126,9 +132,30 @@ export function DownloadDialog({
   onClose,
   title = "下载确认",
   description = "目标页面由第三方提供，请确认链接地址后再继续访问。",
-  downloads = [],
+  sources,
+  downloads,
   onConfirm,
 }: DownloadDialogProps) {
+  const [activeTab, setActiveTab] = useState(0);
+
+  // 归一化为 sources 数组（兼容旧版 downloads 直接传入）
+  const normalizedSources: DownloadSource[] =
+    sources && sources.length > 0
+      ? sources
+      : downloads && downloads.length > 0
+        ? [{ name: "下载", downloads }]
+        : [];
+
+  const currentSource = normalizedSources[activeTab] ?? null;
+  const currentDownloads = currentSource?.downloads ?? [];
+  const single = currentDownloads.length === 1 ? currentDownloads[0] : null;
+  const multiple = currentDownloads.length > 1;
+
+  // 打开时重置 tab
+  useEffect(() => {
+    if (isOpen) setActiveTab(0);
+  }, [isOpen]);
+
   useEffect(() => {
     if (!isOpen) return;
     const handleEsc = (e: KeyboardEvent) => {
@@ -146,9 +173,6 @@ export function DownloadDialog({
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
-
-  const single = downloads.length === 1 ? downloads[0] : null;
-  const multiple = downloads.length > 1;
 
   return (
     <div className="fixed inset-0 z-[1100] flex items-center justify-center p-4">
@@ -168,10 +192,36 @@ export function DownloadDialog({
             {description}
           </p>
 
+          {/* 多源 Tab 切换 */}
+          {normalizedSources.length > 1 && (
+            <div className="mt-5 flex gap-1 rounded-xl border border-fd-border/60 bg-fd-accent/20 p-1">
+              {normalizedSources.map((source, index) => (
+                <button
+                  key={source.name}
+                  onClick={() => setActiveTab(index)}
+                  className={`relative flex-1 rounded-lg px-3 py-2 text-xs font-medium transition-colors ${
+                    index === activeTab
+                      ? "border border-fd-border bg-fd-background text-fd-foreground"
+                      : "text-fd-muted-foreground hover:text-fd-foreground"
+                  }`}
+                >
+                  {source.name}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {/* 当前源的单源名称提示（单源但源名不是"下载"时显示） */}
+          {normalizedSources.length === 1 && currentSource && currentSource.name !== "下载" && (
+            <div className="mt-4 inline-flex items-center rounded-lg bg-fd-accent/30 px-3 py-1.5 text-xs font-medium text-fd-muted-foreground">
+              来源：{currentSource.name}
+            </div>
+          )}
+
           {/* 多版本列表 */}
           {multiple && (
             <div className="mt-5 flex flex-col gap-3">
-              {downloads.map((item) => (
+              {currentDownloads.map((item) => (
                 <DownloadItemCard
                   key={item.label}
                   item={item}
@@ -186,6 +236,13 @@ export function DownloadDialog({
           {single && (
             <div className="mt-5">
               <DownloadItemCard item={single} />
+            </div>
+          )}
+
+          {/* 无下载项 */}
+          {currentDownloads.length === 0 && (
+            <div className="mt-5 rounded-xl border border-fd-border/60 bg-fd-accent/30 p-6 text-center text-sm text-fd-muted-foreground">
+              暂无可下载内容
             </div>
           )}
 
@@ -211,7 +268,7 @@ export function DownloadDialog({
                   onConfirm?.();
                   onClose();
                 }}
-                className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-fd-primary px-4 py-2 text-sm font-medium text-fd-primary-foreground transition-colors hover:bg-fd-primary/90"
+                className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-fd-primary px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-fd-primary/90"
               >
                 立即前往
                 <ArrowSquareOutIcon className="size-3.5" />

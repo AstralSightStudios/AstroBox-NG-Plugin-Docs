@@ -10,13 +10,14 @@ import { PlatformDownloadButton } from '@/components/platform-download-button';
 
 欢迎从此开始下载与使用 AstroBox！在开始之前，你可以直接点击选择你的设备，快速查看向导。
 
-<Cards>
-  <Card icon={<AndroidLogo className="text-green-500" weight="duotone" />} title="安卓设备" href="#android" >
+<Card className="mb-3" icon={<AndroidLogo className="text-green-500" weight="duotone" />} title="安卓设备" href="#android" >
       如小米手机、红米手机、vivo 手机、oppo 手机等。
-  </Card>
+</Card>
+
+<Cards>
   <Card icon={<AppleLogo className="text-slate-500" weight="duotone" />} title="iOS / iPadOS设备" href="#ios" />
-  <Card icon={<WindowsLogo className="text-blue-500" weight="duotone" />} title="Windows 电脑" href="#windows" />
   <Card icon={<MacIcon className="text-fd-muted-foreground" />} title="Mac 电脑" href="#mac" />
+  <Card icon={<WindowsLogo className="text-blue-500" weight="duotone" />} title="Windows 电脑" href="#windows" />
   <Card icon={<LinuxLogo className="text-yellow-500" weight="duotone" />} title="Linux 电脑" href="#linux" />
 </Cards>
 
@@ -217,12 +218,6 @@ import { PlatformDownloadButton } from '@/components/platform-download-button';
 
 至此，你就成功安装好 AstroBox 了！当然还有很多其他方法可以安装，也欢迎你问问小伙伴尝试尝试。
 
-## Windows 电脑 [#windows]
-
-你可以前往官网下载 AstroBox 安装包，或是直接点击下方按钮前往下载。
-
-<PlatformDownloadButton platform="windows" label="下载 Windows 版 AstroBox" showPostDialog={false} />
-
 ## Mac 电脑 [#mac]
 
 ### 1. 下载安装包
@@ -253,8 +248,126 @@ sudo xattr -r -d com.apple.quarantine /Applications/AstroBox.app
 
 接下来你可以打开 `访达-应用程序`，找到 AstroBox，首次打开时建议 **右键-点击打开** 开启 AstroBox。
 
+## Windows 电脑 [#windows]
+
+### 1. 安装之前
+
+在安装之前，请你确认你的 Windows 电脑是否拥有蓝牙功能。使用 AstroBox 在 Windows 电脑上连接穿戴设备需要依赖蓝牙功能。
+
+### 2. 开始安装
+你可以前往官网下载 AstroBox 安装包，或是直接点击下方按钮前往下载。
+
+<PlatformDownloadButton platform="windows" label="下载 Windows 版 AstroBox" showPostDialog={false} />
+
+下载完成后，只需要打开安装包，跟随安装包持续完成安装进程即可正常使用 AstroBox。
+
 ## Linux 电脑 [#linux]
+
+### 1. 了解你的发行版
+
+前往你的终端输入以下命令或者前往设置页面查看关于页的操作系统名称，确认自己的发行版所属系列
+``` sh
+grep PRETTY_NAME /etc/os-release && uname -m
+```
+输出例如
+```sh
+PRETTY_NAME="Arch Linux"
+x86_64
+```
+如果第二行显示的不是`x86_64`，那你将无法安装软件，AstroBox只提供了`x86_64`的Linux包。
+<details>
+<summary>点击查看发行版列举</summary>
+
+### Debian 系列
+*   Debian
+*   Ubuntu
+*   Linux Mint
+*   Deepin (深度)
+*   Kali Linux
+
+### RedHat (红帽) 系列
+*   RHEL (Red Hat Enterprise Linux)
+*   Fedora
+*   CentOS Stream
+*   Rocky Linux
+*   AlmaLinux
+
+### SUSE 系列
+*   openSUSE (Leap / Tumbleweed)
+*   SLES (SUSE Linux Enterprise Server)
+
+### Arch 系列
+*   Arch Linux
+*   Manjaro
+*   EndeavourOS
+
+### 其他系列
+*   **Gentoo**
+*   **Alpine Linux**
+*   **NixOS**
+*   **Slackware**
+*   **Void Linux**
+</details>
+
+### 2. 选择正确的包
+
+我们提供`.deb`、`.rpm`、`.pkg.tar.zst`，并因上游依赖问题暂时无法提供`.AppImage`。
 
 你可以前往官网下载 AstroBox 安装包，或是直接点击下方按钮前往下载。
 
 <PlatformDownloadButton platform="linux" label="下载 Linux 版 AstroBox" showPostDialog={false} />
+
+- 对于Debian系列，你可以使用`.deb`包。
+- 对于RedHat系列以及SUSE系列，你可以使用`.rpm`包。
+- 对于Arch系列，你可以使用`.pkg.tar.zst`安装，或者移步到下一步使用更推荐，更简单的[AUR](https://aur.archlinux.org/)来源安装。
+
+### 3. 安装 AstroBox
+
+#### Debian 系列
+下载后前往终端安装：
+```sh
+sudo apt update # 更新软件源
+sudo apt install ./AstroBoxNG_2.0.0.deb
+```
+
+#### RedHat 系列
+```sh
+sudo dnf makecache # 更新软件源
+sudo dnf install ./AstroBoxNG_2.0.0.rpm
+```
+
+#### SUSE 系列
+兼容`openSUSE Leap（稳定版）`和 `Tumbleweed（滚动版）`
+```sh
+sudo zypper refresh # 更新软件源
+sudo zypper install ./AstroBoxNG_2.0.0.rpm
+```
+
+#### Arch 系列
+
+##### 通过 AUR 安装（推荐）
+更简单地通过 [AUR](https://aur.archlinux.org/) 安装，在终端运行以下命令：
+> 如未安装 AUR helper，请参考 [AUR 助手安装指南](https://wiki.archlinuxcn.org/wiki/AUR_%E5%8A%A9%E6%89%8B)安装。
+```sh
+yay -S astrobox-ng
+```
+或者使用 paru：
+```sh
+paru -S astrobox-ng
+```
+
+##### 从安装包安装
+```sh
+sudo pacman -Sy # 同步数据库
+sudo pacman -U ./AstroBoxNG_2.0.0.pkg.tar.zst
+```
+
+### 4. 启动 AstroBox
+
+打开`应用菜单(Application Launcher) `，AstroBox在此显示，点击打开，也可以右键选择让其固定在`Dock（程序坞）`或者`Panel（面板/任务栏）`里。
+
+你也可以同样使用命令行启动。
+
+```sh
+astrobox-ng
+```

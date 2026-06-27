@@ -37,6 +37,18 @@ export function Footer() {
               </Link>{" "}
               协议共享
             </p>
+            {process.env.NEXT_PUBLIC_BUILD_TIME && (
+              <p className="mt-1 text-fd-muted-foreground/60">
+                构建于 {" "}
+                {new Date(process.env.NEXT_PUBLIC_BUILD_TIME).toLocaleString("zh-CN", {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              </p>
+            )}
           </div>
         </div>
 

@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import { RootProvider } from "fumadocs-ui/provider/next";
-import { Banner } from "fumadocs-ui/components/banner";
 import {
   siteBrandName,
   siteDescription,
@@ -97,9 +96,6 @@ export default function Layout({ children }: { children: ReactNode }) {
         <meta name="google-site-verification" content="sNHpAbOCDMylrieI_PT-NbFXxpjsYgUGkL5sexF4ncE" />
       </head>
       <Body>
-        <Banner height="2.5rem" className="fixed! w-screen bg-[#1781ff] text-white z-50">
-          未完成内容，不代表最终质量
-        </Banner>
         <RootProvider
           i18n={{ locale: "zh-CN", translations: { toc: "大纲" } }}
           theme={{ disableTransitionOnChange: false }}

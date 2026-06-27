@@ -5,11 +5,29 @@
       "name": "WINDOWS 10 20H2+",
       "version": "V1.5.5",
       "hasDownload": true,
-      "downloads": [
+      "sources": [
         {
-          "label": "Windows",
-          "href": "https://www.123pan.com/s/astrobox-win111",
-          "password": "abx111w"
+          "name": "123云盘",
+          "downloads": [
+            {
+              "label": "Windows",
+              "href": "https://www.123pan.com/s/astrobox-win111",
+              "password": "abx111w"
+            }
+          ]
+        },
+        {
+          "name": "GitHub Releases",
+          "downloads": [
+            {
+              "label": "Windows (x64)",
+              "href": "https://github.com/your-org/astrobox/releases/download/v1.5.5/AstroBox-1.5.5-win-x64.exe"
+            },
+            {
+              "label": "Windows (arm64)",
+              "href": "https://github.com/your-org/astrobox/releases/download/v1.5.5/AstroBox-1.5.5-win-arm64.exe"
+            }
+          ]
         }
       ],
       "docHref": "/docs/usage",
@@ -20,11 +38,16 @@
       "name": "MACOS SONOMA (14)+",
       "version": "V1.5.91",
       "hasDownload": true,
-      "downloads": [
+      "sources": [
         {
-          "label": "macOS",
-          "href": "https://www.123pan.com/s/astrobox-mac",
-          "password": "abxm"
+          "name": "123云盘",
+          "downloads": [
+            {
+              "label": "macOS",
+              "href": "https://www.123pan.com/s/astrobox-mac",
+              "password": "abxm"
+            }
+          ]
         }
       ],
       "docHref": "/docs/usage",
@@ -35,16 +58,21 @@
       "name": "DEBIAN/REDHAT",
       "version": "V1.5.5",
       "hasDownload": true,
-      "downloads": [
+      "sources": [
         {
-          "label": "Debian (.deb)",
-          "href": "https://www.123pan.com/s/astrobox-deb",
-          "password": "abxd"
-        },
-        {
-          "label": "RedHat (.rpm)",
-          "href": "https://www.123pan.com/s/astrobox-rpm",
-          "password": "abxr"
+          "name": "123云盘",
+          "downloads": [
+            {
+              "label": "Debian (.deb)",
+              "href": "https://www.123pan.com/s/astrobox-deb",
+              "password": "abxd"
+            },
+            {
+              "label": "RedHat (.rpm)",
+              "href": "https://www.123pan.com/s/astrobox-rpm",
+              "password": "abxr"
+            }
+          ]
         }
       ],
       "docHref": "/docs/usage",
@@ -55,10 +83,15 @@
       "name": "IOS/IPADOS 14+",
       "version": "V1.5.5",
       "hasDownload": true,
-      "downloads": [
+      "sources": [
         {
-          "label": "iOS / iPadOS",
-          "href": "https://apps.apple.com/app/astrobox"
+          "name": "App Store",
+          "downloads": [
+            {
+              "label": "iOS / iPadOS",
+              "href": "https://apps.apple.com/app/astrobox"
+            }
+          ]
         }
       ],
       "docHref": "/docs/usage",
@@ -69,11 +102,16 @@
       "name": "Android 10+",
       "version": "V1.5.5",
       "hasDownload": true,
-      "downloads": [
+      "sources": [
         {
-          "label": "Android",
-          "href": "https://www.123pan.com/s/astrobox-android",
-          "password": "abxa"
+          "name": "123云盘",
+          "downloads": [
+            {
+              "label": "Android",
+              "href": "https://www.123pan.com/s/astrobox-android",
+              "password": "abxa"
+            }
+          ]
         }
       ],
       "docHref": "/docs/usage",
@@ -85,11 +123,16 @@
       "version": "V1.5.5",
       "hasDownload": true,
       "actionLabel": "前往",
-      "downloads": [
+      "sources": [
         {
-          "label": "Chromium",
-          "href": "https://chrome.google.com/webstore/detail/astrobox",
-          "linkLabel": "链接"
+          "name": "Chrome 网上应用店",
+          "downloads": [
+            {
+              "label": "Chromium",
+              "href": "https://chrome.google.com/webstore/detail/astrobox",
+              "linkLabel": "链接"
+            }
+          ]
         }
       ],
       "docHref": "/docs/usage",

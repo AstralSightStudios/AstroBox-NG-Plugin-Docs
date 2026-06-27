@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { CaretRightIcon } from "@phosphor-icons/react";
-import { DownloadDialog, type DownloadItem } from "./download-dialog";
+import { DownloadDialog, type DownloadSource } from "./download-dialog";
 import { PostDownloadDialog } from "./post-download-dialog";
 import rawDownloads from "@/lib/downloads.json";
 
@@ -81,12 +81,7 @@ export function PlatformDownloadButton({
     }
   };
 
-  const downloads: DownloadItem[] = platformData.downloads.map((d) => ({
-    label: d.label,
-    href: d.href,
-    password: (d as { password?: string }).password,
-    linkLabel: (d as { linkLabel?: string }).linkLabel,
-  }));
+  const sources: DownloadSource[] = (platformData as any).sources ?? [];
 
   return (
     <>
@@ -117,7 +112,7 @@ export function PlatformDownloadButton({
         onClose={() => setDialogOpen(false)}
         title="即将离开 AstroBox 文档"
         description="目标页面由第三方提供，请确认链接地址后再继续访问。"
-        downloads={downloads}
+        sources={sources}
         onConfirm={handleConfirm}
       />
 

@@ -14,7 +14,7 @@ import {
   AndroidLogo,
   GoogleChromeLogo,
 } from "@phosphor-icons/react";
-import { DownloadDialog, type DownloadItem } from "./download-dialog";
+import { DownloadDialog, type DownloadSource } from "./download-dialog";
 import { PostDownloadDialog } from "./post-download-dialog";
 import { MacIcon } from "./mac-icon";
 
@@ -23,7 +23,7 @@ interface Platform {
   name: string;
   version: string;
   hasDownload: boolean;
-  downloads: DownloadItem[];
+  sources: DownloadSource[];
   docHref?: string;
   docLabel?: string;
   actionLabel?: string;
@@ -235,7 +235,7 @@ export function DownloadCards() {
         onClose={() => setDialogOpen(false)}
         title="即将离开 AstroBox 文档"
         description="目标页面由第三方提供，请确认链接地址后再继续访问。"
-        downloads={activePlatform?.downloads}
+        sources={activePlatform?.sources}
         onConfirm={handleConfirm}
       />
 

@@ -141,7 +141,7 @@ html[data-theme-transition="active"] #nd-page .prose :where(
     --color-fd-primary-foreground: #ffffff;
     --color-fd-accent: rgba(23, 129, 255, 0.08);
     --color-fd-ring: #1781ff;
-    --fd-nav-height: 118px !important;
+    --fd-nav-height: 64px !important;
     --color-main-background: var(--color-fd-background);
     --color-text: var(--color-fd-foreground);
     --font-family-serif: Georgia, "Times New Roman", "Songti SC", serif;
@@ -376,7 +376,7 @@ header+div:has(aside#nd-sidebar) {
 }
 
 #nd-page {
-    margin-top: 32px;
+    margin-top: 24px;
 }
 
 @media (max-width: 767px) {
@@ -385,7 +385,7 @@ header+div:has(aside#nd-sidebar) {
     }
 
     #nd-page {
-        margin-top: 158px;
+        margin-top: 72px;
     }
 
     #nd-sidebar-mobile {
@@ -407,7 +407,7 @@ header+div:has(aside#nd-sidebar) {
     }
 
     #nd-page {
-        margin-top: 96px;
+        margin-top: 48px;
     }
 
     #nd-docs-layout [data-toc-popover] > header{

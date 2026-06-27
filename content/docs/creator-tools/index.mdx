@@ -3,9 +3,49 @@ title: 快速开始
 description: 学习第三方资源的上传、发布，以及接入外部平台实现资源售卖的全流程。
 ---
 
+import {
+  AndroidLogo,
+  AppleLogo,
+  WindowsLogo,
+  LinuxLogo,
+} from "@phosphor-icons/react/dist/ssr";
+import { MacIcon } from "@/components/mac-icon";
+import { PlatformDownloadButton } from "@/components/platform-download-button";
+
 AstroBox 在 2.0 中正式启用了 CreatorConsole 创作者平台。借助此平台，所有创作者可以用简明易懂的图形界面完成资源的发布，并实现接入外部平台完成资源售卖。
 
 <Cards>
   <Card title="账号" href="./creator-tools/account" />
   <Card title="资源管理" href="./creator-tools/resource-management" />
 </Cards>
+
+## 下载 CreatorConsole
+
+选择你的设备，点击下方卡片下载 CreatorConsole。
+
+<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+  <PlatformDownloadButton
+    product="creatorconsole"
+    platform="windows"
+    label="下载 Windows 版"
+    showPostDialog={false}
+  />
+  <PlatformDownloadButton
+    product="creatorconsole"
+    platform="macos"
+    label="下载 macOS 版"
+    showPostDialog={false}
+  />
+  <PlatformDownloadButton
+    product="creatorconsole"
+    platform="android"
+    label="下载 Android 版"
+    showPostDialog={false}
+  />
+  <PlatformDownloadButton
+    product="creatorconsole"
+    platform="ios"
+    label="下载 iOS 版"
+    showPostDialog={false}
+  />
+</div>

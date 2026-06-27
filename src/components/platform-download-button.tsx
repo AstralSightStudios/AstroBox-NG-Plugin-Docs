@@ -49,12 +49,14 @@ const iconMap: Record<string, React.FC<{ className?: string }>> = {
   ),
 };
 interface PlatformDownloadButtonProps {
+  product?: string;
   platform: string;
   label?: string;
   showPostDialog?: boolean;
 }
 
 export function PlatformDownloadButton({
+  product = "astrobox",
   platform,
   label,
   showPostDialog = true,
@@ -62,7 +64,11 @@ export function PlatformDownloadButton({
   const [dialogOpen, setDialogOpen] = useState(false);
   const [postDialogOpen, setPostDialogOpen] = useState(false);
 
-  const platformData = rawDownloads.platforms.find(
+  const productData = rawDownloads.products.find(
+    (p) => p.id.toLowerCase() === product.toLowerCase(),
+  );
+
+  const platformData = productData?.platforms.find(
     (p) =>
       p.name.toLowerCase() === platform.toLowerCase() ||
       p.icon.toLowerCase() === `${platform.toLowerCase()}icon` ||

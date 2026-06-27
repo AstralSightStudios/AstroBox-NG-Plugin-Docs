@@ -29,6 +29,14 @@ interface Platform {
   actionLabel?: string;
 }
 
+interface Product {
+  id: string;
+  name: string;
+  tagline: string;
+  platforms: Platform[];
+  supportedDevices?: Array<{ name: string; status: string; note: string }>;
+}
+
 import rawDownloads from "@/lib/downloads.json";
 
 const iconMap: Record<string, React.FC<{ className?: string }>> = {
@@ -65,18 +73,23 @@ const iconMap: Record<string, React.FC<{ className?: string }>> = {
   ),
 };
 
-const platforms: Platform[] = rawDownloads.platforms.map((p) => ({
-  ...p,
-  icon: iconMap[p.icon] ?? WindowsLogo,
+const products: Product[] = rawDownloads.products.map((product) => ({
+  ...product,
+  platforms: product.platforms.map((p) => ({
+    ...p,
+    icon: iconMap[p.icon] ?? WindowsLogo,
+  })),
 }));
 
-const supportedDevices = rawDownloads.supportedDevices;
-
 export function DownloadCards() {
+  const [activeProductId, setActiveProductId] = useState(products[0]?.id ?? "");
   const [dialogOpen, setDialogOpen] = useState(false);
   const [postDialogOpen, setPostDialogOpen] = useState(false);
   const [activePlatform, setActivePlatform] = useState<Platform | null>(null);
   const [deviceListOpen, setDeviceListOpen] = useState(true);
+
+  const activeProduct = products.find((p) => p.id === activeProductId) ?? products[0];
+  const supportedDevices = activeProduct?.supportedDevices ?? [];
 
   const handleDownloadClick = (platform: Platform) => {
     if (!platform.hasDownload) return;
@@ -96,109 +109,139 @@ export function DownloadCards() {
           快速开始
         </h2>
         <p className="mt-4 text-sm text-fd-muted-foreground md:text-base">
-          从下载最新版 AstroBox 开始
+          从下载最新版 {activeProduct?.name ?? "AstroBox"} 开始
         </p>
       </div>
 
-      {/* 设备兼容性提示 */}
-      <div className="mx-2.5 mb-8 rounded-3xl border border-fd-border/60 bg-fd-background p-3 md:p-4.5">
-        <button
-          onClick={() => setDeviceListOpen((v) => !v)}
-          className="flex w-full items-center justify-between gap-3 text-left"
-        >
-          <div className="flex items-center gap-3">
-            <div className="inline-flex shrink-0 items-center justify-center rounded-xl bg-fd-primary/10 p-2.5 text-fd-primary">
-              <WatchIcon className="size-5" />
-            </div>
-            <div>
-              <h3 className="text-base font-semibold text-fd-foreground">
-                下载前，先确认你的设备是否受支持
-              </h3>
-              <p className="text-sm text-fd-muted-foreground">
-                AstroBox
-                支持多种主流穿戴设备，但不同型号的功能适配情况可能存在差异。
-              </p>
-            </div>
+      {/* 产品切换 */}
+      {products.length > 1 && (
+        <div className="mx-2.5 mb-8 flex justify-center">
+          <div className="inline-flex gap-1 rounded-2xl border border-fd-border/60 bg-fd-accent/20 p-1">
+            {products.map((product) => (
+              <button
+                key={product.id}
+                onClick={() => setActiveProductId(product.id)}
+                className={`rounded-xl px-5 py-2.5 text-sm font-medium transition-all ${
+                  product.id === activeProductId
+                    ? "border border-fd-border bg-fd-background text-fd-foreground shadow-sm"
+                    : "text-fd-muted-foreground hover:text-fd-foreground"
+                }`}
+              >
+                {product.name}
+              </button>
+            ))}
           </div>
-          <div className="inline-flex shrink-0 items-center justify-center rounded-lg p-2 text-fd-muted-foreground transition-colors hover:bg-fd-accent/50 hover:text-fd-foreground">
-            {deviceListOpen ? (
-              <CaretUpIcon className="size-5" />
-            ) : (
-              <CaretDownIcon className="size-5" />
-            )}
-          </div>
-        </button>
+        </div>
+      )}
 
-        <div
-          className={`grid transition-all duration-300 ease-in-out ${deviceListOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
-        >
-          <div className="overflow-hidden">
-            <div className="mt-4 overflow-hidden rounded-xl border border-fd-border/60">
-              <table className="w-full text-left text-sm">
-                <thead>
-                  <tr className="hidden bg-fd-accent/50 md:table-row">
-                    <th className="px-4 py-2.5 font-medium text-fd-foreground">
-                      型号
-                    </th>
-                    <th className="px-4 py-2.5 font-medium text-fd-foreground">
-                      状态
-                    </th>
-                    <th className="px-4 py-2.5 font-medium text-fd-foreground">
-                      备注
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-fd-border/60">
-                  {supportedDevices.map((device) => (
-                    <tr
-                      key={device.name}
-                      className="block transition-colors hover:bg-fd-accent/30 md:table-row"
-                    >
-                      <td className="block px-4 pt-4 pb-1 text-fd-foreground md:table-cell md:py-2.5">
-                        <div className="flex items-start justify-between gap-3 md:block">
-                          <span>{device.name}</span>
-                          <span className="shrink-0 md:hidden">
-                            {device.status === "supported" ? (
-                              <span className="inline-flex items-center gap-1 rounded-md bg-green-500/10 px-2 py-0.5 text-xs font-medium whitespace-nowrap text-green-600 dark:text-green-400">
-                                <CheckCircleIcon className="size-3" />
-                                完整支持
-                              </span>
-                            ) : (
-                              <span className="inline-flex items-center gap-1 rounded-md bg-fd-muted/20 px-2 py-0.5 text-xs font-medium whitespace-nowrap text-fd-muted-foreground">
-                                <XCircleIcon className="size-3" />
-                                不支持
-                              </span>
-                            )}
-                          </span>
-                        </div>
-                      </td>
-                      <td className="hidden px-4 py-2.5 md:table-cell">
-                        {device.status === "supported" ? (
-                          <span className="inline-flex items-center gap-1 rounded-md bg-green-500/10 px-2 py-0.5 text-xs font-medium whitespace-nowrap text-green-600 dark:text-green-400">
-                            <CheckCircleIcon className="size-3" />
-                            完整支持
-                          </span>
-                        ) : (
-                          <span className="inline-flex items-center gap-1 rounded-md bg-fd-muted/20 px-2 py-0.5 text-xs font-medium whitespace-nowrap text-fd-muted-foreground">
-                            <XCircleIcon className="size-3" />
-                            不支持
-                          </span>
-                        )}
-                      </td>
-                      <td className="block px-4 pt-1 pb-4 text-sm text-fd-muted-foreground md:table-cell md:py-2.5">
-                        {device.note}
-                      </td>
+      {/* 产品简介 */}
+      {activeProduct?.tagline && (
+        <p className="mx-2.5 mb-8 text-center text-sm text-fd-muted-foreground">
+          {activeProduct.tagline}
+        </p>
+      )}
+
+      {/* 设备兼容性提示（仅 AstroBox 显示） */}
+      {supportedDevices.length > 0 && (
+        <div className="mx-2.5 mb-8 rounded-3xl border border-fd-border/60 bg-fd-background p-3 md:p-4.5">
+          <button
+            onClick={() => setDeviceListOpen((v) => !v)}
+            className="flex w-full items-center justify-between gap-3 text-left"
+          >
+            <div className="flex items-center gap-3">
+              <div className="inline-flex shrink-0 items-center justify-center rounded-xl bg-fd-primary/10 p-2.5 text-fd-primary">
+                <WatchIcon className="size-5" />
+              </div>
+              <div>
+                <h3 className="text-base font-semibold text-fd-foreground">
+                  下载前，先确认你的设备是否受支持
+                </h3>
+                <p className="text-sm text-fd-muted-foreground">
+                  {activeProduct?.name ?? "AstroBox"}
+                  支持多种主流穿戴设备，但不同型号的功能适配情况可能存在差异。
+                </p>
+              </div>
+            </div>
+            <div className="inline-flex shrink-0 items-center justify-center rounded-lg p-2 text-fd-muted-foreground transition-colors hover:bg-fd-accent/50 hover:text-fd-foreground">
+              {deviceListOpen ? (
+                <CaretUpIcon className="size-5" />
+              ) : (
+                <CaretDownIcon className="size-5" />
+              )}
+            </div>
+          </button>
+
+          <div
+            className={`grid transition-all duration-300 ease-in-out ${deviceListOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
+          >
+            <div className="overflow-hidden">
+              <div className="mt-4 overflow-hidden rounded-xl border border-fd-border/60">
+                <table className="w-full text-left text-sm">
+                  <thead>
+                    <tr className="hidden bg-fd-accent/50 md:table-row">
+                      <th className="px-4 py-2.5 font-medium text-fd-foreground">
+                        型号
+                      </th>
+                      <th className="px-4 py-2.5 font-medium text-fd-foreground">
+                        状态
+                      </th>
+                      <th className="px-4 py-2.5 font-medium text-fd-foreground">
+                        备注
+                      </th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody className="divide-y divide-fd-border/60">
+                    {supportedDevices.map((device) => (
+                      <tr
+                        key={device.name}
+                        className="block transition-colors hover:bg-fd-accent/30 md:table-row"
+                      >
+                        <td className="block px-4 pt-4 pb-1 text-fd-foreground md:table-cell md:py-2.5">
+                          <div className="flex items-start justify-between gap-3 md:block">
+                            <span>{device.name}</span>
+                            <span className="shrink-0 md:hidden">
+                              {device.status === "supported" ? (
+                                <span className="inline-flex items-center gap-1 rounded-md bg-green-500/10 px-2 py-0.5 text-xs font-medium whitespace-nowrap text-green-600 dark:text-green-400">
+                                  <CheckCircleIcon className="size-3" />
+                                  完整支持
+                                </span>
+                              ) : (
+                                <span className="inline-flex items-center gap-1 rounded-md bg-fd-muted/20 px-2 py-0.5 text-xs font-medium whitespace-nowrap text-fd-muted-foreground">
+                                  <XCircleIcon className="size-3" />
+                                  不支持
+                                </span>
+                              )}
+                            </span>
+                          </div>
+                        </td>
+                        <td className="hidden px-4 py-2.5 md:table-cell">
+                          {device.status === "supported" ? (
+                            <span className="inline-flex items-center gap-1 rounded-md bg-green-500/10 px-2 py-0.5 text-xs font-medium whitespace-nowrap text-green-600 dark:text-green-400">
+                              <CheckCircleIcon className="size-3" />
+                              完整支持
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center gap-1 rounded-md bg-fd-muted/20 px-2 py-0.5 text-xs font-medium whitespace-nowrap text-fd-muted-foreground">
+                              <XCircleIcon className="size-3" />
+                              不支持
+                            </span>
+                          )}
+                        </td>
+                        <td className="block px-4 pt-1 pb-4 text-sm text-fd-muted-foreground md:table-cell md:py-2.5">
+                          {device.note}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
 
       <div className="grid grid-cols-2 gap-px bg-fd-border/70 md:grid-cols-3">
-        {platforms.map((p) => {
+        {activeProduct?.platforms.map((p) => {
           const Icon = p.icon;
           return (
             <div

@@ -1,7 +1,10 @@
 {
-  "title": "创作者工具使用文档",
+  "title": "创作者工具",
   "icon": "MagicWand",
-  "description": "学习表盘、快应用等第三方资源的上传、发布，以及接入外部平台实现资源售卖的全流程。",
+  "description": "学习第三方资源的上传、发布，以及接入外部平台实现资源售卖的全流程。",
   "root": true,
-  "pages": ["index"]
+  "pages": [
+    "index",
+    "account",
+    "resource-management"]
 }

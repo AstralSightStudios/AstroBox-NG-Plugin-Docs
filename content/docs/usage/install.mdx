@@ -3,29 +3,81 @@ title: 适用条件与安装
 icon: Download
 description: 了解支持的设备及如何安装 AstroBox
 ---
-import { AndroidLogo, AppleLogo, WindowsLogo, LinuxLogo } from '@phosphor-icons/react/dist/ssr';
-import { MacIcon } from '@/components/mac-icon';
-import { PlatformDownloadButton } from '@/components/platform-download-button';
 
+import {
+  AndroidLogo,
+  AppleLogo,
+  WindowsLogo,
+  LinuxLogo,
+} from "@phosphor-icons/react/dist/ssr";
+import { MacIcon } from "@/components/mac-icon";
+import { PlatformDownloadButton } from "@/components/platform-download-button";
 
 欢迎从此开始下载与使用 AstroBox！在开始之前，你可以直接点击选择你的设备，快速查看向导。
 
-<Card className="mb-3" icon={<AndroidLogo className="text-green-500" weight="duotone" />} title="安卓设备" href="#android" >
-      如小米手机、红米手机、vivo 手机、oppo 手机等。
+<Card
+  className="mb-3"
+  icon={<AndroidLogo className="text-green-500" weight="duotone" />}
+  title="安卓设备"
+  href="#android"
+>
+  如小米手机、红米手机、vivo 手机、oppo 手机等。
 </Card>
 
 <Cards>
-  <Card icon={<AppleLogo className="text-slate-500" weight="duotone" />} title="iOS / iPadOS设备" href="#ios" />
-  <Card icon={<MacIcon className="text-fd-muted-foreground" />} title="Mac 电脑" href="#mac" />
-  <Card icon={<WindowsLogo className="text-blue-500" weight="duotone" />} title="Windows 电脑" href="#windows" />
-  <Card icon={<LinuxLogo className="text-yellow-500" weight="duotone" />} title="Linux 电脑" href="#linux" />
+  <Card
+    icon={<AppleLogo className="text-slate-500" weight="duotone" />}
+    title="iOS / iPadOS设备"
+    href="#ios"
+  />
+  <Card
+    icon={<MacIcon className="text-fd-muted-foreground" />}
+    title="Mac 电脑"
+    href="#mac"
+  />
+  <Card
+    icon={<WindowsLogo className="text-blue-500" weight="duotone" />}
+    title="Windows 电脑"
+    href="#windows"
+  />
+  <Card
+    icon={<LinuxLogo className="text-yellow-500" weight="duotone" />}
+    title="Linux 电脑"
+    href="#linux"
+  />
 </Cards>
 
 ## 安卓设备 [#android]
 
+### 1. 下载安装包并安装
+
 你可以前往官网下载 AstroBox 安装包，或是直接点击下方按钮前往下载。
 
-<PlatformDownloadButton platform="android" label="下载 Android 版 AstroBox" showPostDialog={false} />
+<PlatformDownloadButton
+  platform="android"
+  label="下载 Android 版 AstroBox"
+  showPostDialog={false}
+/>
+
+下载完成后寻找到你的安装包下载位置并点击安装。一般它就在你手机文件管理器中的 Download（下载）文件夹或该文件夹下的浏览器子文件夹（如 Via 就在 Download/Via 下，夸克就在 Download/QuarkDownloads 下）。
+
+### 2. 首次打开及权限配置
+
+首次打开应用会要求你给与一些权限，这些权限都是要完整给到的，否则连接过程就会出问题。
+
+首先是位置权限，记住同时要给精确位置权限。我们不会采集你的位置信息，这是安卓蓝牙连接所要求的。
+
+![](/assets/images/docs/usage/install/1.jpg)
+
+其次蓝牙权限也要始终允许，以便 AstroBox 能够连接到你的穿戴设备。
+
+![](/assets/images/docs/usage/install/2.jpg)
+
+同时我也建议你手动检查并打开附近设备权限。一般你可以长按桌面上的 AstroBox 应用，点击详情按钮，选择「权限管理」，然后找到并打开「附近设备」权限。
+
+![](/assets/images/docs/usage/install/3.jpg)
+
+接下来只需要正常完成 OOBE 流程就可以使用 AstroBox 了。
 
 ## iOS / iPadOS 设备 [#ios]
 
@@ -42,6 +94,7 @@ import { PlatformDownloadButton } from '@/components/platform-download-button';
 #### 0. 准备工作
 
 首先，你需要准备以下内容才能按照本教程在 iOS 设备上安装 AstroBox：
+
 - iOS 设备
 - 电脑
 
@@ -67,7 +120,11 @@ import { PlatformDownloadButton } from '@/components/platform-download-button';
 
 接下来，请你通过官网下载 AstroBox 的 ipa 文件，或是直接点击下方按钮前往下载。
 
-<PlatformDownloadButton platform="ios" label="下载 iOS 版 AstroBox (ipa)" showPostDialog={false} />
+<PlatformDownloadButton
+  platform="ios"
+  label="下载 iOS 版 AstroBox (ipa)"
+  showPostDialog={false}
+/>
 
 然后，请你启动 AltServer（首次启动时请在"应用程序"文件夹中右键打开），按住 Option 键，点击顶部菜单栏中的 AltServer 图标，然后选择 `AstroBox.ipa`
 
@@ -95,7 +152,9 @@ import { PlatformDownloadButton } from '@/components/platform-download-button';
 
 至此安装完成。
 
-<Callout>需要注意的是：此安装方式仅在七天内有效，超过七天后应用过期，需要重新安装。</Callout>
+<Callout>
+  需要注意的是：此安装方式仅在七天内有效，超过七天后应用过期，需要重新安装。
+</Callout>
 
 ### 使用电脑在 iOS 设备上建立本地侧载环境后安装 AstroBox
 
@@ -106,6 +165,7 @@ import { PlatformDownloadButton } from '@/components/platform-download-button';
 #### 0. 准备工作 [#sidestore-prepare]
 
 首先，你需要准备以下内容才能按照本教程在 iOS 设备上安装 AstroBox：
+
 - 美区 AppleID（其他非国区区域或许也可以）
 - iOS 设备
 - 电脑
@@ -115,6 +175,7 @@ import { PlatformDownloadButton } from '@/components/platform-download-button';
 **Mac**
 
 对于 Mac 用户，你需要在 SideStore 官网 下载以下内容：
+
 - AltServer
 - SideStore IPA
 - idevice pair
@@ -126,6 +187,7 @@ import { PlatformDownloadButton } from '@/components/platform-download-button';
 **Windows**
 
 对于 Windows 用户，你需要在 SideStore 官网 下载以下内容：
+
 - AltServer
 - SideStore IPA
 - idevice pair
@@ -188,7 +250,9 @@ import { PlatformDownloadButton } from '@/components/platform-download-button';
 
 本步骤完成。
 
-<Callout>需要注意的是：如果你更新或重置设备，你的配对文件将失效，你将要重新完成此步骤。</Callout>
+<Callout>
+  需要注意的是：如果你更新或重置设备，你的配对文件将失效，你将要重新完成此步骤。
+</Callout>
 
 #### 4. 安装 StosVPN [#sidestore-vpn]
 
@@ -216,18 +280,27 @@ import { PlatformDownloadButton } from '@/components/platform-download-button';
 
 ![](/assets/images/docs/usage/install/ios-sidestore-astrobox-installed.png)
 
-至此，你就成功安装好 AstroBox 了！当然还有很多其他方法可以安装，也欢迎你问问小伙伴尝试尝试。
+至此，你就成功安装好 AstroBox 了！当然还有很多其他方法可以安装，也欢迎你问问小伙伴尝试尝试。接下来只需要正常完成 OOBE 流程就可以使用 AstroBox 了。
 
 ## Mac 电脑 [#mac]
 
 ### 1. 下载安装包
+
 你可以前往官网下载 AstroBox 安装包，或是直接点击下方按钮前往下载。
 
 下载前请确定与你的设备是否一致，我们提供了 `ARM` 设备的版本和 `x86` 设备的版本。属于 M 系列或 A 系列，那么请选择下载 `ARM` 设备的版本；如果不是，请下载 `x86` 版本。
 
 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-  <PlatformDownloadButton platform="macOS" label="下载 macOS(x86) 版 AstroBox" showPostDialog={false} />
-  <PlatformDownloadButton platform="macOS" label="下载 macOS(ARM) 版 AstroBox" showPostDialog={false} />
+  <PlatformDownloadButton
+    platform="macOS"
+    label="下载 macOS(x86) 版 AstroBox"
+    showPostDialog={false}
+  />
+  <PlatformDownloadButton
+    platform="macOS"
+    label="下载 macOS(ARM) 版 AstroBox"
+    showPostDialog={false}
+  />
 </div>
 
 ### 2. 安装 AstroBox
@@ -246,7 +319,7 @@ sudo xattr -r -d com.apple.quarantine /Applications/AstroBox.app
 
 ### 3. 打开 AstroBox
 
-接下来你可以打开 `访达-应用程序`，找到 AstroBox，首次打开时建议 **右键-点击打开** 开启 AstroBox。
+接下来你可以打开 `访达-应用程序`，找到 AstroBox，首次打开时建议 **右键-点击打开** 开启 AstroBox。过程中应用会向你索要蓝牙等权限，请您全部点击允许。接下来只需要正常完成 OOBE 流程就可以使用 AstroBox 了。
 
 ## Windows 电脑 [#windows]
 
@@ -255,58 +328,74 @@ sudo xattr -r -d com.apple.quarantine /Applications/AstroBox.app
 在安装之前，请你确认你的 Windows 电脑是否拥有蓝牙功能。使用 AstroBox 在 Windows 电脑上连接穿戴设备需要依赖蓝牙功能。
 
 ### 2. 开始安装
+
 你可以前往官网下载 AstroBox 安装包，或是直接点击下方按钮前往下载。
 
-<PlatformDownloadButton platform="windows" label="下载 Windows 版 AstroBox" showPostDialog={false} />
+<PlatformDownloadButton
+  platform="windows"
+  label="下载 Windows 版 AstroBox"
+  showPostDialog={false}
+/>
 
-下载完成后，只需要打开安装包，跟随安装包持续完成安装进程即可正常使用 AstroBox。
+下载完成后，只需要打开安装包，跟随安装包持续完成安装进程即可正常使用 AstroBox。接下来只需要正常打开应用完成 OOBE 流程就可以使用 AstroBox 了。
 
 ## Linux 电脑 [#linux]
 
 ### 1. 了解你的发行版
 
 前往你的终端输入以下命令或者前往设置页面查看关于页的操作系统名称，确认自己的发行版所属系列
-``` sh
+
+```sh
 grep PRETTY_NAME /etc/os-release && uname -m
 ```
+
 输出例如
+
 ```sh
 PRETTY_NAME="Arch Linux"
 x86_64
 ```
+
 如果第二行显示的不是`x86_64`，那你将无法安装软件，AstroBox只提供了`x86_64`的Linux包。
+
 <details>
-<summary>点击查看发行版列举</summary>
+    <summary>点击查看发行版列举</summary>
+    
+    ### Debian 系列
+    
+    - Debian
+    - Ubuntu
+    - Linux Mint
+    - Deepin (深度)
+    - Kali Linux
+    
+    ### RedHat (红帽) 系列
+    
+    - RHEL (Red Hat Enterprise Linux)
+    - Fedora
+    - CentOS Stream
+    - Rocky Linux
+    - AlmaLinux
+    
+    ### SUSE 系列
+    
+    - openSUSE (Leap / Tumbleweed)
+    - SLES (SUSE Linux Enterprise Server)
+    
+    ### Arch 系列
+    
+    - Arch Linux
+    - Manjaro
+    - EndeavourOS
+    
+    ### 其他系列
+    
+    - **Gentoo**
+    - **Alpine Linux**
+    - **NixOS**
+    - **Slackware**
+    - **Void Linux**
 
-### Debian 系列
-*   Debian
-*   Ubuntu
-*   Linux Mint
-*   Deepin (深度)
-*   Kali Linux
-
-### RedHat (红帽) 系列
-*   RHEL (Red Hat Enterprise Linux)
-*   Fedora
-*   CentOS Stream
-*   Rocky Linux
-*   AlmaLinux
-
-### SUSE 系列
-*   openSUSE (Leap / Tumbleweed)
-*   SLES (SUSE Linux Enterprise Server)
-
-### Arch 系列
-*   Arch Linux
-*   Manjaro
-*   EndeavourOS
-
-### 其他系列
-*   **Gentoo**
-*   **Alpine Linux**
-*   **NixOS**
-*   **Slackware**
-*   **Void Linux**
 </details>
 
 ### 2. 选择正确的包
@@ -315,7 +404,11 @@ x86_64
 
 你可以前往官网下载 AstroBox 安装包，或是直接点击下方按钮前往下载。
 
-<PlatformDownloadButton platform="linux" label="下载 Linux 版 AstroBox" showPostDialog={false} />
+<PlatformDownloadButton
+  platform="linux"
+  label="下载 Linux 版 AstroBox"
+  showPostDialog={false}
+/>
 
 - 对于Debian系列，你可以使用`.deb`包。
 - 对于RedHat系列以及SUSE系列，你可以使用`.rpm`包。
@@ -324,20 +417,25 @@ x86_64
 ### 3. 安装 AstroBox
 
 #### Debian 系列
+
 下载后前往终端安装：
+
 ```sh
 sudo apt update # 更新软件源
 sudo apt install ./AstroBoxNG_2.0.0.deb
 ```
 
 #### RedHat 系列
+
 ```sh
 sudo dnf makecache # 更新软件源
 sudo dnf install ./AstroBoxNG_2.0.0.rpm
 ```
 
 #### SUSE 系列
+
 兼容`openSUSE Leap（稳定版）`和 `Tumbleweed（滚动版）`
+
 ```sh
 sudo zypper refresh # 更新软件源
 sudo zypper install ./AstroBoxNG_2.0.0.rpm
@@ -346,17 +444,23 @@ sudo zypper install ./AstroBoxNG_2.0.0.rpm
 #### Arch 系列
 
 ##### 通过 AUR 安装（推荐）
+
 更简单地通过 [AUR](https://aur.archlinux.org/) 安装，在终端运行以下命令：
+
 > 如未安装 AUR helper，请参考 [AUR 助手安装指南](https://wiki.archlinuxcn.org/wiki/AUR_%E5%8A%A9%E6%89%8B)安装。
+
 ```sh
 yay -S astrobox-ng
 ```
+
 或者使用 paru：
+
 ```sh
 paru -S astrobox-ng
 ```
 
 ##### 从安装包安装
+
 ```sh
 sudo pacman -Sy # 同步数据库
 sudo pacman -U ./AstroBoxNG_2.0.0.pkg.tar.zst
@@ -371,3 +475,5 @@ sudo pacman -U ./AstroBoxNG_2.0.0.pkg.tar.zst
 ```sh
 astrobox-ng
 ```
+
+接下来只需要正常打开应用完成 OOBE 流程就可以使用 AstroBox 了。

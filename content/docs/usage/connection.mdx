@@ -4,7 +4,7 @@ icon: LinkSimpleHorizontal
 description: 了解如何通过小米/vivo账号或其他方式导入设备并连接
 ---
 
-AstroBox 支持使用多种方式导入不同品牌的穿戴设备（例如小米、vivo）
+AstroBox 支持使用多种方式导入不同品牌的穿戴设备（例如小米、vivo），在开始之前，你可以直接点击选择你想看的部分，快速查看向导。
 
 <Cards className="mb-3">
   <Card title="从小米账号开始" href="#mi">
@@ -13,11 +13,13 @@ AstroBox 支持使用多种方式导入不同品牌的穿戴设备（例如小�
   <Card title="从 vivo 账号开始" href="#vivo">
     AstroBox 支持通过直接登录 vivo账号同步同账号下的所有穿戴设备。
   </Card>
+  <Card title="手动输入 Authkey 连接" href="#other_Authkey">
+    仅支持小米穿戴设备的连接
+  </Card>
+  <Card title="手动输入 OpenID 连接" href="#other_openid">
+    仅支持 vivo/iQOO 穿戴设备
+  </Card>
 </Cards>
-
-<Card title="手动输入 Authkey 连接" href="#other">
-  仅支持小米穿戴设备的连接
-</Card>
 
 ## 从小米账号开始 [#mi]
 
@@ -156,6 +158,7 @@ AstroBox 支持使用多种方式导入不同品牌的穿戴设备（例如小�
 
 如果你的手机/电脑出现这样的提示，请点击绑定。
 
+![](/assets/images/docs/usage/connection/17.png)
 ![](/assets/images/docs/usage/connection/14.png)
 
 接下来绑定就完成了～你可以开始体验各种穿戴设备三方功能了～
@@ -172,7 +175,7 @@ AstroBox 的相关功能没有向我们的服务器回传任何 vivo 账号数�
 
 如果 vivo 方面认为该功能确有问题，请直接通过 dmca@astralsight.space 与我们联系。
 
-## 手动输入 Authkey 连接 [#other]
+## 手动输入 Authkey 连接 [#other_Authkey]
 
 > 仅支持小米穿戴设备
 
@@ -211,3 +214,23 @@ AstroBox 的相关功能没有向我们的服务器回传任何 vivo 账号数�
 接下来绑定就完成了～你可以开始体验各种穿戴设备三方功能了～
 
 ![](/assets/images/docs/usage/connection/15.png)
+
+
+## 手动输入 OpenID 连接 [#other_openid]
+
+> 仅支持 vivo/iQOO 穿戴设备
+
+首先进入设备列表。在电脑上，直接点击左上角的「设备卡片」就可以调出。在手机上，你需要点击下方「设备卡片」，然后点击屏幕中部偏上的切换设备按钮。如果你一时找不到，可以参考下图。
+
+![](/assets/images/docs/usage/connection/5.png)
+
+在 AstroBox 中，请你于设备列表中点击要连接的设备并手动填写 OpenID，如果你知道，请你直接填入并点击连接；如果你碰巧不知道，请你尝试第一种方法，使用「vivo 账号」同步。
+
+![](/assets/images/docs/usage/connection/18.png)
+
+
+如果你的手机/电脑出现这样的提示，请点击绑定。
+
+![](/assets/images/docs/usage/connection/14.png)
+
+接下来绑定就完成了～你可以开始体验各种穿戴设备三方功能了～

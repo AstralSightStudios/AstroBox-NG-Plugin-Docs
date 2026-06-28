@@ -117,14 +117,23 @@
           "icon": "IosIcon",
           "name": "IOS/IPADOS 14+",
           "version": "V2.0.0",
-          "hasDownload": false,
+          "hasDownload": true,
           "sources": [
             {
-              "name": "App Store",
+              "name": "iCloud",
               "downloads": [
                 {
                   "label": "iOS / iPadOS",
-                  "href": "https://apps.apple.com/app/astrobox"
+                  "href": "https://www.icloud.com/iclouddrive/08cWNjVXvpO-J07RjVhDz0Qmg#AstroBox"
+                }
+              ]
+            },
+            {
+              "name": "GitHub Releases",
+              "downloads": [
+                {
+                  "label": "iOS / iPadOS",
+                  "href": "https://github.com/AstralSightStudios/AstroBox-NG/releases/download/2.0.0/AstroBox.ipa"
                 }
               ]
             }

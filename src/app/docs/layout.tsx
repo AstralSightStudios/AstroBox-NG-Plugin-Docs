@@ -4,15 +4,17 @@ import { ThemeSwitcher } from "@/components/theme-switcher";
 import { baseOptions } from "@/lib/layout.shared";
 import { source } from "@/lib/source";
 import { getSection } from "@/lib/section";
+import { CustomSidebar } from "@/components/sidebar/custom-sidebar";
 
 const locale = "zh-CN";
 
 export default function Layout({ children }: { children: ReactNode }) {
   const options = baseOptions();
+  const tree = source.getPageTree(locale);
 
   return (
     <DocsLayout
-      tree={source.getPageTree(locale)}
+      tree={tree}
       {...options}
       links={[]}
       searchToggle={{ enabled: true }}
@@ -51,6 +53,30 @@ export default function Layout({ children }: { children: ReactNode }) {
             };
           },
         },
+        component: (
+          <CustomSidebar
+            tree={tree}
+            nav={options.nav}
+            githubUrl={options.githubUrl}
+            links={[]}
+            searchToggle={{ enabled: true }}
+            themeSwitch={{
+              ...options.themeSwitch,
+              component: (
+                <ThemeSwitcher
+                  mode="light-dark-system"
+                  variant="slider"
+                  className="ms-auto"
+                />
+              ),
+            }}
+            sidebarProps={{
+              defaultOpenLevel: 1,
+            }}
+            tabMode="auto"
+            i18n={false}
+          />
+        ),
       }}
     >
       {children}

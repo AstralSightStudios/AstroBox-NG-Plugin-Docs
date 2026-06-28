@@ -391,7 +391,30 @@ header+div:has(aside#nd-sidebar) {
     #nd-sidebar-mobile {
         top: var(--fd-docs-row-1, var(--fd-banner-height, 0px));
         height: calc(100dvh - var(--fd-docs-row-1, var(--fd-banner-height, 0px)));
+        inset-inline-end: auto;
+        inset-inline-start: 0;
+        border-inline-start-width: 0;
+        border-inline-end-width: 1px;
+        --fd-sidebar-drawer-offset: -100%;
     }
+
+    #nd-sidebar-mobile > div:first-child > div:first-child {
+        flex-direction: row;
+        justify-content: flex-start;
+    }
+
+    /* 取消 iconLinks 的 flex-1，Github 放中间 */
+    #nd-sidebar-mobile > div:first-child > div:first-child > div:first-child {
+        order: 2;
+        flex: none !important;
+    }
+
+    /* ThemeToggle 放最右 */
+    #nd-sidebar-mobile > div:first-child > div:first-child > *:not(:first-child):not(:last-child) {
+        order: 3;
+    }
+
+    /* SidebarTrigger 按钮默认 order: 0，在 row 下最靠左 */
 
     .hero-typing-wrapper:not(:has([data-ready="true"]))~.hero-bottom-line {
         transform: translateY(-1.25em);

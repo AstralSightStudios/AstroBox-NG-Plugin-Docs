@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckIcon, DesktopIcon, MoonIcon, SunIcon, CaretUpDownIcon } from "@phosphor-icons/react";
+import { CheckIcon, GearSixIcon, MoonIcon, SunIcon, CaretUpDownIcon } from "@phosphor-icons/react";
 import { buttonVariants } from "fumadocs-ui/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "fumadocs-ui/components/ui/popover";
 import { useTheme } from "next-themes";
@@ -27,7 +27,7 @@ type ThemeOption = {
 const themeOptions: ThemeOption[] = [
   { key: "light", label: "浅色模式", shortLabel: "浅色", icon: SunIcon },
   { key: "dark", label: "深色模式", shortLabel: "深色", icon: MoonIcon },
-  { key: "system", label: "跟随系统", shortLabel: "系统", icon: DesktopIcon },
+  { key: "system", label: "跟随系统", shortLabel: "系统", icon: GearSixIcon },
 ];
 
 function getVisibleOptions(mode: ThemeMode) {
@@ -154,7 +154,7 @@ export function ThemeSwitcher({
               className,
             )}
           >
-            <ActiveIcon className="size-4" />
+            <ActiveIcon className="size-4" weight="bold" />
             <CaretUpDownIcon
               className={joinClassName(
                 "size-4 text-fd-muted-foreground transition-transform duration-200",
@@ -186,7 +186,7 @@ export function ThemeSwitcher({
                       isActive ? "bg-fd-primary text-fd-primary-foreground" : "bg-fd-accent/60 text-fd-muted-foreground",
                     )}
                   >
-                    <Icon className="size-4" />
+                    <Icon className="size-4" weight="bold" />
                   </span>
                   <CheckIcon
                     className={joinClassName(
@@ -247,7 +247,7 @@ export function ThemeSwitcher({
             )}
             onClick={() => handleThemeChange(item.key)}
           >
-            <Icon className="size-4 shrink-0" />
+            <Icon className="size-4 shrink-0" weight="bold" />
           </button>
         );
       })}

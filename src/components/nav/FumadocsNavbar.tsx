@@ -175,7 +175,7 @@ export function FumadocsNavbar() {
             onPointerEnter={handleSidebarPointerEnter}
             onPointerLeave={handleSidebarPointerLeave}
           >
-            <SidebarSimpleIcon className="size-[18px]" />
+            <SidebarSimpleIcon className="size-[18px]" weight="bold" />
           </SidebarTrigger>
         ) : undefined
       }

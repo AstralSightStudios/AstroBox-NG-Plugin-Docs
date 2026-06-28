@@ -50,7 +50,7 @@ export function FumadocsSearchToggle({ className, style }: FumadocsSearchToggleP
       onPointerLeave={handlePointerLeave}
       onClick={() => setOpenSearch(true)}
     >
-      <MagnifyingGlassIcon className="size-[18px]" />
+      <MagnifyingGlassIcon className="size-[18px]" weight="bold" />
     </button>
   );
 }

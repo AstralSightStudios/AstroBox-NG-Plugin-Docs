@@ -9,12 +9,12 @@ import type {
 } from "react";
 import { useState } from "react";
 import { NavHeader as BaseNavHeader, type NavHeaderItem } from "@claralight-design/abweb-navbar";
-import { MagnifyingGlassIcon, SidebarSimpleIcon } from "@phosphor-icons/react";
+import { MagnifyingGlassIcon, SidebarSimpleIcon, GithubLogoIcon } from "@phosphor-icons/react";
 import { usePathname, useRouter } from "next/navigation";
 import { SidebarTrigger } from "fumadocs-ui/components/sidebar/base";
 import { useSearchContext } from "fumadocs-ui/contexts/search";
 import { AstroBoxBrandTitle } from "@/components/brand";
-import { siteBrandName, siteHomeHref, topNavLinks } from "@/lib/site-config";
+import { siteBrandName, siteGithubUrl, siteHomeHref, topNavLinks } from "@/lib/site-config";
 import { FumadocsSearchToggle } from "./FumadocsSearchToggle";
 import { FumadocsThemeToggle } from "./FumadocsThemeToggle";
 
@@ -184,10 +184,21 @@ export function FumadocsNavbar() {
       homeHref={siteHomeHref}
       labels={{ menu: "菜单", close: "关闭" }}
       leftSlotDesktop={
-        <FumadocsThemeToggle
-          mode="light-dark-system"
-          className={navToolButtonClassName}
-        />
+        <span className="inline-flex items-center gap-1.5">
+          <a
+            href={siteGithubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub"
+            className={`${navToolButtonClassName} inline-flex items-center justify-center size-9 hover:bg-fd-primary hover:text-fd-primary-foreground hover:border-fd-primary transition-colors`}
+          >
+            <GithubLogoIcon className="size-[18px]" weight="bold" />
+          </a>
+          <FumadocsThemeToggle
+            mode="light-dark-system"
+            className={navToolButtonClassName}
+          />
+        </span>
       }
       leftSlotMobile={
         <FumadocsSearchToggle

@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import { RootProvider } from "fumadocs-ui/provider/next";
+import { CustomSearchDialog } from "@/components/search-dialog";
 import {
   siteBrandName,
   siteDescription,
@@ -99,6 +100,9 @@ export default function Layout({ children }: { children: ReactNode }) {
         <RootProvider
           i18n={{ locale: "zh-CN", translations: { toc: "大纲" } }}
           theme={{ disableTransitionOnChange: false }}
+          search={{
+            SearchDialog: CustomSearchDialog as any,
+          }}
         >
           {children}
         </RootProvider>

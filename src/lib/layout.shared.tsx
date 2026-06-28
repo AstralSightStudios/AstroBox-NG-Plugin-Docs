@@ -2,7 +2,7 @@ import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
 import { AstroBoxBrandTitle } from "@/components/brand";
 import { FumadocsNavbar } from "@/components/nav";
 import { ThemeSwitcher } from "@/components/theme-switcher";
-import { siteHomeHref, topNavLinks } from "@/lib/site-config";
+import { siteGithubUrl, siteHomeHref, topNavLinks } from "@/lib/site-config";
 
 type BaseOptionsConfig = {
   showNav?: boolean;
@@ -28,8 +28,7 @@ export function baseOptions({
       ),
       url: siteHomeHref,
     },
-    githubUrl:
-      "https://github.com/AstralSightStudios/AstroBox-NG-Plugin-Template-Rust",
+    githubUrl: siteGithubUrl,
     themeSwitch: {
       component: <ThemeSwitcher mode="light-dark-system" variant="slider" />,
       mode: "light-dark-system",

@@ -119,6 +119,14 @@ export default function HomePage() {
                 >
                   产品官网
                 </a>
+                <a
+                  href="https://xykong-technology.feishu.cn/share/base/form/shrcnZScNiXcdtK7xhoDo4Fwysd"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center rounded-full border border-fd-border bg-fd-secondary px-6 py-3 text-sm font-medium text-fd-secondary-foreground transition-all hover:brightness-95"
+                >
+                  反馈问卷
+                </a>
               </div>
 
               {/* 三大入口模块 */}

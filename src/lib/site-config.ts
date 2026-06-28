@@ -2,6 +2,7 @@ import type { MainItemType } from "fumadocs-ui/layouts/shared";
 
 export const siteHomeHref = "/";
 export const siteBrandName = "AstroBox";
+export const siteGithubUrl = "https://github.com/AstralSightStudios/AstroBox-NG";
 export const siteTitle = "AstroBox 文档";
 export const siteLocale = "zh_CN";
 export const siteLanguage = "zh-CN";

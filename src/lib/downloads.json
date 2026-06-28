@@ -115,7 +115,7 @@
         },
         {
           "icon": "IosIcon",
-          "name": "IOS/IPADOS 14+",
+          "name": "IOS/IPADOS 16.5+",
           "version": "V2.0.0",
           "hasDownload": true,
           "sources": [

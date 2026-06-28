@@ -8,8 +8,8 @@
     "index",
     "install",
     "connection",
-    "resource",
     "account",
+    "resource",
     "---进阶功能---",
     "cli-and-skills"
   ]

@@ -54,6 +54,15 @@ export function Footer() {
 
         <div className="flex flex-col items-center gap-2 text-xs text-fd-muted-foreground/70 md:items-end">
           <a
+            href="https://qm.qq.com/q/AL8Js6khKq"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 transition-colors hover:text-fd-muted-foreground"
+          >
+            <span>QQ 群: 1102457938</span>
+          </a>
+
+          <a
             href="https://beian.miit.gov.cn/"
             target="_blank"
             rel="noopener noreferrer"

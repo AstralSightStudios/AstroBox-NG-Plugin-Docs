@@ -8,16 +8,15 @@
         {
           "icon": "WinIcon",
           "name": "WINDOWS 10 20H2+",
-          "version": "V1.5.5",
-          "hasDownload": false,
+          "version": "V2.0.0",
+          "hasDownload": true,
           "sources": [
             {
-              "name": "123云盘",
+              "name": "iCloud",
               "downloads": [
                 {
                   "label": "Windows",
-                  "href": "https://www.123pan.com/s/astrobox-win111",
-                  "password": "abx111w"
+                  "href": "https://www.icloud.com/iclouddrive/081iD5B_dWS4SFL38UKQTLOOA#AstroBox%5F2.0.0%5Fx64%5Fzh-CN"
                 }
               ]
             },
@@ -25,68 +24,99 @@
               "name": "GitHub Releases",
               "downloads": [
                 {
-                  "label": "Windows (x64)",
-                  "href": "https://github.com/your-org/astrobox/releases/download/v1.5.5/AstroBox-1.5.5-win-x64.exe"
-                },
-                {
-                  "label": "Windows (arm64)",
-                  "href": "https://github.com/your-org/astrobox/releases/download/v1.5.5/AstroBox-1.5.5-win-arm64.exe"
+                  "label": "Windows",
+                  "href": "https://github.com/AstralSightStudios/AstroBox-NG/releases/download/2.0.0/AstroBox_2.0.0_x64.msi"
                 }
               ]
             }
           ],
-          "docHref": "/docs/usage",
+          "docHref": "/docs/usage/install#windows",
           "docLabel": "查看 Windows 使用教程"
         },
         {
           "icon": "MacIcon",
           "name": "MACOS SONOMA (14)+",
           "version": "V1.5.91",
-          "hasDownload": false,
+          "hasDownload": true,
           "sources": [
             {
-              "name": "123云盘",
+              "name": "iCloud",
               "downloads": [
                 {
-                  "label": "macOS",
-                  "href": "https://www.123pan.com/s/astrobox-mac",
-                  "password": "abxm"
+                  "label": "MacOS（arm64）",
+                  "href": "https://www.icloud.com/iclouddrive/09a0iDR4HfVlAdVzNkPIMXBpg#AstroBox%5FmacOS%5Farm64"
+                },
+                {
+                  "label": "MacOS（x86_64）",
+                  "href": "https://www.icloud.com/iclouddrive/0f5VP7YPdQmUl_r0cqcE4alJw#AstroBox%5FmacOS%5Fx86%5F64"
+                }
+              ]
+            },
+            {
+              "name": "GitHub Releases",
+              "downloads": [
+                {
+                  "label": "MacOS（arm64）",
+                  "href": "https://github.com/AstralSightStudios/AstroBox-NG/releases/download/2.0.0/AstroBox_2.0.0_arm64.dmg"
+                },
+                {
+                  "label": "MacOS（x86_64）",
+                  "href": "https://github.com/AstralSightStudios/AstroBox-NG/releases/download/2.0.0/AstroBox_2.0.0_x86_64.dmg"
                 }
               ]
             }
           ],
-          "docHref": "/docs/usage",
+          "docHref": "/docs/usage/install#mac",
           "docLabel": "查看 macOS 使用教程"
         },
         {
           "icon": "LinuxIcon",
           "name": "DEBIAN/REDHAT",
-          "version": "V1.5.5",
-          "hasDownload": false,
+          "version": "V2.0.0",
+          "hasDownload": true,
           "sources": [
             {
-              "name": "123云盘",
+              "name": "iCloud",
               "downloads": [
                 {
                   "label": "Debian (.deb)",
-                  "href": "https://www.123pan.com/s/astrobox-deb",
-                  "password": "abxd"
+                  "href": "https://www.icloud.com/iclouddrive/099gfdLouwvsbxpC9Jojf4aUA#AstroBox%5F2.0.0%5Famd64"
                 },
                 {
                   "label": "RedHat (.rpm)",
-                  "href": "https://www.123pan.com/s/astrobox-rpm",
-                  "password": "abxr"
+                  "href": "https://www.icloud.com/iclouddrive/079s4o7K7JTx4HBeRmrieKafQ#AstroBox-2.0.0-1.x86%5F64"
+                },
+                {
+                  "label": "Arch (.pkg.tar.zst)",
+                  "href": "https://www.icloud.com/iclouddrive/0d2zrClZ8cgHtubO6gV0zjlXA#AstroBox%5F2.0.0-1-x86%5F64.pkg.tar"
+                }
+              ]
+            },
+            {
+              "name": "GitHub Releases",
+              "downloads": [
+                {
+                  "label": "Debian (.deb)",
+                  "href": "https://github.com/AstralSightStudios/AstroBox-NG/releases/download/2.0.0/AstroBox_2.0.0_amd64.deb"
+                },
+                {
+                  "label": "RedHat (.rpm)",
+                  "href": "https://github.com/AstralSightStudios/AstroBox-NG/releases/download/2.0.0/AstroBox_2.0.0_x86_64.rpm"
+                },
+                {
+                  "label": "Arch (.pkg.tar.zst)",
+                  "href": "https://github.com/AstralSightStudios/AstroBox-NG/releases/download/2.0.0/AstroBox_2.0.0_x86_64.pkg.tar.zst"
                 }
               ]
             }
           ],
-          "docHref": "/docs/usage",
+          "docHref": "/docs/usage/install#linux",
           "docLabel": "查看 Linux 使用教程"
         },
         {
           "icon": "IosIcon",
           "name": "IOS/IPADOS 14+",
-          "version": "V1.5.5",
+          "version": "V2.0.0",
           "hasDownload": false,
           "sources": [
             {
@@ -105,27 +135,43 @@
         {
           "icon": "AndroidIcon",
           "name": "Android 10+",
-          "version": "V1.5.5",
-          "hasDownload": false,
+          "version": "V2.0.0",
+          "hasDownload": true,
           "sources": [
             {
-              "name": "123云盘",
+              "name": "iCloud",
               "downloads": [
                 {
-                  "label": "Android",
-                  "href": "https://www.123pan.com/s/astrobox-android",
-                  "password": "abxa"
+                  "label": "Android（轻量版）",
+                  "href": "https://www.icloud.com/iclouddrive/063SaT-XsMCScZ9mpyCNXR3Zg#astrobox2-android-normal"
+                },
+                {
+                  "label": "Android（带 Webview 版本）",
+                  "href": "https://www.icloud.com/iclouddrive/056GyxiF_85YX418JBm3aNVdQ#app-webview-unsigned%5Fsigned"
+                }
+              ]
+            },
+            {
+              "name": "GitHub Releases",
+              "downloads": [
+                {
+                  "label": "Android（轻量版）",
+                  "href": "https://github.com/AstralSightStudios/AstroBox-NG/releases/download/2.0.0/AstroBox_2.0.0.apk"
+                },
+                {
+                  "label": "Android（带 Webview 版本）",
+                  "href": "https://github.com/AstralSightStudios/AstroBox-NG/releases/download/2.0.0/AstroBox_2.0.0_with_webview.apk"
                 }
               ]
             }
           ],
-          "docHref": "/docs/usage",
+          "docHref": "http://localhost:3000/docs/usage/install#android",
           "docLabel": "查看 Android 使用教程"
         },
         {
           "icon": "ChromiumIcon",
           "name": "CHROMIUM 117+",
-          "version": "V1.5.5",
+          "version": "V2.0.0",
           "hasDownload": false,
           "actionLabel": "前往",
           "sources": [
@@ -173,7 +219,7 @@
           "hasDownload": false,
           "sources": [
             {
-              "name": "123云盘",
+              "name": "iCloud",
               "downloads": [
                 {
                   "label": "Windows",
@@ -202,7 +248,7 @@
           "hasDownload": false,
           "sources": [
             {
-              "name": "123云盘",
+              "name": "iCloud",
               "downloads": [
                 {
                   "label": "macOS",
@@ -222,7 +268,7 @@
           "hasDownload": false,
           "sources": [
             {
-              "name": "123云盘",
+              "name": "iCloud",
               "downloads": [
                 {
                   "label": "Debian (.deb)",
@@ -247,7 +293,7 @@
           "hasDownload": false,
           "sources": [
             {
-              "name": "123云盘",
+              "name": "iCloud",
               "downloads": [
                 {
                   "label": "Android",

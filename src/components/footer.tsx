@@ -28,12 +28,12 @@ export function Footer() {
             <p>
               遵循{" "}
               <Link
-                href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+                href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh-hans"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="underline underline-offset-2 transition-colors hover:text-fd-primary"
               >
-                CC BY-NC-SA 4.0
+                CC BY-NC-ND 4.0
               </Link>{" "}
               协议共享
             </p>

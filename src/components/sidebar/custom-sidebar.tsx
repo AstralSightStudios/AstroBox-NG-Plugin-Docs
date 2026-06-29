@@ -18,20 +18,24 @@ import {
   SidebarTrigger,
   useFolder,
   useFolderDepth,
+  useSidebar,
 } from "fumadocs-ui/components/sidebar/base";
 import { createLinkItemRenderer } from "fumadocs-ui/components/sidebar/link-item";
 import { createPageTreeRenderer } from "fumadocs-ui/components/sidebar/page-tree";
 import { ScrollArea, ScrollViewport } from "fumadocs-ui/components/ui/scroll-area";
 import { LinkItem } from "fumadocs-ui/utils/link-item";
-import { SidebarTabsDropdown } from "fumadocs-ui/components/sidebar/tabs/dropdown";
 import { getSidebarTabs } from "fumadocs-ui/components/sidebar/tabs/index";
-import { useMemo, useRef, Fragment } from "react";
+import { useMemo, useRef, useState, Fragment, isValidElement, cloneElement } from "react";
 import { SidebarSimpleIcon, MagnifyingGlassIcon } from "@phosphor-icons/react";
 import { useSearchContext } from "fumadocs-ui/contexts/search";
 import { renderTitleNav, useLinkItems } from "fumadocs-ui/layouts/shared";
 import type { Root as PageTreeRoot } from "fumadocs-core/page-tree";
 import type { ReactNode, ComponentProps } from "react";
 import type { NavOptions } from "fumadocs-ui/layouts/shared";
+import { usePathname } from "fumadocs-core/framework";
+import Link from "fumadocs-core/link";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { Popover, PopoverContent, PopoverTrigger } from "fumadocs-ui/components/ui/popover";
 
 function getSectionFromUrl(url: string | undefined): string | undefined {
   if (!url) return undefined;
@@ -250,7 +254,7 @@ function CustomSidebarContent({
               data-collapsed={collapsed}
               data-hovered={collapsed && hovered}
               className={cn(
-                "absolute flex flex-col w-full start-0 inset-y-0 items-end bg-fd-card text-sm border-e duration-250 *:w-[var(--fd-sidebar-width)]",
+                "group/sidebar absolute flex flex-col w-full start-0 inset-y-0 items-end bg-fd-card text-sm border-e duration-250 *:w-[var(--fd-sidebar-width)]",
                 collapsed && [
                   "inset-y-2 rounded-xl transition-transform border w-[var(--fd-sidebar-width)]",
                   hovered
@@ -336,6 +340,101 @@ function CustomSidebarDrawer({
 }
 
 // ============================
+// 自定义 SidebarTabsDropdown（把 md:size-5 改为 md:size-9，和手机端一致）
+// ============================
+
+function normalizeUrl(url: string): string {
+  return url.replace(/\/$/, "");
+}
+
+function isTabUrlActive(tab: any, pathname: string): boolean {
+  if (tab.urls) return tab.urls.has(normalizeUrl(pathname));
+  const normalizedUrl = normalizeUrl(tab.url);
+  const normalizedPathname = normalizeUrl(pathname);
+  return normalizedPathname.startsWith(normalizedUrl);
+}
+
+function CustomSidebarTabsDropdown({ options, placeholder, ...props }: any) {
+  const [open, setOpen] = useState(false);
+  const { closeOnRedirect } = useSidebar();
+  const pathname = usePathname();
+  const selected = useMemo(() => {
+    return options.findLast((item: any) => isTabUrlActive(item, pathname));
+  }, [options, pathname]);
+  const onClick = () => {
+    closeOnRedirect.current = false;
+    setOpen(false);
+  };
+  const item = selected ? (
+    <>
+      <div className="size-7 shrink-0 empty:hidden">
+        {isValidElement(selected.icon)
+          ? cloneElement(selected.icon, {
+              className: (selected.icon.props.className || '').replace('md:p-1.5', 'md:p-1')
+            })
+          : selected.icon}
+      </div>
+      <div>
+        <p className="text-sm font-medium">{selected.title}</p>
+        <p className="text-sm text-fd-muted-foreground empty:hidden md:hidden">
+          {selected.description}
+        </p>
+      </div>
+    </>
+  ) : placeholder;
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      {item && (
+        <PopoverTrigger
+          {...props}
+          className={cn(
+            "flex items-center gap-2 rounded-lg p-2 border bg-fd-secondary/50 text-start text-fd-secondary-foreground transition-colors hover:bg-fd-accent data-[state=open]:bg-fd-accent data-[state=open]:text-fd-accent-foreground",
+            props.className
+          )}
+        >
+          {item}
+          <ChevronsUpDown className="shrink-0 ms-auto size-4 text-fd-muted-foreground" />
+        </PopoverTrigger>
+      )}
+      <PopoverContent className="flex flex-col gap-1 w-(--radix-popover-trigger-width) p-1 fd-scroll-container">
+        {options.map((item: any) => {
+          const isActive = selected && item.url === selected.url;
+          if (!isActive && item.unlisted) return null;
+          return (
+            <Link
+              href={item.url}
+              onClick={onClick}
+              {...item.props}
+              className={cn(
+                "flex items-center gap-2 rounded-lg p-1.5 hover:bg-fd-accent hover:text-fd-accent-foreground",
+                item.props?.className
+              )}
+              key={item.url}
+            >
+              <div className="shrink-0 size-9 md:mb-auto md:size-9 empty:hidden">
+                {item.icon}
+              </div>
+              <div>
+                <p className="text-sm font-medium leading-none">{item.title}</p>
+                <p className="text-[0.8125rem] text-fd-muted-foreground mt-1 empty:hidden">
+                  {item.description}
+                </p>
+              </div>
+              <Check
+                className={cn(
+                  "shrink-0 ms-auto size-3.5 text-fd-primary",
+                  !isActive && "invisible"
+                )}
+              />
+            </Link>
+          );
+        })}
+      </PopoverContent>
+    </Popover>
+  );
+}
+
+// ============================
 // CustomSidebar 主组件
 // ============================
 
@@ -398,7 +497,7 @@ export function CustomSidebar({
         ...tab,
         icon: (
           <div
-            className="[&_svg]:size-full rounded-lg size-full text-(--tab-color) max-md:bg-(--tab-color)/10 max-md:border max-md:p-1.5"
+            className="flex items-center justify-center [&_svg]:size-full rounded-lg size-full text-(--tab-color) bg-(--tab-color)/10 border p-1 md:p-1.5"
             style={{ "--tab-color": color } as React.CSSProperties}
           >
             {tab.icon}
@@ -456,7 +555,7 @@ export function CustomSidebar({
               <CustomLargeSearchToggle hideIfDisabled={true} />
             ))}
           {tabs.length > 0 && tabMode === "auto" && (
-            <SidebarTabsDropdown options={tabs} />
+            <CustomSidebarTabsDropdown options={tabs} />
           )}
           {banner}
         </div>
@@ -518,7 +617,7 @@ export function CustomSidebar({
             </SidebarTrigger>
           </div>
           {tabs.length > 0 && (
-            <SidebarTabsDropdown options={tabs} />
+            <CustomSidebarTabsDropdown options={tabs} />
           )}
           {banner}
         </div>

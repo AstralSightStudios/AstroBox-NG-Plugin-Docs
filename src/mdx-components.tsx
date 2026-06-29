@@ -3,6 +3,7 @@ import type { MDXComponents } from "mdx/types";
 import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 import Zoom from "react-medium-image-zoom";
 import { CodeBlock, Pre } from "fumadocs-ui/components/codeblock";
+import { DeviceSupportList } from "@/components/device-support-list";
 
 function getSrc(src: any): string {
   if (typeof src === "string") return src;
@@ -45,5 +46,6 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
       </CodeBlock>
     ),
     ...components,
+    DeviceSupportList,
   };
 }

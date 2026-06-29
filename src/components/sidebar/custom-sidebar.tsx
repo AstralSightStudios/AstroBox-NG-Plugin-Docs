@@ -356,13 +356,13 @@ function isTabUrlActive(tab: any, pathname: string): boolean {
 
 function CustomSidebarTabsDropdown({ options, placeholder, ...props }: any) {
   const [open, setOpen] = useState(false);
-  const { closeOnRedirect } = useSidebar();
+  const { closeOnRedirect: closeOnRedirectRef } = useSidebar();
   const pathname = usePathname();
   const selected = useMemo(() => {
     return options.findLast((item: any) => isTabUrlActive(item, pathname));
   }, [options, pathname]);
   const onClick = () => {
-    closeOnRedirect.current = false;
+    closeOnRedirectRef.current = false;
     setOpen(false);
   };
   const item = selected ? (
@@ -440,6 +440,8 @@ export interface CustomSidebarProps {
     banner?: ReactNode;
     collapsible?: boolean;
     components?: Record<string, unknown>;
+    defaultOpenLevel?: number;
+    prefetch?: boolean;
     [key: string]: unknown;
   };
   nav?: Partial<NavOptions>;
@@ -502,7 +504,7 @@ export function CustomSidebar({
     });
   }, [rawTabs]);
 
-  const { footer, banner, collapsible = true, components, ...rest } = sidebarProps;
+  const { footer, banner, collapsible = true, components, defaultOpenLevel, prefetch, ...rest } = sidebarProps;
   const { menuItems } = useLinkItems({ links, githubUrl });
 
   const iconLinks = menuItems.filter((item) => item.type === "icon");
@@ -522,7 +524,7 @@ export function CustomSidebar({
   );
 
   return (
-    <>
+    <SidebarProvider defaultOpenLevel={defaultOpenLevel} prefetch={prefetch}>
       <CustomSidebarContent {...rest}>
         <div className="flex flex-col gap-3 p-4 pb-2">
           <div className="flex">
@@ -621,6 +623,6 @@ export function CustomSidebar({
           {footer}
         </div>
       </CustomSidebarDrawer>
-    </>
+    </SidebarProvider>
   );
 }

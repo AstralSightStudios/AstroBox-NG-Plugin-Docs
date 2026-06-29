@@ -151,11 +151,6 @@ export function DownloadDialog({
   const single = currentDownloads.length === 1 ? currentDownloads[0] : null;
   const multiple = currentDownloads.length > 1;
 
-  // 打开时重置 tab
-  useEffect(() => {
-    if (isOpen) setActiveTab(0);
-  }, [isOpen]);
-
   useEffect(() => {
     if (!isOpen) return;
     const handleEsc = (e: KeyboardEvent) => {

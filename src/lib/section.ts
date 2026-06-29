@@ -12,6 +12,8 @@ export function getSection(path: string | undefined): string | undefined {
   switch (dir) {
     case "plugin-dev":
       return "plugin";
+    case "plugin-v1":
+      return "legacy";
     case "creator-tools":
       return "creator";
     case "usage":

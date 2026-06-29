@@ -151,6 +151,7 @@ html[data-theme-transition="active"] #nd-page .prose :where(
     --usage-color: #1781ff;
     --plugin-color: #8b5cf6;
     --creator-color: #f59e0b;
+    --legacy-color: #171717;
 }
 
 .dark {
@@ -164,6 +165,7 @@ html[data-theme-transition="active"] #nd-page .prose :where(
     --usage-color: #5cafff;
     --plugin-color: #a78bfa;
     --creator-color: #fbbf24;
+    --legacy-color: #a3a3a3;
 }
 
 /* Plugin 文档主题色 */
@@ -194,6 +196,19 @@ body.creator {
     --color-fd-accent: color-mix(in srgb,
             var(--creator-color) 15%,
             transparent);
+}
+
+/* V1 插件开发（Legacy）文档主题色 */
+body.legacy {
+    --color-fd-primary: var(--legacy-color);
+    --color-fd-primary-foreground: #ffffff;
+    --color-fd-accent: color-mix(in srgb, var(--legacy-color) 12%, transparent);
+    --color-fd-ring: var(--legacy-color);
+}
+
+.dark body.legacy {
+    --color-fd-primary-foreground: #e5e5e5;
+    --color-fd-accent: color-mix(in srgb, var(--legacy-color) 15%, transparent);
 }
 
 #nd-home-layout {

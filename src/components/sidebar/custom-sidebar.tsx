@@ -41,6 +41,8 @@ function getSectionFromUrl(url: string | undefined): string | undefined {
   switch (dir) {
     case "plugin-dev":
       return "plugin";
+    case "plugin-v1":
+      return "legacy";
     case "creator-tools":
       return "creator";
     case "usage":
@@ -382,7 +384,7 @@ export function CustomSidebar({
     if (Array.isArray(sidebarTabs)) return sidebarTabs;
     if (typeof sidebarTabs === "object" && sidebarTabs !== null)
       return getSidebarTabs(tree, sidebarTabs);
-    if (sidebarTabs !== false) return getSidebarTabs(tree);
+    if (sidebarTabs !== false) return getSidebarTabs(tree, { transform: (option) => option });
     return [];
   }, [tree, sidebarTabs]);
 

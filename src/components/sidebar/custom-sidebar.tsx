@@ -33,6 +33,23 @@ import type { Root as PageTreeRoot } from "fumadocs-core/page-tree";
 import type { ReactNode, ComponentProps } from "react";
 import type { NavOptions } from "fumadocs-ui/layouts/shared";
 
+function getSectionFromUrl(url: string | undefined): string | undefined {
+  if (!url) return undefined;
+  const path = url.replace(/^\/(?:docs\/)?/, "");
+  const [dir] = path.split("/", 1);
+  if (!dir) return undefined;
+  switch (dir) {
+    case "plugin-dev":
+      return "plugin";
+    case "creator-tools":
+      return "creator";
+    case "usage":
+      return "usage";
+    default:
+      return undefined;
+  }
+}
+
 // ============================
 // 基础组件（复制自 fumadocs-ui/layouts/docs/sidebar）
 // ============================
@@ -361,13 +378,33 @@ export function CustomSidebar({
   tabMode = "auto",
   sidebarTabs,
 }: CustomSidebarProps) {
-  const tabs = useMemo(() => {
+  const rawTabs = useMemo(() => {
     if (Array.isArray(sidebarTabs)) return sidebarTabs;
     if (typeof sidebarTabs === "object" && sidebarTabs !== null)
       return getSidebarTabs(tree, sidebarTabs);
     if (sidebarTabs !== false) return getSidebarTabs(tree);
     return [];
   }, [tree, sidebarTabs]);
+
+  const tabs = useMemo(() => {
+    return rawTabs.map((tab: any) => {
+      if (!tab.icon) return tab;
+      const section = getSectionFromUrl(tab.url);
+      if (!section) return tab;
+      const color = `var(--${section}-color)`;
+      return {
+        ...tab,
+        icon: (
+          <div
+            className="[&_svg]:size-full rounded-lg size-full text-(--tab-color) max-md:bg-(--tab-color)/10 max-md:border max-md:p-1.5"
+            style={{ "--tab-color": color } as React.CSSProperties}
+          >
+            {tab.icon}
+          </div>
+        ),
+      };
+    });
+  }, [rawTabs]);
 
   const { footer, banner, collapsible = true, components, ...rest } = sidebarProps;
   const { menuItems } = useLinkItems({ links, githubUrl });

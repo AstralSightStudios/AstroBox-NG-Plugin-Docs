@@ -374,12 +374,7 @@ function CustomSidebarTabsDropdown({ options, placeholder, ...props }: any) {
             })
           : selected.icon}
       </div>
-      <div>
-        <p className="text-sm font-medium">{selected.title}</p>
-        <p className="text-sm text-fd-muted-foreground empty:hidden md:hidden">
-          {selected.description}
-        </p>
-      </div>
+      <p className="text-sm font-medium leading-none mt-0.5">{selected.title}</p>
     </>
   ) : placeholder;
   return (
@@ -401,17 +396,17 @@ function CustomSidebarTabsDropdown({ options, placeholder, ...props }: any) {
           const isActive = selected && item.url === selected.url;
           if (!isActive && item.unlisted) return null;
           return (
-            <Link
+              <Link
               href={item.url}
               onClick={onClick}
               {...item.props}
               className={cn(
-                "flex items-center gap-2 rounded-lg p-1.5 hover:bg-fd-accent hover:text-fd-accent-foreground",
+                "flex items-start gap-2 rounded-lg p-1.5 hover:bg-fd-accent hover:text-fd-accent-foreground",
                 item.props?.className
               )}
               key={item.url}
             >
-              <div className="shrink-0 size-9 md:mb-auto md:size-9 empty:hidden">
+              <div className="shrink-0 size-9 md:size-9 empty:hidden">
                 {item.icon}
               </div>
               <div>
@@ -422,7 +417,7 @@ function CustomSidebarTabsDropdown({ options, placeholder, ...props }: any) {
               </div>
               <Check
                 className={cn(
-                  "shrink-0 ms-auto size-3.5 text-fd-primary",
+                  "shrink-0 ms-auto size-3.5 text-fd-primary self-center",
                   !isActive && "invisible"
                 )}
               />

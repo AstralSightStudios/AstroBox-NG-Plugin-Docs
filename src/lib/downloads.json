@@ -213,7 +213,8 @@
         { "name": "小米 Watch S4", "status": "supported", "note": "—" },
         { "name": "小米 Watch S3", "status": "supported", "note": "—" },
         { "name": "小米 Watch S2 及更老机型", "status": "unsupported", "note": "协议版本不支持" },
-        { "name": "REDMI 手环 / Active 系列", "status": "unsupported", "note": "协议版本不支持" }
+        { "name": "REDMI 手环 / Active 系列", "status": "unsupported", "note": "协议版本不支持" },
+        { "name": "vivo Watch GT 系列", "status": "experimental", "note": "部分功能可能不稳定" }
       ]
     },
     {

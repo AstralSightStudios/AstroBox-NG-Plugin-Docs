@@ -5,6 +5,7 @@ import {
   CaretDownIcon,
   CaretUpIcon,
   CheckCircleIcon,
+  FlaskIcon,
   WatchIcon,
   XCircleIcon,
 } from "@phosphor-icons/react";
@@ -41,6 +42,33 @@ export function DeviceSupportList({
 
   if (supportedDevices.length === 0) return null;
 
+  function renderStatusBadge(status: string) {
+    if (status === "experimental") {
+      return (
+        <span className="inline-flex items-center gap-1 rounded-md bg-yellow-500/10 px-2 py-0.5 text-xs font-medium whitespace-nowrap text-yellow-600 dark:text-yellow-400">
+          <FlaskIcon className="size-3" />
+          实验性支持
+        </span>
+      );
+    }
+
+    if (status === "supported") {
+      return (
+        <span className="inline-flex items-center gap-1 rounded-md bg-green-500/10 px-2 py-0.5 text-xs font-medium whitespace-nowrap text-green-600 dark:text-green-400">
+          <CheckCircleIcon className="size-3" />
+          完整支持
+        </span>
+      );
+    }
+
+    return (
+      <span className="inline-flex items-center gap-1 rounded-md bg-fd-muted/20 px-2 py-0.5 text-xs font-medium whitespace-nowrap text-fd-muted-foreground">
+        <XCircleIcon className="size-3" />
+        不支持
+      </span>
+    );
+  }
+
   const table = (
     <table className="w-full text-left text-sm">
       <thead>
@@ -60,32 +88,12 @@ export function DeviceSupportList({
               <div className="flex items-start justify-between gap-3 md:block">
                 <span>{device.name}</span>
                 <span className="shrink-0 md:hidden">
-                  {device.status === "supported" ? (
-                    <span className="inline-flex items-center gap-1 rounded-md bg-green-500/10 px-2 py-0.5 text-xs font-medium whitespace-nowrap text-green-600 dark:text-green-400">
-                      <CheckCircleIcon className="size-3" />
-                      完整支持
-                    </span>
-                  ) : (
-                    <span className="inline-flex items-center gap-1 rounded-md bg-fd-muted/20 px-2 py-0.5 text-xs font-medium whitespace-nowrap text-fd-muted-foreground">
-                      <XCircleIcon className="size-3" />
-                      不支持
-                    </span>
-                  )}
+                  {renderStatusBadge(device.status)}
                 </span>
               </div>
             </td>
             <td className="hidden px-4 py-2.5 md:table-cell">
-              {device.status === "supported" ? (
-                <span className="inline-flex items-center gap-1 rounded-md bg-green-500/10 px-2 py-0.5 text-xs font-medium whitespace-nowrap text-green-600 dark:text-green-400">
-                  <CheckCircleIcon className="size-3" />
-                  完整支持
-                </span>
-              ) : (
-                <span className="inline-flex items-center gap-1 rounded-md bg-fd-muted/20 px-2 py-0.5 text-xs font-medium whitespace-nowrap text-fd-muted-foreground">
-                  <XCircleIcon className="size-3" />
-                  不支持
-                </span>
-              )}
+              {renderStatusBadge(device.status)}
             </td>
             <td className="block px-4 pt-1 pb-4 text-sm text-fd-muted-foreground md:table-cell md:py-2.5">
               {device.note}

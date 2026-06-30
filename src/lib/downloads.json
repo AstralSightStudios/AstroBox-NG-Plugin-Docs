@@ -40,6 +40,10 @@
           "hasDownload": true,
           "sources": [
             {
+              "name": "一键安装",
+              "command": "curl -fsSL https://abox.run/install.sh | bash"
+            },
+            {
               "name": "iCloud",
               "downloads": [
                 {
@@ -75,6 +79,10 @@
           "version": "V2.0.0",
           "hasDownload": true,
           "sources": [
+            {
+              "name": "一键安装",
+              "command": "curl -fsSL https://abox.run/install.sh | bash"
+            },
             {
               "name": "iCloud",
               "downloads": [

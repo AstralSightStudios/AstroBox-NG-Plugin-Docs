@@ -12,7 +12,8 @@ export interface DownloadItem {
 
 export interface DownloadSource {
   name: string;
-  downloads: DownloadItem[];
+  downloads?: DownloadItem[];
+  command?: string;
 }
 
 interface DownloadDialogProps {
@@ -25,7 +26,17 @@ interface DownloadDialogProps {
   onConfirm?: () => void;
 }
 
-function CopyButton({ text }: { text: string }) {
+function CopyButton({
+  text,
+  label = "复制",
+  copiedLabel = "已复制",
+  title = "复制",
+}: {
+  text: string;
+  label?: string;
+  copiedLabel?: string;
+  title?: string;
+}) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = useCallback(async () => {
@@ -48,17 +59,17 @@ function CopyButton({ text }: { text: string }) {
     <button
       onClick={handleCopy}
       className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-fd-border bg-fd-background px-3 py-2 text-xs font-medium text-fd-foreground transition-colors hover:bg-fd-accent/50"
-      title="复制提取码"
+      title={title}
     >
       {copied ? (
         <>
           <CheckIcon className="size-3.5 text-green-500" />
-          <span>已复制</span>
+          <span>{copiedLabel}</span>
         </>
       ) : (
         <>
           <CopyIcon className="size-3.5" />
-          <span>复制</span>
+          <span>{label}</span>
         </>
       )}
     </button>
@@ -101,7 +112,7 @@ function DownloadItemCard({
                 {item.password}
               </div>
             </div>
-            <CopyButton text={item.password} />
+            <CopyButton text={item.password} title="复制提取码" />
           </div>
         </div>
       )}
@@ -148,6 +159,7 @@ export function DownloadDialog({
 
   const currentSource = normalizedSources[activeTab] ?? null;
   const currentDownloads = currentSource?.downloads ?? [];
+  const hasCommand = Boolean(currentSource?.command);
   const single = currentDownloads.length === 1 ? currentDownloads[0] : null;
   const multiple = currentDownloads.length > 1;
 
@@ -213,8 +225,22 @@ export function DownloadDialog({
             </div>
           )}
 
+          {/* 一键安装命令 */}
+          {hasCommand && currentSource.command && (
+            <div className="mt-5 rounded-xl border border-fd-border/60 bg-fd-accent/30 p-4">
+              <div className="text-xs font-medium text-fd-primary">{currentSource.name}</div>
+              <div className="mt-2 text-xs text-fd-muted-foreground">在终端运行以下命令</div>
+              <div className="mt-2 flex items-center gap-2 rounded-lg border border-fd-border bg-fd-background p-3">
+                <code className="flex-1 break-all font-mono text-xs text-fd-foreground">
+                  {currentSource.command}
+                </code>
+                <CopyButton text={currentSource.command} title="复制命令" />
+              </div>
+            </div>
+          )}
+
           {/* 多版本列表 */}
-          {multiple && (
+          {!hasCommand && multiple && (
             <div className="mt-5 flex flex-col gap-3">
               {currentDownloads.map((item) => (
                 <DownloadItemCard
@@ -228,14 +254,14 @@ export function DownloadDialog({
           )}
 
           {/* 单版本 */}
-          {single && (
+          {!hasCommand && single && (
             <div className="mt-5">
               <DownloadItemCard item={single} />
             </div>
           )}
 
           {/* 无下载项 */}
-          {currentDownloads.length === 0 && (
+          {!hasCommand && currentDownloads.length === 0 && (
             <div className="mt-5 rounded-xl border border-fd-border/60 bg-fd-accent/30 p-6 text-center text-sm text-fd-muted-foreground">
               暂无可下载内容
             </div>
@@ -249,7 +275,7 @@ export function DownloadDialog({
 
         {/* 底部按钮 */}
         <div className="flex items-center justify-end gap-2 border-t border-fd-border/60 px-6 py-4">
-          {single ? (
+          {single && !hasCommand ? (
             <>
               <button
                 onClick={onClose}

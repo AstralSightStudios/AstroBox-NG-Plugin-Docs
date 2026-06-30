@@ -81,6 +81,12 @@ printf '%b\n' '  \033[38;2;23;129;255m██\033[0m \033[38;2;23;129;255m██�
 printf '%b\n' '\033[38;2;23;129;255m███\033[0m     \033[38;2;23;129;255m██\033[0m  \033[38;2;23;129;255m███████\033[0m     \033[38;2;23;129;255m██\033[0m    \033[38;2;23;129;255m██\033[0m    \033[38;2;23;129;255m███\033[0m   \033[38;2;23;129;255m██████\033[0m   \033[38;2;23;129;255m███████\033[0m    \033[38;2;23;129;255m██████\033[0m   \033[38;2;23;129;255m██\033[0m    \033[38;2;23;129;255m██\033[0m'
 
 echo "Detected: ${OS} ${ARCH}"
+read -rp "Ready to install AstroBox NG ${VERSION} on ${OS} ${ARCH}? [Y/n] " CONFIRM
+if [[ -n "${CONFIRM}" && "${CONFIRM}" != [yY] ]]; then
+    echo "Installation cancelled."
+    exit 0
+fi
+
 echo "Downloading ${PKG}..."
 
 if command -v curl &>/dev/null; then

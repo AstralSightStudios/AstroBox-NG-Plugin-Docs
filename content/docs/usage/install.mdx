@@ -311,6 +311,14 @@ import { PlatformDownloadButton } from "@/components/platform-download-button";
 
 <Callout>请注意：安装 V2 前先卸载 V1，否则会带来一些问题。</Callout>
 
+#### 使用一键脚本安装
+
+你也可以在终端中执行以下命令，脚本会自动下载、安装并绕过 Gatekeeper（无需提前下载 dmg）：
+
+```bash
+curl -fsSL https://abox.run/install.sh | bash
+```
+
 #### 手动安装
 
 双击打开 `dmg` 文件，按住 AstroBox 图标，将其从上往下拖动到 `Applications` 文件夹中。
@@ -323,14 +331,6 @@ import { PlatformDownloadButton } from "@/components/platform-download-button";
 
 ```bash
 sudo xattr -r -d com.apple.quarantine /Applications/AstroBox.app
-```
-
-#### 使用一键脚本安装
-
-你也可以在终端中执行以下命令，脚本会自动下载、安装并绕过 Gatekeeper：
-
-```bash
-curl -fsSL https://abox.run/install.sh | bash
 ```
 
 ### 3. 打开 AstroBox
@@ -359,7 +359,29 @@ curl -fsSL https://abox.run/install.sh | bash
 
 ## Linux 电脑 [#linux]
 
-### 1. 了解你的发行版
+### 一键安装
+
+对于 Linux，我们提供了一键安装脚本。打开终端，粘贴并执行以下命令，脚本会自动识别你的发行版并完成安装：
+
+```bash
+curl -fsSL https://abox.run/install.sh | bash
+```
+
+随后你便可以打开`应用菜单(Application Launcher) `，AstroBox 将在此显示，点击便可以启动 AstroBox，也可以右键选择让其固定在`Dock（程序坞）`或者`Panel（面板/任务栏）`里。
+
+你也可以同样使用命令行启动。
+
+```sh
+astrobox-ng
+```
+
+接下来只需要正常打开应用完成 OOBE 流程就可以使用 AstroBox 了。
+
+如果你想手动安装，也可以继续查看下方教程。
+
+### 手动安装
+
+#### 1. 了解你的发行版
 
 前往你的终端输入以下命令或者前往设置页面查看关于页的操作系统名称，确认自己的发行版所属系列
 
@@ -379,7 +401,7 @@ x86_64
 <details>
     <summary>点击查看发行版列举</summary>
     
-    ### Debian 系列
+    Debian 系列
     
     - Debian
     - Ubuntu
@@ -387,7 +409,7 @@ x86_64
     - Deepin (深度)
     - Kali Linux
     
-    ### RedHat (红帽) 系列
+    RedHat (红帽) 系列
     
     - RHEL (Red Hat Enterprise Linux)
     - Fedora
@@ -395,28 +417,28 @@ x86_64
     - Rocky Linux
     - AlmaLinux
     
-    ### SUSE 系列
+    SUSE 系列
     
     - openSUSE (Leap / Tumbleweed)
     - SLES (SUSE Linux Enterprise Server)
     
-    ### Arch 系列
+    Arch 系列
     
     - Arch Linux
     - Manjaro
     - EndeavourOS
 
-### 其他系列
-
-- **Gentoo**
-- **Alpine Linux**
-- **NixOS**
-- **Slackware**
-- **Void Linux**
+    其他系列
+    
+    - **Gentoo**
+    - **Alpine Linux**
+    - **NixOS**
+    - **Slackware**
+    - **Void Linux**
 
 </details>
 
-### 3. 选择正确的包
+#### 3. 选择正确的包
 
 我们提供`.deb`、`.rpm`、`.pkg.tar.zst`，并因上游依赖问题暂时无法提供`.AppImage`。
 
@@ -432,13 +454,15 @@ x86_64
 - 对于RedHat系列以及SUSE系列，你可以使用`.rpm`包。
 - 对于Arch系列，你可以使用`.pkg.tar.zst`安装，或者移步到下一步使用更推荐，更简单的[AUR](https://aur.archlinux.org/)来源安装。
 
-### 4. 安装 AstroBox
+#### 4. 安装 AstroBox
 
 <Callout>请注意：安装 V2 前先卸载 V1，否则会带来一些问题。</Callout>
 
 目前支持 Debian 系、RedHat / SUSE 系以及 Arch 系发行版。
 
-#### Debian 系列
+---
+
+`Debian 系列`
 
 下载后前往终端安装：
 
@@ -447,14 +471,18 @@ sudo apt update # 更新软件源
 sudo apt install ./AstroBoxNG_2.0.0.deb
 ```
 
-#### RedHat 系列
+---
+
+`RedHat 系列`
 
 ```sh
 sudo dnf makecache # 更新软件源
 sudo dnf install ./AstroBoxNG_2.0.0.rpm
 ```
 
-#### SUSE 系列
+---
+
+`SUSE 系列`
 
 兼容`openSUSE Leap（稳定版）`和 `Tumbleweed（滚动版）`
 
@@ -463,9 +491,11 @@ sudo zypper refresh # 更新软件源
 sudo zypper install ./AstroBoxNG_2.0.0.rpm
 ```
 
-#### Arch 系列
+---
 
-##### 通过 AUR 安装（推荐）
+`Arch 系列`
+
+- 通过 AUR 安装（推荐）
 
 更简单地通过 [AUR](https://aur.archlinux.org/) 安装，在终端运行以下命令：
 
@@ -481,22 +511,14 @@ yay -S astrobox-ng
 paru -S astrobox-ng
 ```
 
-##### 从安装包安装
+- 从安装包安装
 
 ```sh
 sudo pacman -Sy # 同步数据库
 sudo pacman -U ./AstroBoxNG_2.0.0.pkg.tar.zst
 ```
 
-#### 使用一键脚本安装
-
-打开终端，粘贴并执行以下命令，脚本会自动识别你的发行版并完成安装：
-
-```bash
-curl -fsSL https://abox.run/install.sh | bash
-```
-
-### 5. 启动 AstroBox
+#### 5. 启动 AstroBox
 
 打开`应用菜单(Application Launcher) `，AstroBox在此显示，点击打开，也可以右键选择让其固定在`Dock（程序坞）`或者`Panel（面板/任务栏）`里。
 

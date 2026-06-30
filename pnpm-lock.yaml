@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@claralight-design/abweb-navbar':
-        specifier: ^0.2.4
-        version: 0.2.4(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        specifier: ^0.3.0
+        version: 0.3.0(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@orama/tokenizers':
         specifier: ^3.1.18
         version: 3.1.18
@@ -161,11 +161,16 @@ packages:
     resolution: {integrity: sha512-LwdZHpScM4Qz8Xw2iKSzS+cfglZzJGvofQICy7W7v4caru4EaAmyUuO6BGrbyQ2mYV11W0U8j5mBhd14dd3B0A==}
     engines: {node: '>=6.9.0'}
 
-  '@claralight-design/abweb-navbar@0.2.4':
-    resolution: {integrity: sha512-eFCQ0MZYtSUjvjaRH65XA/Ez407eO+D8Zp5ZlB9jsClBLPkUUTLgIViNDBRY5RmxS8BsWBG99hFYFG3l4z3Jgg==}
+  '@claralight-design/abweb-navbar@0.3.0':
+    resolution: {integrity: sha512-rZK4uzT6PgtAzK/1dfVQfcqxqCfU7IOMXD+GYUhjd7gD51KifQOrFpronCQxSctagxkJkhVLgcbIvj6yB/wnxA==}
     peerDependencies:
       react: ^18.2.0 || ^19.0.0
       react-dom: ^18.2.0 || ^19.0.0
+
+  '@claralight-design/smooth-capsule@0.1.1':
+    resolution: {integrity: sha512-3qWua1kUaC0khVU1LFnNkp4Kuls6SYESCfw8Holq5ybA6v//WAPDOwirga3mOLh/kWbwDkRf1/80R6iW0o6/MA==}
+    peerDependencies:
+      react: '>=18'
 
   '@emnapi/core@1.8.1':
     resolution: {integrity: sha512-AvT9QFpxK0Zd8J0jopedNm+w/2fIzvtPKPjqyw9jwvBaReTTqPBk9Hixaz7KbjimP+QNz605/XnjFcDAL2pqBg==}
@@ -3968,8 +3973,9 @@ snapshots:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.28.5
 
-  '@claralight-design/abweb-navbar@0.2.4(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
+  '@claralight-design/abweb-navbar@0.3.0(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
     dependencies:
+      '@claralight-design/smooth-capsule': 0.1.1(react@19.2.4)
       '@phosphor-icons/react': 2.1.10(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
@@ -3978,6 +3984,10 @@ snapshots:
     transitivePeerDependencies:
       - '@types/react'
       - '@types/react-dom'
+
+  '@claralight-design/smooth-capsule@0.1.1(react@19.2.4)':
+    dependencies:
+      react: 19.2.4
 
   '@emnapi/core@1.8.1':
     dependencies:

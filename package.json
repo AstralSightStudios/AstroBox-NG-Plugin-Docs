@@ -12,7 +12,7 @@
     "sitemap:generate": "tsx scripts/generate-sitemap.ts"
   },
   "dependencies": {
-    "@claralight-design/abweb-navbar": "^0.2.4",
+    "@claralight-design/abweb-navbar": "^0.3.0",
     "@orama/tokenizers": "^3.1.18",
     "@paper-design/shaders-react": "^0.0.71",
     "@phosphor-icons/react": "^2.1.10",

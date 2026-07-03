@@ -4,7 +4,7 @@
 set -euo pipefail
 
 REPO="AstralSightStudios/AstroBox-NG"
-VERSION="2.0.0"
+VERSION="v2.0.1"
 RELEASE_URL="https://github.com/${REPO}/releases/download/${VERSION}"
 
 OS=$(uname -s)

@@ -20,7 +20,6 @@ interface Platform {
   version: string;
   hasDownload: boolean;
   hideVersion?: boolean;
-  thirdPartyCommunity?: boolean;
   sources: DownloadSource[];
   docHref?: string;
   docLabel?: string;
@@ -79,6 +78,48 @@ const products: Product[] = rawDownloads.products.map((product) => ({
   })),
 }));
 
+function chunkPlatforms<T>(items: T[]): T[][] {
+  const total = items.length;
+  if (total <= 3) return [items];
+  const remainder = total % 3;
+  if (remainder === 0) {
+    const chunks: T[][] = [];
+    for (let i = 0; i < total; i += 3) chunks.push(items.slice(i, i + 3));
+    return chunks;
+  }
+  if (remainder === 1) {
+    const chunks: T[][] = [];
+    let i = 0;
+    while (i < total - 4) {
+      chunks.push(items.slice(i, i + 3));
+      i += 3;
+    }
+    chunks.push(items.slice(i, i + 2));
+    chunks.push(items.slice(i + 2));
+    return chunks;
+  }
+  const chunks: T[][] = [];
+  let i = 0;
+  while (i < total - 2) {
+    chunks.push(items.slice(i, i + 3));
+    i += 3;
+  }
+  chunks.push(items.slice(i));
+  return chunks;
+}
+
+function getDesktopSpans<T>(items: T[]): string[] {
+  const chunks = chunkPlatforms(items);
+  const spans: string[] = [];
+  for (const chunk of chunks) {
+    const span = 6 / chunk.length;
+    const className =
+      span === 6 ? "md:col-span-6" : span === 3 ? "md:col-span-3" : "md:col-span-2";
+    for (const _ of chunk) spans.push(className);
+  }
+  return spans;
+}
+
 export function DownloadCards() {
   const [activeProductId, setActiveProductId] = useState(products[0]?.id ?? "");
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -89,6 +130,8 @@ export function DownloadCards() {
 
   const activeProduct = products.find((p) => p.id === activeProductId) ?? products[0];
   const supportedDevices = activeProduct?.supportedDevices ?? [];
+  const desktopSpans = getDesktopSpans(activeProduct?.platforms ?? []);
+  const platformCount = activeProduct?.platforms.length ?? 0;
 
   const showToast = (message: string) => {
     setToast({ show: true, message });
@@ -159,13 +202,14 @@ export function DownloadCards() {
         </div>
       )}
 
-      <div className="grid grid-cols-2 gap-px bg-fd-border/70 md:grid-cols-3">
-        {activeProduct?.platforms.map((p) => {
+      <div className="grid grid-cols-2 gap-px bg-fd-border/70 md:grid-cols-6">
+        {activeProduct?.platforms.map((p, index) => {
           const Icon = p.icon;
+          const isLastOdd = platformCount % 2 === 1 && index === platformCount - 1;
           return (
             <div
               key={p.name}
-              className="group relative flex flex-col items-center justify-center bg-fd-background py-8 text-center transition-colors hover:bg-fd-accent/30"
+              className={`group relative flex flex-col items-center justify-center bg-fd-background py-8 text-center transition-colors hover:bg-fd-accent/30 ${isLastOdd ? "col-span-2" : "col-span-1"} ${desktopSpans[index]}`}
             >
               <div className="mb-4 inline-flex size-10 items-center justify-center rounded-full border border-fd-border/60 text-fd-muted-foreground transition-colors group-hover:border-fd-primary/50 group-hover:text-fd-primary">
                 <Icon className="size-6" />
@@ -176,14 +220,6 @@ export function DownloadCards() {
               {p.version && !p.hideVersion && (
                 <span className="mt-1 text-xs tracking-wide text-fd-muted-foreground/70">
                   {p.version}
-                </span>
-              )}
-              {p.thirdPartyCommunity && (
-                <span className="group/badge relative mt-2 inline-flex cursor-help items-center rounded-full border border-yellow-400/50 bg-yellow-400/10 px-2 py-0.5 text-xs font-medium text-yellow-600 transition-colors hover:border-yellow-500 hover:bg-yellow-400/20 hover:text-yellow-700 dark:text-yellow-400 dark:hover:text-yellow-300">
-                  第三方社区
-                  <span className="absolute bottom-full left-1/2 z-10 mb-2 w-max max-w-[18rem] -translate-x-1/2 rounded-lg border border-fd-border bg-fd-background px-3 py-2 text-center text-xs text-fd-foreground opacity-0 shadow-lg transition-opacity duration-200 pointer-events-none group-hover/badge:opacity-100">
-                    此版本为第三方社区使用 AstroBox 核心制作，不代表官方团队
-                  </span>
                 </span>
               )}
               {p.hasDownload ? (

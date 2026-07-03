@@ -12,6 +12,7 @@ import { baseOptions } from "@/lib/layout.shared";
 import { HomeHeroBackground } from "@/components/home-hero-background";
 import { HeroTyping } from "@/components/hero-typing";
 import { DownloadCards } from "@/components/download-cards";
+import { ThirdPartyDownloads } from "@/components/third-party-downloads";
 import { Footer } from "@/components/footer";
 import {
   siteDescription,
@@ -162,6 +163,11 @@ export default function HomePage() {
           {/* 下载平台卡片 */}
           <div className="mt-12 md:mt-16">
             <DownloadCards />
+          </div>
+
+          {/* 第三方社区版 */}
+          <div className="mt-16 md:mt-24">
+            <ThirdPartyDownloads />
           </div>
         </div>
       </HomeLayout>

@@ -75,7 +75,7 @@
         },
         {
           "icon": "LinuxIcon",
-          "name": "DEBIAN/REDHAT",
+          "name": "DEBIAN/REDHAT/ARCH",
           "version": "V2.0.1",
           "hasDownload": true,
           "sources": [
@@ -113,7 +113,7 @@
                 },
                 {
                   "label": "Arch (.pkg.tar.zst)",
-                  "href": "https://github.com/AstralSightStudios/AstroBox-NG/releases/download/v2.0.1/astrobox-ng-2.0.1-1-x86_64.pkg.tar.zst"
+                  "href": "https://github.com/AstralSightStudios/AstroBox-NG/releases/download/v2.0.1/AstroBox_2.0.1_x86_64.pkg.tar.zst"
                 }
               ]
             }

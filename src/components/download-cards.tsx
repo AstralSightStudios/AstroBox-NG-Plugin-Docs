@@ -19,6 +19,8 @@ interface Platform {
   name: string;
   version: string;
   hasDownload: boolean;
+  hideVersion?: boolean;
+  thirdPartyCommunity?: boolean;
   sources: DownloadSource[];
   docHref?: string;
   docLabel?: string;
@@ -171,9 +173,17 @@ export function DownloadCards() {
               <span className="text-sm tracking-wide text-fd-muted-foreground">
                 {p.name}
               </span>
-              {p.version && (
+              {p.version && !p.hideVersion && (
                 <span className="mt-1 text-xs tracking-wide text-fd-muted-foreground/70">
                   {p.version}
+                </span>
+              )}
+              {p.thirdPartyCommunity && (
+                <span className="group/badge relative mt-2 inline-flex cursor-help items-center rounded-full border border-yellow-400/50 bg-yellow-400/10 px-2 py-0.5 text-xs font-medium text-yellow-600 transition-colors hover:border-yellow-500 hover:bg-yellow-400/20 hover:text-yellow-700 dark:text-yellow-400 dark:hover:text-yellow-300">
+                  第三方社区
+                  <span className="absolute bottom-full left-1/2 z-10 mb-2 w-max max-w-[18rem] -translate-x-1/2 rounded-lg border border-fd-border bg-fd-background px-3 py-2 text-center text-xs text-fd-foreground opacity-0 shadow-lg transition-opacity duration-200 pointer-events-none group-hover/badge:opacity-100">
+                    此版本为第三方社区使用 AstroBox 核心制作，不代表官方团队
+                  </span>
                 </span>
               )}
               {p.hasDownload ? (

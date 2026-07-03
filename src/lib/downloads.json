@@ -172,7 +172,7 @@
                   "href": "https://www.icloud.com/iclouddrive/063SaT-XsMCScZ9mpyCNXR3Zg#astrobox2-android-normal"
                 },
                 {
-                  "label": "Android（带 Webview 版本）",
+                  "label": "Android（带 Webview 版本，轻量版闪退可用）",
                   "href": "https://www.icloud.com/iclouddrive/056GyxiF_85YX418JBm3aNVdQ#app-webview-unsigned%5Fsigned"
                 }
               ]
@@ -185,28 +185,30 @@
                   "href": "https://github.com/AstralSightStudios/AstroBox-NG/releases/download/2.0.0/AstroBox_2.0.0.apk"
                 },
                 {
-                  "label": "Android（带 Webview 版本）",
+                  "label": "Android（带 Webview 版本，轻量版闪退可用）",
                   "href": "https://github.com/AstralSightStudios/AstroBox-NG/releases/download/2.0.0/AstroBox_2.0.0_with_webview.apk"
                 }
               ]
             }
           ],
-          "docHref": "http://localhost:3000/docs/usage/install#android",
+          "docHref": "/docs/usage/install#android",
           "docLabel": "查看 Android 使用教程"
         },
         {
           "icon": "ChromiumIcon",
           "name": "CHROMIUM 117+",
           "version": "V2.0.0",
-          "hasDownload": false,
+          "hasDownload": true,
+          "hideVersion": true,
+          "thirdPartyCommunity": true,
           "actionLabel": "前往",
           "sources": [
             {
-              "name": "Chrome 网上应用店",
+              "name": "0.2 Studio & BandBBS Team",
               "downloads": [
                 {
-                  "label": "Chromium",
-                  "href": "https://chrome.google.com/webstore/detail/astrobox",
+                  "label": "Bandburg",
+                  "href": "https://bandburg.bandbbs.cn/",
                   "linkLabel": "链接"
                 }
               ]

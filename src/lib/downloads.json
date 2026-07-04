@@ -164,6 +164,15 @@
           "hasDownload": true,
           "sources": [
             {
+              "name": "TestFlight",
+              "downloads": [
+                {
+                  "label": "iOS / iPadOS",
+                  "href": "https://testflight.apple.com/join/t8rdZj5q"
+                }
+              ]
+            },
+            {
               "name": "iCloud",
               "downloads": [
                 {
@@ -178,15 +187,6 @@
                 {
                   "label": "iOS / iPadOS",
                   "href": "https://github.com/AstralSightStudios/AstroBox-NG/releases/download/v2.0.1/AstroBox_2.0.1_os27sdk.ipa"
-                }
-              ]
-            },
-            {
-              "name": "TestFlight",
-              "downloads": [
-                {
-                  "label": "iOS / iPadOS",
-                  "href": "# 审核中，请您使用 ipa 手动安装"
                 }
               ]
             }

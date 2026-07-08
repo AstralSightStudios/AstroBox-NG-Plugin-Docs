@@ -28,6 +28,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         ),
       }}
       sidebar={{
+        defaultOpenLevel: 1,
         component: (
           <CustomSidebar
             tree={tree}
@@ -44,9 +45,6 @@ export default function Layout({ children }: { children: ReactNode }) {
                   className="ms-auto"
                 />
               ),
-            }}
-            sidebarProps={{
-              defaultOpenLevel: 1,
             }}
             tabMode="auto"
             i18n={false}

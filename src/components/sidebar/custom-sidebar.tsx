@@ -13,7 +13,6 @@ import {
   SidebarFolderLink,
   SidebarFolderTrigger,
   SidebarItem,
-  SidebarProvider,
   SidebarSeparator,
   SidebarTrigger,
   useFolder,
@@ -523,8 +522,11 @@ export function CustomSidebar({
     </SidebarViewport>
   );
 
+  // NOTE: Do NOT wrap in <SidebarProvider> here.
+  // DocsLayout already provides one — wrapping again creates a separate
+  // context, so the SidebarTrigger in the navbar can't toggle the drawer.
   return (
-    <SidebarProvider defaultOpenLevel={defaultOpenLevel} prefetch={prefetch}>
+    <>
       <CustomSidebarContent {...rest}>
         <div className="flex flex-col gap-3 p-4 pb-2">
           <div className="flex">
@@ -623,6 +625,6 @@ export function CustomSidebar({
           {footer}
         </div>
       </CustomSidebarDrawer>
-    </SidebarProvider>
+    </>
   );
 }

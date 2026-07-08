@@ -56,6 +56,10 @@ samp {
 /* 全局公告 Banner 偏移：让首页导航栏固定在 Banner 下方 */
 [data-nav-header] {
     top: var(--fd-banner-height, 0px) !important;
+    /* Fix: 100vw on mobile includes scrollbar width, causing nav to shift right.
+       Use 100% instead — for position:fixed this equals the viewport width
+       without the scrollbar. */
+    width: 100% !important;
 }
 
 [data-nav-header],

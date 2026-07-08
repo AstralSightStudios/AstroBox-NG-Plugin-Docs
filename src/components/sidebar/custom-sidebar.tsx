@@ -405,21 +405,25 @@ function CustomSidebarTabsDropdown({ options, placeholder, ...props }: any) {
               )}
               key={item.url}
             >
-              <div className="shrink-0 size-9 md:size-9 empty:hidden">
-                {item.icon}
-              </div>
-              <div>
-                <p className="text-sm font-medium leading-none">{item.title}</p>
-                <p className="text-[0.8125rem] text-fd-muted-foreground mt-1 empty:hidden">
-                  {item.description}
-                </p>
-              </div>
-              <Check
-                className={cn(
-                  "shrink-0 ms-auto size-3.5 text-fd-primary self-center",
-                  !isActive && "invisible"
-                )}
-              />
+              {/* Wrap children in a Fragment so Link receives a single child
+                  instead of an array (avoids React key warnings). */}
+              <>
+                <div className="shrink-0 size-9 md:size-9 empty:hidden">
+                  {item.icon}
+                </div>
+                <div>
+                  <p className="text-sm font-medium leading-none">{item.title}</p>
+                  <p className="text-[0.8125rem] text-fd-muted-foreground mt-1 empty:hidden">
+                    {item.description}
+                  </p>
+                </div>
+                <Check
+                  className={cn(
+                    "shrink-0 ms-auto size-3.5 text-fd-primary self-center",
+                    !isActive && "invisible"
+                  )}
+                />
+              </>
             </Link>
           );
         })}

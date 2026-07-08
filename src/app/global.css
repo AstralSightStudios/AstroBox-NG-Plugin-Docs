@@ -46,6 +46,12 @@ textarea {
     font-family: var(--font-sans);
 }
 
+/* Prevent horizontal scroll caused by decorative overflow elements
+   (e.g. navbar blurEffect at 120vw). */
+body {
+    overflow-x: hidden;
+}
+
 code,
 kbd,
 pre,
@@ -57,9 +63,17 @@ samp {
 [data-nav-header] {
     top: var(--fd-banner-height, 0px) !important;
     /* Fix: 100vw on mobile includes scrollbar width, causing nav to shift right.
-       Use 100% instead — for position:fixed this equals the viewport width
+       Use 100% instead - for position:fixed this equals the viewport width
        without the scrollbar. */
     width: 100% !important;
+}
+
+/* Clip the navbar's decorative blur-effect (width:120vw in abweb-navbar CSS module).
+   It lives inside a position:fixed container, so body overflow-x:hidden can't reach it.
+   [data-nav-header] > div targets only the BlurEffect (the sole direct div child);
+   the <header> element is not a div. */
+[data-nav-header] > div {
+    max-width: 100% !important;
 }
 
 [data-nav-header],
@@ -291,9 +305,8 @@ header+div:has(aside#nd-sidebar) {
     border-radius: 4px;
 }
 
-:root {
-    --fd-layout-width: 19200px;
-}
+/* Remove absurdly large layout width override.
+   Let fumadocs use its default (97rem) or per-layout values. */
 
 /* 目录激活状态优化 */
 #nd-toc .data-\[active\=true\]\:text-fd-primary[data-active="true"],

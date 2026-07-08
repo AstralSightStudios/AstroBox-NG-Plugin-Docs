@@ -2,3 +2,5 @@ allowBuilds:
   esbuild: true
   sharp: true
   unrs-resolver: true
+patchedDependencies:
+  '@claralight-design/abweb-navbar@0.3.0': patches/@claralight-design__abweb-navbar@0.3.0.patch

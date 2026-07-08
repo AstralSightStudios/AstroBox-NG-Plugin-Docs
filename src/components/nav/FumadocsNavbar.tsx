@@ -7,10 +7,11 @@ import type {
   PointerEvent as ReactPointerEvent,
   ReactNode,
 } from "react";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { NavHeader as BaseNavHeader, type NavHeaderItem } from "@claralight-design/abweb-navbar";
 import { MagnifyingGlassIcon, SidebarSimpleIcon, GithubLogoIcon } from "@phosphor-icons/react";
 import { usePathname, useRouter } from "next/navigation";
+import { cn } from "fumadocs-ui/utils/cn";
 import { SidebarTrigger } from "fumadocs-ui/components/sidebar/base";
 import { useSearchContext } from "fumadocs-ui/contexts/search";
 import { AstroBoxBrandTitle } from "@/components/brand";
@@ -85,6 +86,49 @@ export function FumadocsNavbar() {
   const [sidebarButtonHovered, setSidebarButtonHovered] = useState(false);
   const [sidebarButtonPressed, setSidebarButtonPressed] = useState(false);
 
+  // Scroll-aware hide/show: only on the homepage (not docs).
+  // Hide when scrolling down past a threshold; reveal when scrolling up.
+  const [isNavHidden, setIsNavHidden] = useState(false);
+  const lastScrollY = useRef(0);
+  const HIDE_THRESHOLD = 30;
+
+  useEffect(() => {
+    // Only enable auto-hide on the homepage, not on docs pages.
+    if (typeof window === "undefined" || isDocsRoute) return;
+
+    // Sync initial value so refreshing a scrolled page doesn't produce a giant delta.
+    lastScrollY.current = window.scrollY;
+    let rafId: number | null = null;
+    let ticking = false;
+
+    const update = () => {
+      const currentScrollY = window.scrollY;
+      const delta = currentScrollY - lastScrollY.current;
+
+      if (delta > 0 && currentScrollY > HIDE_THRESHOLD) {
+        setIsNavHidden(true);
+      } else if (delta < 0) {
+        setIsNavHidden(false);
+      }
+
+      lastScrollY.current = currentScrollY;
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        rafId = window.requestAnimationFrame(update);
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (rafId) window.cancelAnimationFrame(rafId);
+    };
+  }, [isDocsRoute]);
+
   const navItems: NavHeaderItem[] = topNavLinks.flatMap((item) => {
     if (!("text" in item) || !("url" in item)) return [];
     if ("on" in item && item.on === "menu") return [];
@@ -158,7 +202,11 @@ export function FumadocsNavbar() {
 
   return (
     <NavHeader
-      className={isDocsRoute ? "ab-docs-mobile-nav md:hidden" : undefined}
+      className={cn(
+        isDocsRoute && "ab-docs-mobile-nav md:hidden",
+        "max-md:will-change-transform max-md:transition-transform max-md:duration-300 max-md:ease-[cubic-bezier(0.18,0.86,0.34,1)]",
+        isNavHidden ? "max-md:-translate-y-full" : "max-md:translate-y-0"
+      )}
       variant="docs"
       currentPath={pathname}
       navItems={navItems}

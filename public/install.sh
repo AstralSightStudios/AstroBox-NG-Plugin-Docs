@@ -7,6 +7,24 @@ REPO="AstralSightStudios/AstroBox-NG"
 VERSION="2.0.1"
 RELEASE_URL="https://github.com/${REPO}/releases/download/v${VERSION}"
 
+AUTO_YES=false
+for arg in "$@"; do
+    case "${arg}" in
+        -y|--yes|--no-confirm)
+            AUTO_YES=true
+            ;;
+        -h|--help)
+            echo "Usage: $0 [-y|--yes]"
+            exit 0
+            ;;
+        *)
+            echo "Unknown option: ${arg}"
+            echo "Usage: $0 [-y|--yes]"
+            exit 1
+            ;;
+    esac
+done
+
 OS=$(uname -s)
 ARCH=$(uname -m)
 
@@ -81,10 +99,23 @@ printf '%b\n' '  \033[38;2;23;129;255m██\033[0m \033[38;2;23;129;255m██�
 printf '%b\n' '\033[38;2;23;129;255m███\033[0m     \033[38;2;23;129;255m██\033[0m  \033[38;2;23;129;255m███████\033[0m     \033[38;2;23;129;255m██\033[0m    \033[38;2;23;129;255m██\033[0m    \033[38;2;23;129;255m███\033[0m   \033[38;2;23;129;255m██████\033[0m   \033[38;2;23;129;255m███████\033[0m    \033[38;2;23;129;255m██████\033[0m   \033[38;2;23;129;255m██\033[0m    \033[38;2;23;129;255m██\033[0m'
 
 echo "Detected: ${OS} ${ARCH}"
-read -rp "Ready to install AstroBox NG ${VERSION} on ${OS} ${ARCH}? [Y/n] " CONFIRM
-if [[ -n "${CONFIRM}" && "${CONFIRM}" != [yY] ]]; then
-    echo "Installation cancelled."
-    exit 0
+
+if [[ "${AUTO_YES}" != true ]]; then
+    if [[ -t 0 ]]; then
+        read -rp "Ready to install AstroBox NG ${VERSION} on ${OS} ${ARCH}? [Y/n] " CONFIRM || CONFIRM=""
+    else
+        # When stdin is piped (e.g. curl | bash), read from the controlling
+        # terminal instead. If no terminal is available, default to yes.
+        if ! ( read -rp "Ready to install AstroBox NG ${VERSION} on ${OS} ${ARCH}? [Y/n] " CONFIRM </dev/tty ) 2>/dev/null; then
+            CONFIRM=""
+            echo "No terminal detected; proceeding with installation."
+        fi
+    fi
+
+    if [[ -n "${CONFIRM}" && "${CONFIRM}" != [yY] ]]; then
+        echo "Installation cancelled."
+        exit 0
+    fi
 fi
 
 echo "Downloading ${PKG}..."

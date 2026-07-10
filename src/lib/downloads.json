@@ -164,6 +164,15 @@
           "hasDownload": true,
           "sources": [
             {
+              "name": "App Store",
+              "downloads": [
+                {
+                  "label": "iOS / iPadOS",
+                  "href": "https://apps.apple.com/cn/app/astrobox-%E6%AC%A1%E4%B8%96%E4%BB%A3%E7%A9%BF%E6%88%B4%E8%AE%BE%E5%A4%87%E5%B7%A5%E5%85%B7%E7%AE%B1/id6785374105"
+                }
+              ]
+            },
+            {
               "name": "TestFlight",
               "downloads": [
                 {

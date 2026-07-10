@@ -75,6 +75,20 @@ export default function HomePage() {
           <section className="relative mx-auto flex min-h-[80%] w-full max-w-[95%] flex-col items-center justify-center overflow-hidden rounded-[2rem] border border-fd-border/60 px-6 py-24 text-center md:px-12">
             <HomeHeroBackground />
             <div className="relative z-10 flex max-w-5xl flex-col items-center">
+              {/* App Store 上线通知 */}
+              <a
+                href="https://apps.apple.com/cn/app/astrobox-%E6%AC%A1%E4%B8%96%E4%BB%A3%E7%A9%BF%E6%88%B4%E8%AE%BE%E5%A4%87%E5%B7%A5%E5%85%B7%E7%AE%B1/id6785374105"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mb-6 inline-flex items-center gap-3 rounded-full bg-blue-100/80 px-4 py-2 text-sm text-fd-primary transition-all hover:bg-blue-200/80 dark:bg-fd-primary/10 dark:hover:bg-fd-primary/15"
+              >
+                <span className="font-regular">AstroBox 现已上线 AppStore</span>
+                <span className="inline-flex items-center gap-1 font-semibold">
+                  前往下载
+                  <ArrowRight weight="bold" className="size-3.5" />
+                </span>
+              </a>
+
               {/* 大标题与打字机效果 */}
               <h1 className="text-4xl font-semibold tracking-tight text-fd-foreground leading-[1.25] sm:text-5xl md:text-6xl">
                 <span className="block md:inline">AstroBox 是</span>{" "}

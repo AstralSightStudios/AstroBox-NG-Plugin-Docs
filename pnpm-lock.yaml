@@ -13,7 +13,7 @@ overrides:
   postcss: ^8.5.10
   vite: ^6.4.2
   fumadocs-mdx>picomatch: ^4.0.4
-  js-yaml: ^4.1.2
+  js-yaml: ^4.2.0
 
 patchedDependencies:
   '@claralight-design/abweb-navbar@0.3.0': 00dd6bea0716db89e4e824359cd55fb66aeed09bbc13d42e741bbc4aa4de368e

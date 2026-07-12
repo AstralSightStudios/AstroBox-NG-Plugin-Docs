@@ -4,7 +4,7 @@
 set -euo pipefail
 
 REPO="AstralSightStudios/AstroBox-NG"
-VERSION="2.0.1"
+VERSION="2.0.2"
 RELEASE_URL="https://github.com/${REPO}/releases/download/v${VERSION}"
 
 AUTO_YES=false
@@ -55,7 +55,7 @@ esac
             INSTALLER=(sudo dpkg -i)
             POST_INSTALL=(sudo apt-get install -f -y)
         elif command -v dnf &>/dev/null || command -v yum &>/dev/null || command -v rpm &>/dev/null; then
-            PKG="astrobox-ng_${VERSION}_x86_64.rpm"
+            PKG="astrobox-ng-${VERSION}-1.x86_64.rpm"
             if command -v dnf &>/dev/null; then
                 INSTALLER=(sudo dnf install -y)
             elif command -v yum &>/dev/null; then
@@ -65,7 +65,7 @@ esac
             fi
             POST_INSTALL=()
         elif command -v pacman &>/dev/null; then
-            PKG="AstroBox_${VERSION}_x86_64.pkg.tar.zst"
+            PKG="astrobox-ng-${VERSION}-1-x86_64.pkg.tar.zst"
             INSTALLER=(sudo pacman -U --noconfirm)
             POST_INSTALL=()
         else

@@ -74,6 +74,10 @@ samp {
        Use 100% instead - for position:fixed this equals the viewport width
        without the scrollbar. */
     width: 100% !important;
+    /* Keep nav above the docs TOC popover capsule (z:25) so it does not
+       peek out over the fixed navbar when scrolling. Stay below the search
+       dialog (z:1100) and sidebar drawer (z:999). */
+    z-index: 30 !important;
 }
 
 /* Clip the navbar's decorative blur-effect (width:120vw in abweb-navbar CSS module).
@@ -162,7 +166,9 @@ html[data-theme-transition="active"] #nd-page .prose :where(
 }
 
 .ab-docs-mobile-nav {
-    z-index: 20 !important;
+    /* Match [data-nav-header] z-index (30) so the docs TOC popover
+       capsule (z:25) cannot peek over the fixed navbar when scrolling. */
+    z-index: 30 !important;
 }
 
 @media (min-width: 768px) {

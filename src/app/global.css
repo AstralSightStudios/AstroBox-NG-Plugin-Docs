@@ -47,7 +47,15 @@ textarea {
 }
 
 /* Prevent horizontal scroll caused by decorative overflow elements
-   (e.g. navbar blurEffect at 120vw). */
+   (e.g. navbar blurEffect at 120vw).
+   body{overflow-x:hidden} clips normal-flow descendants, but the fixed
+   navbar's containing block is the initial containing block (html), so we
+   must clip at html too. overflow-x:clip does not create a scroll container,
+   which keeps sticky positioning and native body scroll intact. */
+html {
+    overflow-x: clip;
+}
+
 body {
     overflow-x: hidden;
 }

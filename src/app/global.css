@@ -76,6 +76,16 @@ samp {
     max-width: 100% !important;
 }
 
+/* Align the mobile navbar inner capsule with the hero card (max-w-[95%]).
+   The upstream .inner uses `width: calc(100% - 14px)` under 960px, which leaves
+   only 7px per side and makes the capsule visually overshoot the hero card
+   (~2.5% per side) on wider phones. Clamp it to 95% so both edges line up. */
+@media (max-width: 959px) {
+    [data-nav-header] > header {
+        width: 95% !important;
+    }
+}
+
 [data-nav-header],
 #nd-sidebar,
 #nd-toc,

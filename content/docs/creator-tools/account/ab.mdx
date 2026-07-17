@@ -3,3 +3,73 @@ title: AstroBox 账号
 description: 配置 AstroBox 账号以使用 CreatorConsole 的高级功能。
 ---
 
+import Image from "next/image";
+
+<Card
+  className="mb-3 grid grid-cols-[64px_1fr] items-center gap-x-4 [&>div:first-child]:row-span-2 [&>div:first-child]:mb-0 [&>div:last-child]:col-start-2 [&>div:last-child]:text-sm [&>h3]:col-start-2 [&>h3]:mb-0 [&>h3]:text-xl"
+  icon={<Image src="/assets/images/docs/creator-tools/account/casdoor-icon.png" alt="" width={48} height={48} />}
+  title={<span>Casdoor</span>}
+  href="https://github.com/casdoor/casdoor"
+>
+  Casdoor 是一个开源、AI-first 的身份与访问管理（IAM）/ MCP 网关和认证服务器，并提供 Web UI。
+</Card>
+
+> AstroBox 账户管理由自部署的 Casdoor 驱动。
+
+### 1. 前往注册页面
+
+如果你已有[米坛社区账号](https://www.bandbbs.cn/)或 [Apple 账号](https://account.apple.com/)，可以快速注册 AstroBox 账号。前往[全球节点登录页面](https://cas.astralsight.space/login/astrobox)，点击下方的「使用 米坛社区 继续」或「Sign in with Apple」，按页面提示完成登录与注册。
+
+也可以选择适合所在地区的节点，单独注册 AstroBox 账号。节点只需按访问位置区分：中国大陆用户优先选择中国大陆节点，其他地区用户优先选择全球节点。
+
+<Cards>
+  <Card
+    icon={<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><circle cx="128" cy="128" r="96" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="16"/><path d="M184.42,205.68l-9.36-9.37a8,8,0,0,0-3.63-2.09L150,188.59a8,8,0,0,1-5.88-8.9l2.38-16.2a8,8,0,0,1,4.85-6.22l30.45-12.66a8,8,0,0,1,8.47,1.49L215,168.71" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="16"/><path d="M50.49,184.65l9.92-6.52A8,8,0,0,0,64,171.49l.21-36.23a8.06,8.06,0,0,1,1.35-4.41l20.94-31.3a8,8,0,0,1,11.34-2l19.81,13a8.06,8.06,0,0,0,5.77,1.45l31.46-4.26a8,8,0,0,0,5-2.71L182.06,79.2A8,8,0,0,0,184,74V50" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="16"/></svg>}
+    title="中国大陆节点"
+    href="https://ascas.waterflames.cn/signup/astrobox"
+  >
+    适合中国大陆地区访问，非中国大陆 IP 无法访问。
+  </Card>
+  <Card
+    icon={<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><circle cx="128" cy="128" r="96" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="16"/><path d="M75.88,123.26,89.2,100a8,8,0,0,1,6.94-4h16.71a7.9,7.9,0,0,0,3.86-1L129,88.24a7.12,7.12,0,0,0,1.49-1.07l26.92-24.33A8,8,0,0,0,159,53l-10.5-18.81" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="16"/><path d="M67.78,53.23,56,81.08A8,8,0,0,0,55.88,87l11.5,30.67a8,8,0,0,0,5.81,5l21.43,4.61a8,8,0,0,1,5.52,4.33l3.8,7.87a8,8,0,0,0,7.2,4.51h13.8" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="16"/><path d="M213.09,172.48l-52.38-32.22a8.11,8.11,0,0,0-3.12-1.11l-22.82-3.08a8,8,0,0,0-8.38,4.67l-13.7,30.74a8,8,0,0,0,1.44,8.69l19.74,20.33a8,8,0,0,1,2,6.95l-3.17,16.44" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="16"/></svg>}
+    title="全球节点"
+    href="https://cas.astralsight.space/signup/astrobox"
+  >
+    适合全球大多地区访问。
+  </Card>
+</Cards>
+
+### 2. 填写注册表单
+
+| 字段 | 填写说明 |
+| - | - |
+| `Username` | 登录用户名，不能与已有账号重复，注册后不建议随意更改。 |
+| `Display name` | 对外显示的名称，可以与其他用户重复。 |
+| `Password` | 设置账号密码。请使用安全且能够记住的密码。 |
+| `Confirm` | 再次输入相同的密码，用于确认密码填写无误。 |
+| `Email` | 填写能够正常接收邮件的邮箱。可以使用 QQ 邮箱，格式为 `QQ号@qq.com`。 |
+| `Email code` | 点击获取验证码后，填写邮箱收到的验证码。 |
+| `Accept Terms of Use` | 勾选即表示同意 AstroBox 服务协议。注册前请阅读[相关协议](https://astrobox.online/agreements/)。 |
+
+### 3. 编辑账户信息
+
+注册完成后，前往注册节点对应的账户管理页面：
+
+<Cards>
+  <Card
+    icon={<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><circle cx="128" cy="128" r="96" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="16"/><path d="M184.42,205.68l-9.36-9.37a8,8,0,0,0-3.63-2.09L150,188.59a8,8,0,0,1-5.88-8.9l2.38-16.2a8,8,0,0,1,4.85-6.22l30.45-12.66a8,8,0,0,1,8.47,1.49L215,168.71" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="16"/><path d="M50.49,184.65l9.92-6.52A8,8,0,0,0,64,171.49l.21-36.23a8.06,8.06,0,0,1,1.35-4.41l20.94-31.3a8,8,0,0,1,11.34-2l19.81,13a8.06,8.06,0,0,0,5.77,1.45l31.46-4.26a8,8,0,0,0,5-2.71L182.06,79.2A8,8,0,0,0,184,74V50" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="16"/></svg>}
+    title="中国大陆节点账户管理页面"
+    href="https://ascas.waterflames.cn/account"
+  >
+    适合中国大陆地区访问，非中国大陆 IP 无法访问。
+  </Card>
+  <Card
+    icon={<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><circle cx="128" cy="128" r="96" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="16"/><path d="M75.88,123.26,89.2,100a8,8,0,0,1,6.94-4h16.71a7.9,7.9,0,0,0,3.86-1L129,88.24a7.12,7.12,0,0,0,1.49-1.07l26.92-24.33A8,8,0,0,0,159,53l-10.5-18.81" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="16"/><path d="M67.78,53.23,56,81.08A8,8,0,0,0,55.88,87l11.5,30.67a8,8,0,0,0,5.81,5l21.43,4.61a8,8,0,0,1,5.52,4.33l3.8,7.87a8,8,0,0,0,7.2,4.51h13.8" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="16"/><path d="M213.09,172.48l-52.38-32.22a8.11,8.11,0,0,0-3.12-1.11l-22.82-3.08a8,8,0,0,0-8.38,4.67l-13.7,30.74a8,8,0,0,0,1.44,8.69l19.74,20.33a8,8,0,0,1,2,6.95l-3.17,16.44" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="16"/></svg>}
+    title="全球节点账户管理页面"
+    href="https://cas.astralsight.space/account"
+  >
+    适合全球大多地区访问。
+  </Card>
+</Cards>
+
+建议上传头像，完善账户资料。推荐绑定 [GitHub](https://github.com/)、[爱发电](https://afdian.com/)和[米坛社区](https://www.bandbbs.cn/)账户，方便使用资源提交、权益同步及社区相关功能。你也可以按需绑定 [Steam](https://store.steampowered.com/)、[Google](https://accounts.google.com/)、[Discord](https://discord.com/)或 [Apple](https://account.apple.com/) 账户。

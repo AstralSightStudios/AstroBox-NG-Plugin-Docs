@@ -48,16 +48,21 @@ textarea {
 
 /* Prevent horizontal scroll caused by decorative overflow elements
    (e.g. navbar blurEffect at 120vw).
-   body{overflow-x:hidden} clips normal-flow descendants, but the fixed
-   navbar's containing block is the initial containing block (html), so we
-   must clip at html too. overflow-x:clip does not create a scroll container,
-   which keeps sticky positioning and native body scroll intact. */
+   The fixed navbar's containing block is the initial containing block (html),
+   so we must clip at html too.
+   IMPORTANT: use `overflow-x: clip` on BOTH html and body, never `hidden` on
+   body. Per CSS Overflow 3, when one axis is `hidden` the other computes from
+   `visible` to `auto`, turning body into a sticky scroll container even though
+   the real scroll happens on html/viewport. That breaks position:sticky for the
+   docs sidebar (it scrolls away instead of staying fixed). `clip` does NOT
+   create a scroll container, so sticky positioning and native body scroll stay
+   intact. */
 html {
     overflow-x: clip;
 }
 
 body {
-    overflow-x: hidden;
+    overflow-x: clip;
 }
 
 code,

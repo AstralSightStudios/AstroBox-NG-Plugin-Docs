@@ -5,6 +5,7 @@
   "root": true,
   "pages": [
     "index",
+    "resource-std",
     "account",
     "resource-management"]
 }

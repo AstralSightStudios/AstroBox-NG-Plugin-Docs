@@ -1,43 +1,21 @@
 ---
-title: Github 账号
-description: 配置 Github 账号以提交资源到 AstroBox 平台。
+title: GitHub 账号
+description: 在 CreatorConsole 中配置并登录 GitHub 账号。
 ---
 
 import Image from "next/image";
 
-<Card
-  className="mb-3 grid grid-cols-[64px_1fr] items-center gap-x-4 [&>div:first-child]:row-span-2 [&>div:first-child]:mb-0 [&>div:last-child]:col-start-2 [&>div:last-child]:text-sm [&>h3]:col-start-2 [&>h3]:mb-0 [&>h3]:text-xl"
-  icon={
-    <>
-      <Image src="/assets/images/docs/creator-tools/account/github-invertocat-black.svg" alt="" width={48} height={47} className="dark:hidden" />
-      <Image src="/assets/images/docs/creator-tools/account/github-invertocat-white.svg" alt="" width={48} height={47} className="hidden dark:block" />
-    </>
-  }
-  title={
-    <span>GitHub</span>
-  }
-  href="https://github.com/"
->
-  GitHub 是一个在线软件源代码托管服务平台，用于公开程序或软件的代码，使用 Git 作为版本控制软件。
-</Card>
+GitHub 账号用于通过 CreatorConsole 提交、管理资源。
 
-> AstroBox 官方源使用 Git 的仓库特性，资源仓库由用户控制，官方源负责做可信任的索引，由 [AstroBox-Repo](https://github.com/AstralSightStudios/AstroBox-Repo) 控制。
+## 准备账号
 
-### 1. 填表
-前往[GitHub](https://github.com/signup?source=login)按要求填写表格注册账号。
+没有账号时，前往 [GitHub 注册页面](https://github.com/signup) 按页面提示完成注册和邮箱验证。用户名将用于资源仓库及提交记录，建议使用稳定、易识别的名称。注册或登录问题请查阅 [GitHub 文档](https://docs.github.com/zh/account-and-profile)。
 
-| 字段 |值|
-| - | - |
-|`Email`|使用一个你能收到邮件的email，比如qq邮箱，邮箱地址为`QQ号@qq.com`|
-|`Password`|填写一个记得住的密码|
-|`Username`|使用一个代表性的名字，此名字基本不更改，且不重复|
-|`Your Country/Region`|China|
-|`GitHub Copilot`|勾选|
-|`Email Preferences`|不勾选|
+## 配置 2FA
 
+双因素验证（Two-factor authentication，缩写为 2FA）使用两种不同的元素，合并在一起来确认用户的身份。GitHub 从 2023 年 3 月 13 日起要求所有用户渐进式开启 2FA。
 
-### 2. 完成 2FA 设置
-> 双因素验证(Two-factor authentication，缩写为2FA)使用两种不同的元素，合并在一起，来确认用户的身份。GitHub强制要求从2023年3月13日起要求所有用户渐进式开启2FA。
+登录 GitHub 后，前往 [Settings > Password and authentication](https://github.com/settings/security)，在 **Two-factor authentication** 中按提示配置验证器应用或其他可用方式。
 
 推荐软件：
 
@@ -71,7 +49,52 @@ import Image from "next/image";
   </Card>
 </Cards>
 
-按照要求完成2fa开启即可，并使用冷备份（打印下来实体保存）保存你的`Recovery Codes(恢复代码)`用于丢失手机或验证app出问题后找回账号。
+按照要求完成 2FA 开启即可，并使用冷备份（打印下来实体保存）保存 **Recovery codes（恢复代码）**，用于丢失手机或验证器应用出问题后找回账号。不要把恢复代码提交到资源仓库。
 
-### 3. 完成注册
-然后完成人机验证，创建账户，可以前往[设置](https://github.com/settings/profile)更改头像等信息。
+## 登录 CreatorConsole
+
+### 1. 发起登录
+
+点击 CreatorConsole 左上角的账户按钮，在 **登录新账号** 中选择 **GitHub 登录**。CreatorConsole 会显示一次性设备代码和 GitHub 设备登录地址。
+
+<Image
+  src="/assets/images/docs/creator-tools/account/1.png"
+  alt="CreatorConsole 账户菜单中的 GitHub 登录入口"
+  width={2560}
+  height={1440}
+  className="rounded-lg"
+/>
+
+### 2. 输入设备代码
+
+在浏览器中打开 CreatorConsole 显示的地址，通常为 [github.com/login/device](https://github.com/login/device)。登录 GitHub 后，输入 CreatorConsole 中显示的一次性代码，再点击 **Continue**。
+
+<Image
+  src="/assets/images/docs/creator-tools/account/3.png"
+  alt="GitHub 设备授权页面中的设备代码输入框"
+  width={2868}
+  height={1812}
+  className="rounded-lg"
+/>
+
+设备代码属于登录凭据。只输入 CreatorConsole 当前显示的代码，不要输入他人发送的代码。
+
+### 3. 确认授权
+
+确认页面显示的是准备登录 CreatorConsole 的 GitHub 账号。账号正确时点击 **Continue**，按 GitHub 页面提示完成授权；账号错误时选择 **Use a different account**。
+
+<Image
+  src="/assets/images/docs/creator-tools/account/2.png"
+  alt="GitHub Device Activation 账号确认页面"
+  width={3002}
+  height={1848}
+  className="rounded-lg"
+/>
+
+授权完成后返回 CreatorConsole。账户菜单显示 GitHub 账号信息即表示登录成功，可继续创建或提交资源。
+
+## 重新登录
+
+设备代码过期时，在 CreatorConsole 中重新点击 **GitHub 登录** 获取新代码。授权长期失败时，确认浏览器已登录正确账号、2FA 已完成，再重新发起登录。
+
+出现 `Network Error` 或 `Timeout exceeded` 时，请切换网络环境后重试几次。

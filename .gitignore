@@ -25,3 +25,5 @@ tsconfig.tsbuildinfo
 
 # generated sitemap (auto-generated during build)
 public/sitemap.xml
+
+.opencode

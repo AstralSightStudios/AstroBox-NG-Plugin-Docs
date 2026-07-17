@@ -5,7 +5,8 @@
   "root": true,
   "pages": [
     "index",
-    "resource-std",
     "account",
-    "resource-management"]
+    "resource-std",
+    "resource-management",
+    "community"]
 }

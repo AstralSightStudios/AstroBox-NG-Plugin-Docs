@@ -74,7 +74,7 @@ export default function HomePage() {
           {/* Hero Section */}
           <section className="relative mx-auto flex min-h-[80%] w-full max-w-[95%] flex-col items-center justify-center overflow-hidden rounded-[2rem] border border-fd-border/60 px-6 py-24 text-center md:px-12">
             <HomeHeroBackground />
-            <div className="relative z-10 flex max-w-5xl flex-col items-center">
+            <div className="relative z-10 flex max-w-7xl flex-col items-center">
               {/* App Store 上线通知 */}
               <a
                 href="https://apps.apple.com/cn/app/astrobox-%E6%AC%A1%E4%B8%96%E4%BB%A3%E7%A9%BF%E6%88%B4%E8%AE%BE%E5%A4%87%E5%B7%A5%E5%85%B7%E7%AE%B1/id6785374105"

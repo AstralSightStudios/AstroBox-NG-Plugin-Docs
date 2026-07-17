@@ -49,7 +49,7 @@ export function ImageZoom({
     >
       {children ?? (
         <Image
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 70vw, 900px"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 70vw, 1280px"
           {...props}
           alt={props.alt ?? ""}
         />

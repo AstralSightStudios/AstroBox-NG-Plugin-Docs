@@ -334,8 +334,11 @@ header+div:has(aside#nd-sidebar) {
     border-radius: 4px;
 }
 
-/* Remove absurdly large layout width override.
-   Let fumadocs use its default (97rem) or per-layout values. */
+/* Widen the docs layout container so ultra-wide screens use the space.
+   1920px - sidebar(268px) - toc(256px) leaves ~1396px for the article column. */
+#nd-docs-layout {
+    --fd-layout-width: 1920px;
+}
 
 /* 目录激活状态优化 */
 #nd-toc .data-\[active\=true\]\:text-fd-primary[data-active="true"],
@@ -438,6 +441,8 @@ header+div:has(aside#nd-sidebar) {
 
 #nd-page {
     margin-top: 24px;
+    /* Override fumadocs' fixed 900px article cap; stay fluid up to 1280px for readability */
+    max-width: min(1280px, 100%);
 }
 
 @media (max-width: 767px) {

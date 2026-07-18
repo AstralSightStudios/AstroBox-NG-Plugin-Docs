@@ -94,7 +94,7 @@ export function ThirdPartyDownloads() {
   if (thirdPartyItems.length === 0) return null;
 
   return (
-    <section className="mx-auto w-full max-w-7xl px-4 sm:px-6">
+    <section className="mx-auto w-full max-w-5xl px-4 sm:px-6">
       <div className="mb-8 text-center">
         <h2 className="text-2xl font-bold tracking-wide text-fd-foreground md:text-3xl">
           {title}

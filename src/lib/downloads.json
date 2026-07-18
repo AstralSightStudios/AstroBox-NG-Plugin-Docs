@@ -171,33 +171,6 @@
                   "href": "https://apps.apple.com/cn/app/astrobox-%E6%AC%A1%E4%B8%96%E4%BB%A3%E7%A9%BF%E6%88%B4%E8%AE%BE%E5%A4%87%E5%B7%A5%E5%85%B7%E7%AE%B1/id6785374105"
                 }
               ]
-            },
-            {
-              "name": "TestFlight",
-              "downloads": [
-                {
-                  "label": "iOS / iPadOS",
-                  "href": "https://testflight.apple.com/join/t8rdZj5q"
-                }
-              ]
-            },
-            {
-              "name": "iCloud",
-              "downloads": [
-                {
-                  "label": "iOS / iPadOS",
-                  "href": "https://www.icloud.com/iclouddrive/076UqfqSIhASjd2u49No0XqDw#AstroBox%5F2.0.2%5Fos27sdk"
-                }
-              ]
-            },
-            {
-              "name": "GitHub Releases",
-              "downloads": [
-                {
-                  "label": "iOS / iPadOS",
-                  "href": "https://github.com/AstralSightStudios/AstroBox-NG/releases/download/v2.0.2/AstroBox_2.0.2_os27sdk.ipa"
-                }
-              ]
             }
           ],
           "docHref": "/docs/usage/install#ios",

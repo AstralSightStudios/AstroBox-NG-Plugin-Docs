@@ -1,81 +1,39 @@
 #!/usr/bin/env python3
 """
-AstroBox Docs Tool — 主仓库与内容子仓库的同步管理 CLI
+AstroBox Docs Tool — 交互式 TUI 双仓库管理器
 
-用法:
-    python abdocstool.py init          首次初始化，clone 子仓库并同步内容
-    python abdocstool.py status        查看两个仓库的当前状态与差异
-    python abdocstool.py commit        交互式分别提交主仓库和内容仓库
-    python abdocstool.py sync          从远程拉取内容仓库最新内容到本地
-    python abdocstool.py push          推送两个仓库到远程
+直接运行: python abdocstool.py
 
-设计约定:
-    - 主仓库: AstroBox-NG-Plugin-Docs（代码、配置、主题）
-    - 内容仓库: AstroBox-NG-Plugin-Docs-Content（文档 markdown + 图片资源）
-    - 本地子仓库位置: .subrepo/AstroBox-NG-Plugin-Docs-Content（gitignore 忽略）
-    - 主仓库中的 content/docs 和 public/assets/images/docs 已被 gitignore，
-      编辑后通过本工具同步到子仓库再提交。
+操作:
+    ↑ / ↓      切换菜单
+    Enter      执行选中项
+    Mouse      点击菜单项（支持滚轮）
+    q / ESC    退出
 """
 
 from __future__ import annotations
 
-import argparse
-import filecmp
+import curses
 import os
 import shutil
 import subprocess
 import sys
+import time
 from pathlib import Path
-from typing import Iterable
+from typing import Callable
 
 # ── 配置 ──────────────────────────────────────────────────────────
 SUBREPO_URL = "https://github.com/AstralSightStudios/AstroBox-NG-Plugin-Docs-Content.git"
 SUBREPO_NAME = "AstroBox-NG-Plugin-Docs-Content"
 
-# (主仓库相对路径, 子仓库相对路径)
 SYNC_PAIRS: list[tuple[str, str]] = [
     ("content/docs", "content/docs"),
     ("public/assets/images/docs", "public/assets/images/docs"),
 ]
 
-# 主仓库中需要忽略的文件/目录（不属于主仓库提交范围）
-MAIN_IGNORED = {"content/docs", "public/assets/images/docs", ".subrepo"}
-
-# ── 颜色输出 ──────────────────────────────────────────────────────
-class C:
-    OK = "\033[92m"
-    WARN = "\033[93m"
-    ERR = "\033[91m"
-    INFO = "\033[94m"
-    BOLD = "\033[1m"
-    END = "\033[0m"
-
-
-def ok(msg: str) -> None:
-    print(f"{C.OK}✓{C.END} {msg}")
-
-
-def warn(msg: str) -> None:
-    print(f"{C.WARN}⚠{C.END} {msg}")
-
-
-def err(msg: str) -> None:
-    print(f"{C.ERR}✗{C.END} {msg}", file=sys.stderr)
-
-
-def info(msg: str) -> None:
-    print(f"{C.INFO}→{C.END} {msg}")
-
-
-def bold(msg: str) -> None:
-    print(f"\n{C.BOLD}{msg}{C.END}")
-
-
 # ── 路径工具 ──────────────────────────────────────────────────────
 def get_main_repo() -> Path:
-    """返回主仓库根目录（脚本所在目录的父目录）"""
-    script_dir = Path(__file__).resolve().parent
-    return script_dir
+    return Path(__file__).resolve().parent
 
 
 def get_subrepo_dir(main: Path | None = None) -> Path:
@@ -84,7 +42,6 @@ def get_subrepo_dir(main: Path | None = None) -> Path:
 
 # ── Git 工具 ──────────────────────────────────────────────────────
 def run_git(cmd: list[str], cwd: Path, check: bool = True, capture: bool = False) -> str:
-    """在指定目录运行 git 命令"""
     full_cmd = ["git"] + cmd
     if capture:
         result = subprocess.run(full_cmd, cwd=cwd, capture_output=True, text=True, check=check)
@@ -94,16 +51,26 @@ def run_git(cmd: list[str], cwd: Path, check: bool = True, capture: bool = False
 
 
 def git_has_changes(cwd: Path) -> bool:
-    """检查工作区是否有未暂存/未提交的更改"""
     result = subprocess.run(
-        ["git", "status", "--porcelain"],
-        cwd=cwd, capture_output=True, text=True, check=True
+        ["git", "status", "--porcelain"], cwd=cwd,
+        capture_output=True, text=True, check=True
     )
     return bool(result.stdout.strip())
 
 
 def git_branch(cwd: Path) -> str:
-    return run_git(["branch", "--show-current"], cwd, capture=True)
+    try:
+        return run_git(["branch", "--show-current"], cwd, capture=True)
+    except subprocess.CalledProcessError:
+        return "unknown"
+
+
+def git_latest_commit(cwd: Path, short: bool = True) -> str:
+    try:
+        fmt = "%h" if short else "%H"
+        return run_git(["log", "-1", f"--format={fmt}"], cwd, capture=True)
+    except subprocess.CalledProcessError:
+        return "unknown"
 
 
 def git_remote_url(cwd: Path) -> str:
@@ -113,306 +80,617 @@ def git_remote_url(cwd: Path) -> str:
         return "(no remote)"
 
 
-def git_latest_commit(cwd: Path, short: bool = True) -> str:
-    fmt = "%h" if short else "%H"
-    return run_git(["log", "-1", f"--format={fmt}"], cwd, capture=True)
-
-
 # ── 文件同步 ──────────────────────────────────────────────────────
-def is_ignored_for_main(path: Path, main_repo: Path) -> bool:
-    """判断路径是否属于主仓库应忽略的内容"""
-    try:
-        rel = path.relative_to(main_repo)
-    except ValueError:
-        return False
-    rel_str = str(rel).replace("\\", "/")
-    for ignored in MAIN_IGNORED:
-        if rel_str == ignored or rel_str.startswith(ignored + "/"):
-            return True
-    return False
-
-
 def copy_tree(src: Path, dst: Path) -> None:
-    """递归复制目录，dst 存在则先删除"""
     if dst.exists():
         shutil.rmtree(dst)
     shutil.copytree(src, dst)
 
 
 def sync_main_to_subrepo(main_repo: Path, subrepo: Path) -> None:
-    """将主仓库的 content/docs 和 assets 同步到子仓库"""
     for main_rel, sub_rel in SYNC_PAIRS:
         src = main_repo / main_rel
         dst = subrepo / sub_rel
         if src.exists():
             copy_tree(src, dst)
-        else:
-            warn(f"Source not found: {src}")
 
 
 def sync_subrepo_to_main(subrepo: Path, main_repo: Path) -> None:
-    """将子仓库内容同步回主仓库"""
     for main_rel, sub_rel in SYNC_PAIRS:
         src = subrepo / sub_rel
         dst = main_repo / main_rel
         if src.exists():
             copy_tree(src, dst)
+
+
+# ── TUI 常量 ──────────────────────────────────────────────────────
+ASCII_LOGO = [
+    "    ___         __             ____             __  ____         ___          __  ",
+    "   /   | __  __/ /_____       / __ )____ ______/ /_/ __ )__  __ / (_)_______/ /__",
+    "  / /| |/ / / / __/ __ \     / __  / __ `/ ___/ __/ __  / / / // / / ___/ //_/",
+    " / ___ / /_/ / /_/ /_/ /    / /_/ / /_/ (__  ) /_/ /_/ / /_/ // / / /__/ ,<    ",
+    "/_/  |_\__,_/\__/\____/    /_____/\__,_/____/\__/_____/\__,_// /_/\___/_/|_|   ",
+    "                                                          /___/                ",
+]
+
+# 预定义的配色对
+CP_LOGO = 1
+CP_TITLE = 2
+CP_CARD_BORDER = 3
+CP_CARD_TITLE = 4
+CP_CARD_TEXT = 5
+CP_CARD_OK = 6
+CP_CARD_WARN = 7
+CP_MENU_NORMAL = 8
+CP_MENU_SELECTED = 9
+CP_MENU_HOTKEY = 10
+CP_FOOTER = 11
+CP_EASTER_EGG = 12
+CP_STATUS_BAR = 13
+
+# 菜单项
+MENU_ITEMS = [
+    ("📝  Commit", "commit", "分别提交主仓库和内容仓库"),
+    ("🔄  Sync", "sync", "从远程拉取内容仓库最新内容"),
+    ("📤  Push", "push", "推送两个仓库到远程"),
+    ("ℹ️   Status", "status", "显示详细状态信息"),
+    ("🔧  Init", "init", "初始化/重新同步子仓库"),
+    ("🚪  Exit", "exit", "退出工具"),
+]
+
+
+# ── Curses 辅助 ───────────────────────────────────────────────────
+def safe_addstr(stdscr, y: int, x: int, text: str, attr: int = 0) -> None:
+    """安全地绘制字符串，超出边界不报错"""
+    try:
+        height, width = stdscr.getmaxyx()
+        if y < 0 or y >= height or x >= width:
+            return
+        if x < 0:
+            text = text[-x:]
+            x = 0
+        if len(text) > width - x:
+            text = text[:width - x - 1]
+        if text:
+            stdscr.addstr(y, x, text, attr)
+    except curses.error:
+        pass
+
+
+def draw_box(stdscr, top: int, left: int, height: int, width: int, title: str = "") -> None:
+    """绘制一个带标题的边框"""
+    # 顶边
+    safe_addstr(stdscr, top, left, "┌" + "─" * (width - 2) + "┐", curses.color_pair(CP_CARD_BORDER))
+    # 标题
+    if title:
+        title_x = left + (width - len(title)) // 2
+        safe_addstr(stdscr, top, title_x, title, curses.color_pair(CP_CARD_TITLE) | curses.A_BOLD)
+    # 左右边
+    for y in range(top + 1, top + height - 1):
+        safe_addstr(stdscr, y, left, "│", curses.color_pair(CP_CARD_BORDER))
+        safe_addstr(stdscr, y, left + width - 1, "│", curses.color_pair(CP_CARD_BORDER))
+    # 底边
+    safe_addstr(stdscr, top + height - 1, left, "└" + "─" * (width - 2) + "┘", curses.color_pair(CP_CARD_BORDER))
+
+
+def draw_horizontal_line(stdscr, y: int, x: int, width: int, char: str = "─") -> None:
+    safe_addstr(stdscr, y, x, char * width, curses.color_pair(CP_CARD_BORDER))
+
+
+# ── 动画效果 ──────────────────────────────────────────────────────
+def typewriter_effect(stdscr, y: int, x: int, text: str, delay: float = 0.01, attr: int = 0) -> None:
+    """打字机效果显示文字"""
+    for i, ch in enumerate(text):
+        safe_addstr(stdscr, y, x + i, ch, attr)
+        stdscr.refresh()
+        time.sleep(delay)
+
+
+def fade_in_logo(stdscr, logo_lines: list[str], start_y: int, start_x: int) -> None:
+    """Logo 渐显效果"""
+    for i, line in enumerate(logo_lines):
+        safe_addstr(stdscr, start_y + i, start_x, line, curses.color_pair(CP_LOGO))
+        stdscr.refresh()
+        time.sleep(0.05)
+
+
+# ── 状态收集 ──────────────────────────────────────────────────────
+class RepoStatus:
+    def __init__(self, path: Path, name: str):
+        self.path = path
+        self.name = name
+        self.exists = path.exists() and (path / ".git").exists()
+        self.branch = ""
+        self.commit = ""
+        self.remote = ""
+        self.has_changes = False
+        if self.exists:
+            self.branch = git_branch(path)
+            self.commit = git_latest_commit(path)
+            self.remote = git_remote_url(path)
+            self.has_changes = git_has_changes(path)
+
+
+def collect_status() -> tuple[RepoStatus, RepoStatus]:
+    main = get_main_repo()
+    sub = get_subrepo_dir(main)
+    return RepoStatus(main, "Main Repo"), RepoStatus(sub, "Content Repo")
+
+
+# ── 主 TUI ────────────────────────────────────────────────────────
+def init_colors() -> None:
+    """初始化所有颜色对"""
+    curses.start_color()
+    curses.use_default_colors()
+    
+    # Logo: 青色
+    curses.init_pair(CP_LOGO, curses.COLOR_CYAN, -1)
+    # Title: 白色加亮
+    curses.init_pair(CP_TITLE, curses.COLOR_WHITE, -1)
+    # Card border: 暗灰
+    curses.init_pair(CP_CARD_BORDER, 8, -1)
+    # Card title: 黄色
+    curses.init_pair(CP_CARD_TITLE, curses.COLOR_YELLOW, -1)
+    # Card text: 白色
+    curses.init_pair(CP_CARD_TEXT, curses.COLOR_WHITE, -1)
+    # OK: 绿色
+    curses.init_pair(CP_CARD_OK, curses.COLOR_GREEN, -1)
+    # Warn: 黄色
+    curses.init_pair(CP_CARD_WARN, curses.COLOR_YELLOW, -1)
+    # Menu normal: 白色
+    curses.init_pair(CP_MENU_NORMAL, curses.COLOR_WHITE, -1)
+    # Menu selected: 黑底白字（高亮）
+    curses.init_pair(CP_MENU_SELECTED, curses.COLOR_BLACK, curses.COLOR_WHITE)
+    # Hotkey: 青色
+    curses.init_pair(CP_MENU_HOTKEY, curses.COLOR_CYAN, -1)
+    # Footer: 暗灰
+    curses.init_pair(CP_FOOTER, 8, -1)
+    # Easter egg: 洋红
+    curses.init_pair(CP_EASTER_EGG, curses.COLOR_MAGENTA, -1)
+    # Status bar: 黑底青字
+    curses.init_pair(CP_STATUS_BAR, curses.COLOR_CYAN, curses.COLOR_BLACK)
+
+
+def draw_repo_card(stdscr, y: int, x: int, width: int, status: RepoStatus) -> None:
+    """绘制仓库状态卡片"""
+    lines = [
+        f"  Branch: {status.branch}",
+        f"  Commit: {status.commit}",
+        f"  Remote: {status.remote[:width-10]}",
+    ]
+    
+    if not status.exists:
+        lines.append("  Status: Not initialized")
+        status_color = CP_CARD_WARN
+    elif status.has_changes:
+        lines.append("  Status: Has uncommitted changes")
+        status_color = CP_CARD_WARN
+    else:
+        lines.append("  Status: Clean")
+        status_color = CP_CARD_OK
+    
+    height = len(lines) + 4
+    
+    # 绘制边框
+    draw_box(stdscr, y, x, height, width, f" {status.name} ")
+    
+    # 绘制内容
+    for i, line in enumerate(lines):
+        if "Status:" in line:
+            color = curses.color_pair(status_color) | curses.A_BOLD
         else:
-            warn(f"Source not found in subrepo: {src}")
+            color = curses.color_pair(CP_CARD_TEXT)
+        safe_addstr(stdscr, y + 2 + i, x + 1, line, color)
 
 
-def dir_diff_summary(left: Path, right: Path) -> tuple[int, int, int]:
-    """
-    快速比较两个目录的差异。
-    返回: (仅在左侧, 仅在右侧, 内容不同)
-    """
-    if not left.exists() or not right.exists():
-        return (0, 0, 0)
-
-    cmp = filecmp.dircmp(left, right)
-    only_left = len(cmp.left_only)
-    only_right = len(cmp.right_only)
-    diff_files = len(cmp.diff_files)
-
-    # 递归统计子目录
-    for sub in cmp.subdirs.values():
-        ol, or_, df = dir_diff_summary(Path(sub.left), Path(sub.right))
-        only_left += ol
-        only_right += or_
-        diff_files += df
-
-    return only_left, only_right, diff_files
-
-
-# ── 交互式输入 ────────────────────────────────────────────────────
-def ask_yes_no(prompt: str, default: bool = False) -> bool:
-    suffix = " [Y/n] " if default else " [y/N] "
-    answer = input(f"{prompt}{suffix}").strip().lower()
-    if not answer:
-        return default
-    return answer in ("y", "yes")
+def draw_menu(stdscr, y: int, x: int, width: int, selected: int) -> None:
+    """绘制可选择的菜单"""
+    menu_height = len(MENU_ITEMS) + 2
+    
+    # 绘制边框
+    draw_box(stdscr, y, x, menu_height, width, " Actions ")
+    
+    # 绘制菜单项
+    for i, (label, key, desc) in enumerate(MENU_ITEMS):
+        item_y = y + 1 + i
+        is_selected = i == selected
+        
+        if is_selected:
+            # 选中项：反色 + 粗体 + 指示器
+            bg_attr = curses.color_pair(CP_MENU_SELECTED) | curses.A_BOLD
+            safe_addstr(stdscr, item_y, x + 1, " " * (width - 2), bg_attr)
+            safe_addstr(stdscr, item_y, x + 3, f"▸ {label}", bg_attr)
+            
+            # 在底部显示描述
+            draw_status_bar(stdscr, desc)
+        else:
+            normal_attr = curses.color_pair(CP_MENU_NORMAL)
+            safe_addstr(stdscr, item_y, x + 3, f"  {label}", normal_attr)
 
 
-def ask_input(prompt: str, required: bool = True) -> str:
-    while True:
-        value = input(f"{prompt}: ").strip()
-        if value or not required:
-            return value
-        print("  输入不能为空，请重试。")
+def draw_status_bar(stdscr, message: str) -> None:
+    """在底部绘制状态栏"""
+    height, width = stdscr.getmaxyx()
+    bar_y = height - 1
+    
+    # 清空状态栏
+    safe_addstr(stdscr, bar_y, 0, " " * (width - 1), curses.color_pair(CP_STATUS_BAR))
+    # 绘制消息
+    safe_addstr(stdscr, bar_y, 2, message[:width-4], curses.color_pair(CP_STATUS_BAR))
+
+
+def draw_footer(stdscr) -> None:
+    """绘制底部快捷键提示"""
+    height, width = stdscr.getmaxyx()
+    footer_y = height - 2
+    
+    hints = "[↑↓] Navigate  [Enter] Execute  [Mouse] Click  [q] Exit"
+    x = max(0, (width - len(hints)) // 2)
+    safe_addstr(stdscr, footer_y, x, hints, curses.color_pair(CP_FOOTER))
+
+
+def draw_easter_egg(stdscr) -> None:
+    """彩蛋：根据时间显示不同的问候"""
+    hour = time.localtime().tm_hour
+    height, width = stdscr.getmaxyx()
+    
+    if 5 <= hour < 12:
+        greeting = "☀️  Good morning, space explorer!"
+    elif 12 <= hour < 18:
+        greeting = "🌤  Good afternoon, stargazer!"
+    elif 18 <= hour < 22:
+        greeting = "🌙  Good evening, astronaut!"
+    else:
+        greeting = "⭐ The stars are watching you code..."
+    
+    x = max(0, (width - len(greeting)) // 2)
+    safe_addstr(stdscr, 1, x, greeting, curses.color_pair(CP_EASTER_EGG))
+
+
+def run_command(stdscr, title: str, fn: Callable[[], int]) -> int:
+    """执行命令并显示结果"""
+    curses.endwin()
+    
+    print(f"\n{'='*60}")
+    print(f"  {title}")
+    print(f"{'='*60}\n")
+    
+    try:
+        result = fn()
+    except Exception as e:
+        print(f"\n❌ Error: {e}")
+        result = 1
+    
+    print(f"\n{'='*60}")
+    input("\nPress Enter to return to AstroBox Docs Tool...")
+    
+    # 重新初始化 curses
+    stdscr = curses.initscr()
+    curses.noecho()
+    curses.cbreak()
+    stdscr.keypad(True)
+    curses.curs_set(0)
+    if curses.has_colors():
+        init_colors()
+    
+    return result
 
 
 # ── 命令实现 ──────────────────────────────────────────────────────
-def cmd_init(args: argparse.Namespace) -> int:
+def do_init() -> int:
     main_repo = get_main_repo()
     subrepo = get_subrepo_dir(main_repo)
-
-    bold("初始化 AstroBox Docs 工作区")
-    info(f"主仓库: {main_repo}")
-    info(f"子仓库本地路径: {subrepo}")
-
+    
+    print("🚀 Initializing AstroBox Docs workspace...\n")
+    print(f"Main repo: {main_repo}")
+    print(f"Subrepo path: {subrepo}\n")
+    
     if subrepo.exists():
-        warn("子仓库目录已存在，跳过 clone。")
+        print("⚠️  Subrepo already exists, re-syncing...")
     else:
         subrepo.parent.mkdir(parents=True, exist_ok=True)
-        info("正在 clone 内容子仓库...")
+        print("📦 Cloning content sub-repo...")
         run_git(["clone", SUBREPO_URL, str(subrepo)], cwd=main_repo)
-        ok(f"子仓库已克隆到 {subrepo}")
-
-    # 将子仓库内容同步到主仓库（确保主仓库有文件）
-    info("正在将子仓库内容同步到主仓库...")
+        print("✅ Subrepo cloned")
+    
+    print("\n🔄 Syncing content to main repo...")
     sync_subrepo_to_main(subrepo, main_repo)
-    ok("内容已同步到主仓库")
-
-    print("\n" + "=" * 50)
-    ok("初始化完成！")
-    print("  你现在可以编辑 content/docs 和 public/assets/images/docs 下的文件")
-    print("  编辑完成后运行: python abdocstool.py commit")
+    print("✅ Content synced!")
+    print("\n💡 You can now edit content/docs and run 'Commit' when done.")
     return 0
 
 
-def cmd_status(args: argparse.Namespace) -> int:
+def do_commit() -> int:
     main_repo = get_main_repo()
     subrepo = get_subrepo_dir(main_repo)
-
-    bold("📦 主仓库状态")
-    info(f"路径: {main_repo}")
-    info(f"分支: {git_branch(main_repo)}")
-    info(f"远程: {git_remote_url(main_repo)}")
-    info(f"最新提交: {git_latest_commit(main_repo)}")
-
+    
+    if not subrepo.exists():
+        print("❌ Subrepo not initialized. Please run 'Init' first.")
+        return 1
+    
+    print("📝 Commit Wizard\n")
+    
+    # Main repo
     if git_has_changes(main_repo):
-        print(f"\n{C.WARN}未提交的更改:{C.END}")
-        run_git(["status", "-sb"], cwd=main_repo, check=True)
+        print("📦 Main repo has changes:")
+        run_git(["status", "-sb"], cwd=main_repo)
+        ans = input("\nCommit main repo? [y/N] ").strip().lower()
+        if ans in ("y", "yes"):
+            msg = input("Commit message: ").strip()
+            if msg:
+                run_git(["add", "-A"], cwd=main_repo)
+                run_git(["commit", "-m", msg], cwd=main_repo)
+                print("✅ Main repo committed")
     else:
-        ok("工作区干净")
-
-    bold("📄 内容子仓库状态")
-    if not subrepo.exists():
-        err("子仓库未初始化，请先运行: python abdocstool.py init")
-        return 1
-
-    info(f"路径: {subrepo}")
-    info(f"分支: {git_branch(subrepo)}")
-    info(f"远程: {git_remote_url(subrepo)}")
-    info(f"最新提交: {git_latest_commit(subrepo)}")
-
-    if git_has_changes(subrepo):
-        print(f"\n{C.WARN}未提交的更改:{C.END}")
-        run_git(["status", "-sb"], cwd=subrepo, check=True)
-    else:
-        ok("工作区干净")
-
-    bold("🔄 主仓库 ↔ 子仓库 文件差异")
-    for main_rel, sub_rel in SYNC_PAIRS:
-        left = main_repo / main_rel
-        right = subrepo / sub_rel
-        if not left.exists() or not right.exists():
-            warn(f"{main_rel}: 目录不存在，无法比较")
-            continue
-        ol, or_, df = dir_diff_summary(left, right)
-        total = ol + or_ + df
-        if total == 0:
-            ok(f"{main_rel}: 完全一致")
-        else:
-            warn(f"{main_rel}: 有 {total} 处差异 "
-                 f"(仅主仓库 {ol}, 仅子仓库 {or_}, 内容不同 {df})")
-
-    return 0
-
-
-def cmd_commit(args: argparse.Namespace) -> int:
-    main_repo = get_main_repo()
-    subrepo = get_subrepo_dir(main_repo)
-
-    if not subrepo.exists():
-        err("子仓库未初始化，请先运行: python abdocstool.py init")
-        return 1
-
-    bold("提交向导")
-
-    # ── 主仓库提交 ──
-    main_has = git_has_changes(main_repo)
-    if main_has:
-        print(f"\n{C.INFO}主仓库有未提交的更改:{C.END}")
-        run_git(["status", "-sb"], cwd=main_repo, check=True)
-        if ask_yes_no("是否提交主仓库更改？", default=False):
-            msg = ask_input("主仓库提交信息")
-            run_git(["add", "-A"], cwd=main_repo)
-            run_git(["commit", "-m", msg], cwd=main_repo)
-            ok("主仓库已提交")
-        else:
-            info("跳过主仓库提交")
-    else:
-        ok("主仓库无更改")
-
-    # ── 内容仓库提交 ──
-    # 先将主仓库内容同步到子仓库
+        print("✅ Main repo: clean")
+    
+    # Content repo
     sync_main_to_subrepo(main_repo, subrepo)
-    content_has = git_has_changes(subrepo)
-
-    if content_has:
-        print(f"\n{C.INFO}内容仓库有未提交的更改:{C.END}")
-        run_git(["status", "-sb"], cwd=subrepo, check=True)
-        if ask_yes_no("是否提交内容仓库更改？", default=False):
-            msg = ask_input("内容仓库提交信息")
-            run_git(["add", "-A"], cwd=subrepo)
-            run_git(["commit", "-m", msg], cwd=subrepo)
-            ok("内容仓库已提交")
-        else:
-            info("跳过内容仓库提交")
+    if git_has_changes(subrepo):
+        print("\n📄 Content repo has changes:")
+        run_git(["status", "-sb"], cwd=subrepo)
+        ans = input("\nCommit content repo? [y/N] ").strip().lower()
+        if ans in ("y", "yes"):
+            msg = input("Commit message: ").strip()
+            if msg:
+                run_git(["add", "-A"], cwd=subrepo)
+                run_git(["commit", "-m", msg], cwd=subrepo)
+                print("✅ Content repo committed")
     else:
-        ok("内容仓库无更改（与主仓库一致）")
-
+        print("✅ Content repo: clean")
+    
     return 0
 
 
-def cmd_sync(args: argparse.Namespace) -> int:
+def do_sync() -> int:
     main_repo = get_main_repo()
     subrepo = get_subrepo_dir(main_repo)
-
+    
     if not subrepo.exists():
-        err("子仓库未初始化，请先运行: python abdocstool.py init")
+        print("❌ Subrepo not initialized. Please run 'Init' first.")
         return 1
-
-    bold("同步内容仓库到主仓库")
-
-    info("正在拉取子仓库最新内容...")
+    
+    print("🔄 Syncing from remote...\n")
+    
     run_git(["fetch", "origin"], cwd=subrepo)
-
-    local_branch = git_branch(subrepo)
-    run_git(["reset", "--hard", f"origin/{local_branch}"], cwd=subrepo)
-    ok(f"子仓库已同步到 origin/{local_branch}")
-
-    info("正在将最新内容复制到主仓库...")
+    branch = git_branch(subrepo)
+    run_git(["reset", "--hard", f"origin/{branch}"], cwd=subrepo)
+    print(f"✅ Subrepo synced to origin/{branch}")
+    
+    print("\n🔄 Copying to main repo...")
     sync_subrepo_to_main(subrepo, main_repo)
-    ok("主仓库内容已更新")
-
-    print("\n提示: 如果主仓库的 content/docs 之前有未保存的本地修改，它们已被覆盖。")
-    print("      如需保留，请先从 git 历史或备份中恢复。")
+    print("✅ Main repo updated!")
+    
+    print("\n⚠️  Warning: Local changes in content/docs have been overwritten.")
     return 0
 
 
-def cmd_push(args: argparse.Namespace) -> int:
+def do_push() -> int:
     main_repo = get_main_repo()
     subrepo = get_subrepo_dir(main_repo)
-
+    
     if not subrepo.exists():
-        err("子仓库未初始化，请先运行: python abdocstool.py init")
+        print("❌ Subrepo not initialized. Please run 'Init' first.")
         return 1
-
-    bold("推送向导")
-
-    # 主仓库
+    
+    print("📤 Push Wizard\n")
+    
     main_branch = git_branch(main_repo)
-    if ask_yes_no(f"推送主仓库 ({main_branch})？", default=True):
+    ans = input(f"Push main repo ({main_branch})? [Y/n] ").strip().lower()
+    if ans in ("", "y", "yes"):
         run_git(["push", "origin", main_branch], cwd=main_repo)
-        ok("主仓库已推送")
-    else:
-        info("跳过主仓库推送")
-
-    # 内容仓库
+        print("✅ Main repo pushed")
+    
     sub_branch = git_branch(subrepo)
-    if ask_yes_no(f"推送内容仓库 ({sub_branch})？", default=True):
+    ans = input(f"\nPush content repo ({sub_branch})? [Y/n] ").strip().lower()
+    if ans in ("", "y", "yes"):
         run_git(["push", "origin", sub_branch], cwd=subrepo)
-        ok("内容仓库已推送")
-    else:
-        info("跳过内容仓库推送")
-
+        print("✅ Content repo pushed")
+    
     return 0
 
 
-# ── 入口 ──────────────────────────────────────────────────────────
+def do_status() -> int:
+    main_repo = get_main_repo()
+    subrepo = get_subrepo_dir(main_repo)
+    
+    print("📊 Detailed Status\n")
+    
+    print("─" * 50)
+    print("📦 Main Repo")
+    print("─" * 50)
+    print(f"  Path:   {main_repo}")
+    print(f"  Branch: {git_branch(main_repo)}")
+    print(f"  Commit: {git_latest_commit(main_repo)}")
+    print(f"  Remote: {git_remote_url(main_repo)}")
+    print(f"  Clean:  {'✅ Yes' if not git_has_changes(main_repo) else '⚠️  No'}")
+    
+    if subrepo.exists():
+        print("\n" + "─" * 50)
+        print("📄 Content Repo")
+        print("─" * 50)
+        print(f"  Path:   {subrepo}")
+        print(f"  Branch: {git_branch(subrepo)}")
+        print(f"  Commit: {git_latest_commit(subrepo)}")
+        print(f"  Remote: {git_remote_url(subrepo)}")
+        print(f"  Clean:  {'✅ Yes' if not git_has_changes(subrepo) else '⚠️  No'}")
+    else:
+        print("\n⚠️  Content repo not initialized")
+    
+    print()
+    return 0
+
+
+# ── 主循环 ────────────────────────────────────────────────────────
+def main_tui(stdscr) -> int:
+    # 初始化
+    curses.curs_set(0)
+    stdscr.nodelay(False)
+    stdscr.timeout(100)
+    
+    if curses.has_colors():
+        init_colors()
+    
+    # 启用鼠标支持
+    curses.mousemask(curses.ALL_MOUSE_EVENTS | curses.REPORT_MOUSE_POSITION)
+    
+    selected = 0
+    
+    # 首次启动收集状态
+    main_status, sub_status = collect_status()
+    
+    while True:
+        stdscr.clear()
+        height, width = stdscr.getmaxyx()
+        
+        # 最小尺寸检查
+        if height < 20 or width < 60:
+            stdscr.addstr(0, 0, "Terminal too small! Need at least 60x20")
+            stdscr.refresh()
+            key = stdscr.getch()
+            if key == ord('q'):
+                break
+            continue
+        
+        # ═══════════════════════════════════════
+        # 上部：Logo + 状态
+        # ═══════════════════════════════════════
+        
+        # Logo
+        logo_x = max(0, (width - len(ASCII_LOGO[0])) // 2)
+        for i, line in enumerate(ASCII_LOGO):
+            if i < height:
+                safe_addstr(stdscr, i, logo_x, line, curses.color_pair(CP_LOGO))
+        
+        logo_height = len(ASCII_LOGO)
+        
+        # 彩蛋问候
+        draw_easter_egg(stdscr)
+        
+        # 状态卡片
+        card_y = logo_height + 1
+        card_width = min(35, (width - 6) // 2)
+        card_spacing = 4
+        
+        total_cards_width = card_width * 2 + card_spacing
+        cards_start_x = max(0, (width - total_cards_width) // 2)
+        
+        draw_repo_card(stdscr, card_y, cards_start_x, card_width, main_status)
+        draw_repo_card(stdscr, card_y, cards_start_x + card_width + card_spacing, card_width, sub_status)
+        
+        # 分隔线
+        sep_y = card_y + 7
+        draw_horizontal_line(stdscr, sep_y, 2, width - 4)
+        
+        # ═══════════════════════════════════════
+        # 下部：菜单
+        # ═══════════════════════════════════════
+        
+        menu_y = sep_y + 1
+        menu_width = min(40, width - 4)
+        menu_x = max(0, (width - menu_width) // 2)
+        
+        draw_menu(stdscr, menu_y, menu_x, menu_width, selected)
+        
+        # 底部提示
+        draw_footer(stdscr)
+        
+        # 刷新
+        stdscr.refresh()
+        
+        # ═══════════════════════════════════════
+        # 输入处理
+        # ═══════════════════════════════════════
+        
+        key = stdscr.getch()
+        
+        if key == -1:
+            continue
+        
+        # 鼠标事件
+        if key == curses.KEY_MOUSE:
+            try:
+                _, mx, my, _, bstate = curses.getmouse()
+                
+                # 检查是否点击在菜单区域内
+                menu_start_y = menu_y + 1
+                menu_end_y = menu_y + 1 + len(MENU_ITEMS)
+                menu_start_x = menu_x + 3
+                menu_end_x = menu_x + menu_width - 3
+                
+                if menu_start_y <= my < menu_end_y and menu_start_x <= mx < menu_end_x:
+                    clicked_item = my - menu_start_y
+                    if 0 <= clicked_item < len(MENU_ITEMS):
+                        selected = clicked_item
+                        stdscr.refresh()
+                        
+                        # 如果是单击（左键）
+                        if bstate & curses.BUTTON1_CLICKED:
+                            # 执行选中的命令
+                            pass  # 继续到下面的 Enter 处理
+                
+                # 鼠标滚轮（兼容不同平台）
+                scroll_up = getattr(curses, "BUTTON4_PRESSED", 0)
+                scroll_down = getattr(curses, "BUTTON5_PRESSED", 0)
+                if scroll_up and bstate & scroll_up:
+                    selected = (selected - 1) % len(MENU_ITEMS)
+                elif scroll_down and bstate & scroll_down:
+                    selected = (selected + 1) % len(MENU_ITEMS)
+                    
+            except curses.error:
+                pass
+        
+        # 键盘导航
+        elif key in (curses.KEY_UP, ord('k')):
+            selected = (selected - 1) % len(MENU_ITEMS)
+        elif key in (curses.KEY_DOWN, ord('j')):
+            selected = (selected + 1) % len(MENU_ITEMS)
+        elif key == curses.KEY_HOME:
+            selected = 0
+        elif key == curses.KEY_END:
+            selected = len(MENU_ITEMS) - 1
+        elif key in (10, 13, curses.KEY_ENTER):  # Enter
+            action = MENU_ITEMS[selected][1]
+            
+            if action == "exit":
+                break
+            elif action == "init":
+                run_command(stdscr, "🚀 Initialize Subrepo", do_init)
+            elif action == "commit":
+                run_command(stdscr, "📝 Commit Changes", do_commit)
+            elif action == "sync":
+                run_command(stdscr, "🔄 Sync from Remote", do_sync)
+            elif action == "push":
+                run_command(stdscr, "📤 Push to Remote", do_push)
+            elif action == "status":
+                run_command(stdscr, "📊 Detailed Status", do_status)
+            
+            # 命令执行后重新收集状态
+            main_status, sub_status = collect_status()
+        
+        elif key in (ord('q'), 27):  # q 或 ESC
+            break
+    
+    return 0
+
+
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        prog="abdocstool.py",
-        description="AstroBox Docs 主仓库与内容子仓库的同步管理工具",
-    )
-    sub = parser.add_subparsers(dest="command", required=True)
-
-    sub.add_parser("init", help="首次初始化，clone 子仓库并同步内容")
-    sub.add_parser("status", help="查看两个仓库的当前状态与差异")
-    sub.add_parser("commit", help="交互式分别提交主仓库和内容仓库")
-    sub.add_parser("sync", help="从远程拉取内容仓库最新内容到本地")
-    sub.add_parser("push", help="推送两个仓库到远程")
-
-    args = parser.parse_args()
-
-    handlers: dict[str, callable] = {
-        "init": cmd_init,
-        "status": cmd_status,
-        "commit": cmd_commit,
-        "sync": cmd_sync,
-        "push": cmd_push,
-    }
+    # 检测是否在真正的 TTY 终端中运行
+    if not sys.stdin.isatty() or not sys.stdout.isatty():
+        print("❌ abdocstool.py requires an interactive terminal (TTY).")
+        print("   Please run it directly in your terminal:")
+        print("   python abdocstool.py")
+        return 1
 
     try:
-        return handlers[args.command](args)
-    except subprocess.CalledProcessError as e:
-        err(f"命令执行失败: {e}")
+        return curses.wrapper(main_tui)
+    except curses.error as e:
+        print(f"\n❌ Terminal error: {e}")
+        print("   Make sure your terminal supports curses (e.g., iTerm2, Terminal.app)")
         return 1
     except KeyboardInterrupt:
-        print("\n\n已取消操作")
-        return 130
+        print("\n\n👋 See you, space cowboy!")
+        return 0
 
 
 if __name__ == "__main__":

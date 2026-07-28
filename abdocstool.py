@@ -396,7 +396,18 @@ def do_init() -> int:
     print("\n🔄 Syncing content to main repo...")
     sync_subrepo_to_main(subrepo, main_repo)
     print("✅ Content synced!")
-    print("\n💡 You can now edit content/docs and run 'Commit' when done.")
+
+    # Install dependencies if needed
+    node_modules = main_repo / "node_modules"
+    if not node_modules.exists():
+        print("\n📦 node_modules not found, running pnpm install...")
+        subprocess.run(["pnpm", "install"], cwd=main_repo, check=True)
+        print("✅ Dependencies installed!")
+    else:
+        print("\n✅ node_modules already exists, skipping pnpm install")
+
+    print("\n🎉 Initialization complete!")
+    print("   You can now run: pnpm dev")
     return 0
 
 

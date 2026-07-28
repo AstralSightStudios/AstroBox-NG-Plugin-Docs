@@ -31,4 +31,7 @@ content/docs
 public/assets/images/docs
 .docs-content-cache
 
+# local subrepo clone managed by abdocstool.py
+.subrepo
+
 .opencode

@@ -26,4 +26,9 @@ tsconfig.tsbuildinfo
 # generated sitemap (auto-generated during build)
 public/sitemap.xml
 
+# docs content fetched from sub-repo
+content/docs
+public/assets/images/docs
+.docs-content-cache
+
 .opencode

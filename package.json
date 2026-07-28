@@ -4,11 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "pnpm sitemap:generate && next build",
+    "build": "pnpm fetch-docs && pnpm sitemap:generate && next build",
     "start": "next start",
     "lint": "eslint .",
     "types:check": "fumadocs-mdx && next typegen && tsc --noEmit",
     "postinstall": "fumadocs-mdx",
+    "fetch-docs": "tsx scripts/fetch-docs.ts",
     "sitemap:generate": "tsx scripts/generate-sitemap.ts"
   },
   "dependencies": {

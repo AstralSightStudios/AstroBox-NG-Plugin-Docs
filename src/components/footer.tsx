@@ -26,14 +26,14 @@ export function Footer() {
           <div className="flex flex-col items-center gap-1 text-xs text-fd-muted-foreground md:items-start">
             <p>版权所有 2026</p>
             <p>
-              遵循{" "}
+              文档内容遵循{" "}
               <Link
-                href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh-hans"
+                href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="underline underline-offset-2 transition-colors hover:text-fd-primary"
               >
-                CC BY-NC-ND 4.0
+                CC BY-NC-SA 4.0
               </Link>{" "}
               协议共享
             </p>

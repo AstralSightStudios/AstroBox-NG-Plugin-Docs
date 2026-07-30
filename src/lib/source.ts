@@ -14,8 +14,13 @@ import {
   IdentificationCardIcon,
   LinkSimpleHorizontalIcon,
   MagicWandIcon,
+  MusicNotesIcon,
   PlugIcon,
+  PuzzlePieceIcon,
   RocketIcon,
+  UsersIcon,
+  WatchIcon,
+  WrenchIcon,
 } from "@phosphor-icons/react/dist/ssr";
 
 const docIcons = {
@@ -34,12 +39,17 @@ const docIcons = {
   Link2: LinkSimpleHorizontalIcon,
   LinkSimpleHorizontal: LinkSimpleHorizontalIcon,
   MagicWand: MagicWandIcon,
+  MusicNotes: MusicNotesIcon,
   PartyPopper: ConfettiIcon,
   Plug: PlugIcon,
   Plug2: PlugIcon,
+  PuzzlePiece: PuzzlePieceIcon,
   Rocket: RocketIcon,
   SquareCode: FileCodeIcon,
+  Users: UsersIcon,
   WandSparkles: MagicWandIcon,
+  Watch: WatchIcon,
+  Wrench: WrenchIcon,
 } as const;
 
 export const source = loader({

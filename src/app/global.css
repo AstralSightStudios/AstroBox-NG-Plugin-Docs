@@ -1,4 +1,10 @@
 @import "tailwindcss";
+/* content/docs is populated from the separate content repo
+ * (AstroBox-NG-Plugin-Docs-Content) and gitignored in this repo.
+ * Tailwind v4's auto-detection skips gitignored files, so explicitly
+ * register the directory so className utilities in MDX files are generated.
+ */
+@source "../../content/docs";
 @import "fumadocs-ui/css/neutral.css";
 @import "fumadocs-ui/css/preset.css";
 

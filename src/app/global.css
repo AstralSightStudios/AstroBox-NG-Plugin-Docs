@@ -205,6 +205,7 @@ html[data-theme-transition="active"] #nd-page .prose :where(
     --plugin-color: #8b5cf6;
     --creator-color: #f59e0b;
     --legacy-color: #171717;
+    --facetory-color: #ff4800;
 }
 
 .dark {
@@ -219,6 +220,7 @@ html[data-theme-transition="active"] #nd-page .prose :where(
     --plugin-color: #a78bfa;
     --creator-color: #fbbf24;
     --legacy-color: #a3a3a3;
+    --facetory-color: #ff6a33;
 }
 
 /* Plugin 文档主题色 */
@@ -262,6 +264,18 @@ body.legacy {
 .dark body.legacy {
     --color-fd-primary-foreground: #e5e5e5;
     --color-fd-accent: color-mix(in srgb, var(--legacy-color) 15%, transparent);
+}
+
+/* Facetofy 用户文档主题色 */
+body.facetory {
+    --color-fd-primary: var(--facetory-color);
+    --color-fd-primary-foreground: #ffffff;
+    --color-fd-accent: color-mix(in srgb, var(--facetory-color) 12%, transparent);
+    --color-fd-ring: var(--facetory-color);
+}
+
+.dark body.facetory {
+    --color-fd-accent: color-mix(in srgb, var(--facetory-color) 15%, transparent);
 }
 
 #nd-home-layout {

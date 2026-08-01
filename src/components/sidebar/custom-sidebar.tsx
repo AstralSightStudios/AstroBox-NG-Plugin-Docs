@@ -26,6 +26,7 @@ import { LinkItem } from "fumadocs-ui/utils/link-item";
 import { getSidebarTabs } from "fumadocs-ui/components/sidebar/tabs/index";
 import { useMemo, useRef, useState, Fragment, isValidElement, cloneElement } from "react";
 import { SidebarSimpleIcon, MagnifyingGlassIcon } from "@phosphor-icons/react";
+import { PaletteIcon } from "@phosphor-icons/react";
 import { useSearchContext } from "fumadocs-ui/contexts/search";
 import { renderTitleNav, useLinkItems } from "fumadocs-ui/layouts/shared";
 import type { Root as PageTreeRoot } from "fumadocs-core/page-tree";
@@ -50,6 +51,8 @@ function getSectionFromUrl(url: string | undefined): string | undefined {
       return "creator";
     case "usage":
       return "usage";
+    case "facetory-usage":
+      return "facetory";
     default:
       return undefined;
   }
@@ -489,8 +492,14 @@ export function CustomSidebar({
 
   const tabs = useMemo(() => {
     return rawTabs.map((tab: any) => {
-      if (!tab.icon) return tab;
       const section = getSectionFromUrl(tab.url);
+      const icon =
+        section === "facetory" ? (
+          <PaletteIcon weight="bold" />
+        ) : (
+          tab.icon
+        );
+      if (!icon) return tab;
       if (!section) return tab;
       const color = `var(--${section}-color)`;
       return {
@@ -500,7 +509,7 @@ export function CustomSidebar({
             className="flex items-center justify-center [&_svg]:size-full rounded-lg size-full text-(--tab-color) bg-(--tab-color)/10 border p-1 md:p-1.5"
             style={{ "--tab-color": color } as React.CSSProperties}
           >
-            {tab.icon}
+            {icon}
           </div>
         ),
       };

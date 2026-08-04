@@ -21,7 +21,7 @@ export default function OpenPage({
 }: OpenPageProps) {
   return (
     <>
-      <main data-debug={isDebugPage ? "true" : undefined}>
+      <div data-debug={isDebugPage ? "true" : undefined} data-open-page="">
         <div className="titleContainer">
           <h1>{copy.heading}</h1>
           <p className="hint">{copy.prompt}</p>
@@ -95,7 +95,7 @@ export default function OpenPage({
           </section>
         </div>
         <QRCodeClient caption={copy.qrCaption} />
-      </main>
+      </div>
       <style jsx global>{`
         @font-face {
           font-family: "Geist";
@@ -117,39 +117,7 @@ export default function OpenPage({
           font-weight: 600 900;
         }
 
-        :root {
-          font-family: var(--font-family);
-        }
-
-        html {
-          margin: 0;
-          width: 100%;
-          overflow-x: hidden;
-          scrollbar-width: thin;
-          scrollbar-color: color-mix(in srgb, var(--color-text) 28%, transparent)
-            transparent;
-          background-color: var(--color-main-background);
-        }
-
-        body {
-          margin: 0;
-          width: 100%;
-          overflow-x: clip;
-          scrollbar-width: thin;
-          scrollbar-color: color-mix(in srgb, var(--color-text) 28%, transparent)
-            transparent;
-          background-color: var(--color-main-background);
-        }
-
-        html {
-          height: 100%;
-        }
-
-        body {
-          min-height: 100%;
-        }
-
-        :root {
+        [data-open-page] {
           --color-primary: #b3d5ff;
           --color-primary-markdown: color-mix(
             in srgb,
@@ -162,10 +130,6 @@ export default function OpenPage({
           --color-green: #203c25;
           --color-yellow: #664019;
           --color-danger: #641723;
-          background-color: var(--color-main-background);
-          color: var(--color-text);
-          font-family: var(--font-family);
-          overflow-x: hidden;
           --color-text: #000;
           --color-main-background: #ffffff;
           --color-gray-background: #f5f5f8;
@@ -196,10 +160,11 @@ export default function OpenPage({
             Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
           --font-family-flex: var(--font-family);
           --font-family-serif: "Clara Serif Pro Med", serif;
-          --font-family-mono: "Sarasa Mono SC", "Courier New", Courier, "Geist",
-            "MiSans", "MiSans Chinese", MiSans, system-ui, miui, -apple-system,
-            BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell,
-            "Open Sans", "Helvetica Neue", monospace, sans-serif;
+          --font-family-mono: "Sarasa Mono SC", "Courier New", Courier,
+            "Geist", "MiSans", "MiSans Chinese", MiSans, system-ui, miui,
+            -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+            Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", monospace,
+            sans-serif;
           -webkit-tap-highlight-color: transparent;
           font-feature-settings: "liga" 1, "calt" 1, "ss07" 1, "ss08" 1,
             "cv01" 1, "cv03" 1, "cv04" 1, "cv10" 1;
@@ -208,11 +173,7 @@ export default function OpenPage({
         }
 
         @supports (corner-shape: superellipse(2)) {
-          * {
-            corner-shape: superellipse(2);
-          }
-
-          :root {
+          [data-open-page] {
             --radius-root: var(--radius-root-base);
             --radius-5xl: var(--radius-5xl-base);
             --radius-4xl: var(--radius-4xl-base);
@@ -227,70 +188,31 @@ export default function OpenPage({
           }
         }
 
-        :root {
+        [data-open-page] {
           --color-primary: #0b407f;
           --color-tertiary: #b3d5ff;
           --color-green: #65ba74;
           --color-yellow: #e9c162;
           --color-danger: #eb8e90;
-          background-color: var(--color-main-background);
-          color: var(--color-text);
-          --color-text: #fff;
+          --color-text: #fff !important;
           --color-main-background: #101010 !important;
           --color-gray-background: #1b1b1d !important;
           --qr-background-color: white;
           --qr-border-color: transparent;
+          color: var(--color-text);
+          background-color: #101010;
         }
 
-        * {
+        [data-open-page] * {
           font-family: var(--font-family);
         }
 
-        *::selection {
+        [data-open-page] *::selection {
           background-color: transparent;
           color: var(--color-brand);
         }
 
-        ::-webkit-scrollbar {
-          width: 10px;
-          height: 10px;
-        }
-
-        ::-webkit-scrollbar-track,
-        ::-webkit-scrollbar-track-piece,
-        ::-webkit-scrollbar-corner {
-          background: transparent;
-        }
-
-        ::-webkit-scrollbar-thumb {
-          background: color-mix(in srgb, var(--color-text) 22%, transparent);
-          border-radius: 999px;
-          border: 3px solid transparent;
-          background-clip: content-box;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-          background: color-mix(in srgb, var(--color-text) 34%, transparent);
-          background-clip: content-box;
-        }
-
-        ::-webkit-scrollbar-thumb:active {
-          background: color-mix(in srgb, var(--color-text) 48%, transparent);
-          background-clip: content-box;
-        }
-
-        body {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          justify-content: flex-start;
-          overflow: hidden;
-          padding: 0;
-          width: 100vw;
-          background-color: transparent;
-        }
-
-        main {
+        [data-open-page] {
           display: flex;
           flex-direction: column;
           align-items: flex-start;
@@ -298,9 +220,10 @@ export default function OpenPage({
           gap: 48px;
           width: min(90vw, 996px);
           margin: 0 auto;
+          flex: 1;
         }
 
-        h1 {
+        [data-open-page] h1 {
           background-image: linear-gradient(
             to top,
             var(--color-text),
@@ -318,21 +241,21 @@ export default function OpenPage({
           letter-spacing: -2px;
         }
 
-        h2 {
+        [data-open-page] h2 {
           margin: 0;
           font-size: 1rem;
           font-weight: 600;
         }
 
-        p {
+        [data-open-page] p {
           margin: 0;
         }
 
-        a {
+        [data-open-page] a {
           color: var(--color-text);
         }
 
-        .titleContainer {
+        [data-open-page] .titleContainer {
           display: flex;
           flex-direction: column;
           align-items: flex-start;
@@ -340,17 +263,17 @@ export default function OpenPage({
           padding: 4px;
         }
 
-        .hint {
+        [data-open-page] .hint {
           opacity: 0.6;
           font-size: 14px;
         }
 
-        .links {
+        [data-open-page] .links {
           display: flex;
           gap: 32px;
         }
 
-        .btnContainer {
+        [data-open-page] .btnContainer {
           display: flex;
           align-items: flex-start;
           flex-wrap: wrap;
@@ -358,7 +281,7 @@ export default function OpenPage({
           margin: 12px -4px;
         }
 
-        .btnContainer > * {
+        [data-open-page] .btnContainer > * {
           display: inline-flex;
           align-items: center;
           justify-content: center;
@@ -377,7 +300,7 @@ export default function OpenPage({
           transition: all 0.3s ease-in-out;
         }
 
-        .btnContainer > *:hover {
+        [data-open-page] .btnContainer > *:hover {
           background: color-mix(in srgb, var(--color-text) 12%, transparent);
           border: solid 1px
             color-mix(in srgb, var(--color-text) 10%, transparent);
@@ -385,7 +308,7 @@ export default function OpenPage({
           opacity: 1;
         }
 
-        .btnContainer > *:active {
+        [data-open-page] .btnContainer > *:active {
           background: color-mix(in srgb, var(--color-text) 8%, transparent);
           border: solid 1px
             color-mix(in srgb, var(--color-text) 8%, transparent);
@@ -393,13 +316,13 @@ export default function OpenPage({
           opacity: 1;
         }
 
-        .btnContainer > *:disabled {
+        [data-open-page] .btnContainer > *:disabled {
           opacity: 0.5;
           cursor: not-allowed;
           box-shadow: none;
         }
 
-        .debugPanel {
+        [data-open-page] .debugPanel {
           display: none;
           flex-direction: column;
           gap: 12px;
@@ -411,55 +334,51 @@ export default function OpenPage({
           background: color-mix(in srgb, var(--color-text) 6%, transparent);
         }
 
-        main[data-debug="true"] .debugPanel {
+        [data-open-page][data-debug="true"] .debugPanel {
           display: flex;
         }
 
-        dl {
+        [data-open-page] dl {
           display: flex;
           flex-direction: column;
           gap: 10px;
           margin: 0;
         }
 
-        dl div {
+        [data-open-page] dl div {
           display: flex;
           flex-direction: column;
           gap: 4px;
         }
 
-        dt {
+        [data-open-page] dt {
           font-size: 13px;
           opacity: 0.6;
         }
 
-        dd {
+        [data-open-page] dd {
           margin: 0;
           line-height: 1.5;
           word-break: break-all;
         }
 
         @media (prefers-color-scheme: dark) {
-          .btnContainer > *:hover {
+          [data-open-page] .btnContainer > *:hover {
             box-shadow: 0 4px 12px 0 rgb(0 0 0 / 30%);
           }
 
-          .btnContainer > *:active {
+          [data-open-page] .btnContainer > *:active {
             box-shadow: 0 2px 6px 0 rgb(0 0 0 / 30%);
           }
         }
 
         @media (max-width: 568px) {
-          body {
-            overflow: auto;
-          }
-
-          .links {
+          [data-open-page] .links {
             flex-direction: column;
             gap: 8px;
           }
 
-          main {
+          [data-open-page] {
             padding: 96px 0 0;
           }
         }

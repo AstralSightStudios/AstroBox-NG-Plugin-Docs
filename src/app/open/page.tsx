@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
+import { HomeLayout } from "fumadocs-ui/layouts/home";
 import OpenPage from "@/components/open-page";
+import { baseOptions } from "@/lib/layout.shared";
 import { openCopy } from "@/lib/open-copy";
 
 interface OpenPageSearchParams {
@@ -168,7 +170,7 @@ export default async function Page({
     debugParam !== null && ["1", "true", "yes", "on"].includes(debugParam);
 
   return (
-    <>
+    <HomeLayout {...baseOptions()} className="bg-[#101010]">
       <OpenPage
         isDebugPage={isDebugPage}
         homePath="/"
@@ -178,6 +180,6 @@ export default async function Page({
         type="text/javascript"
         dangerouslySetInnerHTML={{ __html: getInlineScript(isDebugPage) }}
       />
-    </>
+    </HomeLayout>
   );
 }

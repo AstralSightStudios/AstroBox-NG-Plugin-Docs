@@ -1,18 +1,26 @@
 #!/usr/bin/env python3
 """
-AstroBox Docs Tool — 交互式 TUI 双仓库管理器
+AstroBox Docs Tool — 交互式 TUI 双仓库管理器 / CLI
 
-直接运行: python abdocstool.py
+直接运行（TUI）: python abdocstool.py
 
 操作:
     ↑ / ↓      切换菜单
     Enter      执行选中项
     Mouse      点击菜单项（支持滚轮）
     q / ESC    退出
+
+命令行模式:
+    python abdocstool.py commit -m "提交信息" --push
+    python abdocstool.py push
+    python abdocstool.py status
+    python abdocstool.py sync
+    python abdocstool.py init
 """
 
 from __future__ import annotations
 
+import argparse
 import curses
 import os
 import shutil
@@ -411,7 +419,7 @@ def do_init() -> int:
     return 0
 
 
-def do_commit() -> int:
+def do_commit(main_message: str | None = None, content_message: str | None = None, auto_push: bool = False, main_files: list[str] | None = None) -> int:
     main_repo = get_main_repo()
     subrepo = get_subrepo_dir(main_repo)
     
@@ -425,13 +433,22 @@ def do_commit() -> int:
     if git_has_changes(main_repo):
         print("📦 Main repo has changes:")
         run_git(["status", "-sb"], cwd=main_repo)
-        ans = input("\nCommit main repo? [y/N] ").strip().lower()
-        if ans in ("y", "yes"):
-            msg = input("Commit message: ").strip()
-            if msg:
+        if main_message is not None:
+            if main_files:
+                for f in main_files:
+                    run_git(["add", f], cwd=main_repo)
+            else:
                 run_git(["add", "-A"], cwd=main_repo)
-                run_git(["commit", "-m", msg], cwd=main_repo)
-                print("✅ Main repo committed")
+            run_git(["commit", "-m", main_message], cwd=main_repo)
+            print("✅ Main repo committed")
+        else:
+            ans = input("\nCommit main repo? [y/N] ").strip().lower()
+            if ans in ("y", "yes"):
+                msg = input("Commit message: ").strip()
+                if msg:
+                    run_git(["add", "-A"], cwd=main_repo)
+                    run_git(["commit", "-m", msg], cwd=main_repo)
+                    print("✅ Main repo committed")
     else:
         print("✅ Main repo: clean")
     
@@ -440,16 +457,23 @@ def do_commit() -> int:
     if git_has_changes(subrepo):
         print("\n📄 Content repo has changes:")
         run_git(["status", "-sb"], cwd=subrepo)
-        ans = input("\nCommit content repo? [y/N] ").strip().lower()
-        if ans in ("y", "yes"):
-            msg = input("Commit message: ").strip()
-            if msg:
-                run_git(["add", "-A"], cwd=subrepo)
-                run_git(["commit", "-m", msg], cwd=subrepo)
-                print("✅ Content repo committed")
+        if content_message is not None:
+            run_git(["add", "-A"], cwd=subrepo)
+            run_git(["commit", "-m", content_message], cwd=subrepo)
+            print("✅ Content repo committed")
+        else:
+            ans = input("\nCommit content repo? [y/N] ").strip().lower()
+            if ans in ("y", "yes"):
+                msg = input("Commit message: ").strip()
+                if msg:
+                    run_git(["add", "-A"], cwd=subrepo)
+                    run_git(["commit", "-m", msg], cwd=subrepo)
+                    print("✅ Content repo committed")
     else:
         print("✅ Content repo: clean")
     
+    if auto_push:
+        return do_push(auto_confirm=True)
     return 0
 
 
@@ -476,7 +500,7 @@ def do_sync() -> int:
     return 0
 
 
-def do_push() -> int:
+def do_push(auto_confirm: bool = False) -> int:
     main_repo = get_main_repo()
     subrepo = get_subrepo_dir(main_repo)
     
@@ -487,16 +511,23 @@ def do_push() -> int:
     print("📤 Push Wizard\n")
     
     main_branch = git_branch(main_repo)
-    ans = input(f"Push main repo ({main_branch})? [Y/n] ").strip().lower()
-    if ans in ("", "y", "yes"):
+    sub_branch = git_branch(subrepo)
+    
+    if auto_confirm:
         run_git(["push", "origin", main_branch], cwd=main_repo)
         print("✅ Main repo pushed")
-    
-    sub_branch = git_branch(subrepo)
-    ans = input(f"\nPush content repo ({sub_branch})? [Y/n] ").strip().lower()
-    if ans in ("", "y", "yes"):
         run_git(["push", "origin", sub_branch], cwd=subrepo)
         print("✅ Content repo pushed")
+    else:
+        ans = input(f"Push main repo ({main_branch})? [Y/n] ").strip().lower()
+        if ans in ("", "y", "yes"):
+            run_git(["push", "origin", main_branch], cwd=main_repo)
+            print("✅ Main repo pushed")
+        
+        ans = input(f"\nPush content repo ({sub_branch})? [Y/n] ").strip().lower()
+        if ans in ("", "y", "yes"):
+            run_git(["push", "origin", sub_branch], cwd=subrepo)
+            print("✅ Content repo pushed")
     
     return 0
 
@@ -685,8 +716,70 @@ def main_tui(stdscr) -> int:
     return 0
 
 
+def build_parser() -> argparse.ArgumentParser:
+    """构建命令行参数解析器"""
+    parser = argparse.ArgumentParser(
+        prog="abdocstool.py",
+        description="AstroBox Docs Tool — 交互式 TUI 双仓库管理器 / CLI",
+    )
+    subparsers = parser.add_subparsers(dest="command")
+
+    commit_parser = subparsers.add_parser("commit", help="分别提交主仓库和内容仓库")
+    commit_parser.add_argument(
+        "-m", "--message",
+        help="提交信息（同时用于主仓库和内容仓库，可被 --main-message / --content-message 覆盖）",
+    )
+    commit_parser.add_argument("--main-message", help="主仓库提交信息")
+    commit_parser.add_argument("--content-message", help="内容仓库提交信息")
+    commit_parser.add_argument("--push", action="store_true", help="提交后自动推送")
+    commit_parser.add_argument(
+        "--main-files",
+        help="主仓库仅提交指定文件，逗号分隔（默认全部）",
+    )
+
+    subparsers.add_parser("push", help="推送两个仓库到远程")
+    subparsers.add_parser("sync", help="从远程拉取内容仓库最新内容")
+    subparsers.add_parser("init", help="初始化/重新同步子仓库")
+    subparsers.add_parser("status", help="显示详细状态信息")
+
+    return parser
+
+
+def run_cli(args: argparse.Namespace) -> int:
+    """运行命令行模式"""
+    if args.command == "commit":
+        main_msg = args.main_message or args.message
+        content_msg = args.content_message or args.message
+        main_files = None
+        if args.main_files:
+            main_files = [f.strip() for f in args.main_files.split(",") if f.strip()]
+        return do_commit(
+            main_message=main_msg,
+            content_message=content_msg,
+            auto_push=args.push,
+            main_files=main_files,
+        )
+    elif args.command == "push":
+        return do_push(auto_confirm=True)
+    elif args.command == "sync":
+        return do_sync()
+    elif args.command == "init":
+        return do_init()
+    elif args.command == "status":
+        return do_status()
+    else:
+        print("请指定命令。使用 --help 查看帮助。")
+        return 1
+
+
 def main() -> int:
-    # 检测是否在真正的 TTY 终端中运行
+    # 命令行模式：带参数
+    if len(sys.argv) > 1:
+        parser = build_parser()
+        args = parser.parse_args()
+        return run_cli(args)
+
+    # TUI 模式：检测是否在真正的 TTY 终端中运行
     if not sys.stdin.isatty() or not sys.stdout.isatty():
         print("❌ abdocstool.py requires an interactive terminal (TTY).")
         print("   Please run it directly in your terminal:")

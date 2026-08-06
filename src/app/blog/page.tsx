@@ -79,7 +79,7 @@ export default function BlogPage() {
                 <Link
                   key={post.url}
                   href={post.url}
-                  className="group flex flex-col overflow-hidden rounded-3xl border border-fd-border/60 bg-fd-card transition-all duration-300 hover:-translate-y-1 hover:border-fd-primary/50 hover:bg-fd-primary/5 hover:shadow-xl hover:shadow-fd-primary/10"
+                  className="group flex flex-col overflow-hidden rounded-3xl border border-fd-border/60 bg-fd-card transition-colors duration-300"
                 >
                   <div className="relative aspect-[16/10] overflow-hidden">
                     {hasCover ? (

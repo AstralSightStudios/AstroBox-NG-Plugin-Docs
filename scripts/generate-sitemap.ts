@@ -86,6 +86,42 @@ function getContentPages(): Array<{ url: string; slugs: string[] }> {
 }
 
 /**
+ * 从 content/blog 目录扫描所有博客文件
+ */
+function getBlogPages(): Array<{ url: string; slug: string }> {
+  const blogDir = path.join(projectRoot, "content", "blog");
+  const pages: Array<{ url: string; slug: string }> = [];
+
+  if (!fs.existsSync(blogDir)) {
+    return pages;
+  }
+
+  const items = fs.readdirSync(blogDir);
+
+  for (const item of items) {
+    const fullPath = path.join(blogDir, item);
+    const stat = fs.statSync(fullPath);
+
+    if (stat.isDirectory()) {
+      continue;
+    }
+
+    if (item.endsWith(".md") || item.endsWith(".mdx")) {
+      const slug = item.replace(/\.(md|mdx)$/, "");
+      if (slug === "meta") {
+        continue;
+      }
+      pages.push({
+        url: `/blog/${slug}`,
+        slug,
+      });
+    }
+  }
+
+  return pages;
+}
+
+/**
  * 根据页面路径判断优先级
  */
 function getPagePriority(url: string, slugLength: number): number {
@@ -161,6 +197,25 @@ function main() {
         lastmod: new Date().toISOString(),
         changefreq: getChangeFrequency(page.url, slugLength),
         priority: getPagePriority(page.url, slugLength),
+      });
+    }
+
+    // 添加博客列表页
+    entries.push({
+      url: `${SITE_URL}/blog`,
+      lastmod: new Date().toISOString(),
+      changefreq: "weekly",
+      priority: PRIORITY_CONFIG.category,
+    });
+
+    // 添加博客文章
+    const blogPages = getBlogPages();
+    for (const page of blogPages) {
+      entries.push({
+        url: `${SITE_URL}${page.url}`,
+        lastmod: new Date().toISOString(),
+        changefreq: "monthly",
+        priority: PRIORITY_CONFIG.doc,
       });
     }
 

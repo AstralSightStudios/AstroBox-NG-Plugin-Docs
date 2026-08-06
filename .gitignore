@@ -28,6 +28,7 @@ public/sitemap.xml
 
 # docs content fetched from sub-repo
 content/docs
+content/blog
 public/assets/images/docs
 .docs-content-cache
 

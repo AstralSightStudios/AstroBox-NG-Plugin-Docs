@@ -23,6 +23,7 @@ const TMP_ZIP = path.join(projectRoot, ".docs-content.zip");
 const TMP_EXTRACT = path.join(projectRoot, ".docs-content-extract");
 
 const TARGET_CONTENT = path.join(projectRoot, "content", "docs");
+const TARGET_BLOG = path.join(projectRoot, "content", "blog");
 const TARGET_ASSETS = path.join(
   projectRoot,
   "public",
@@ -65,9 +66,10 @@ function main() {
   console.log("📦 Checking docs content...");
 
   const contentExists = hasContent(TARGET_CONTENT);
+  const blogExists = hasContent(TARGET_BLOG);
   const assetsExist = hasContent(TARGET_ASSETS);
 
-  if (contentExists && assetsExist && !FORCE) {
+  if (contentExists && blogExists && assetsExist && !FORCE) {
     console.log(
       "  ↳ Local docs content already present. Skipping fetch.",
     );
@@ -106,6 +108,7 @@ function main() {
 
   const repoRoot = path.join(TMP_EXTRACT, extractedDirs[0]);
   const sourceContent = path.join(repoRoot, "content", "docs");
+  const sourceBlog = path.join(repoRoot, "content", "blog");
   const sourceAssets = path.join(
     repoRoot,
     "public",
@@ -117,6 +120,9 @@ function main() {
   // Sync to project directories
   console.log("🔄 Syncing content/docs...");
   syncDir(sourceContent, TARGET_CONTENT);
+
+  console.log("🔄 Syncing content/blog...");
+  syncDir(sourceBlog, TARGET_BLOG);
 
   console.log("🔄 Syncing public/assets/images/docs...");
   syncDir(sourceAssets, TARGET_ASSETS);

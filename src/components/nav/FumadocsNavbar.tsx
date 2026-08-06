@@ -86,15 +86,17 @@ export function FumadocsNavbar() {
   const [sidebarButtonHovered, setSidebarButtonHovered] = useState(false);
   const [sidebarButtonPressed, setSidebarButtonPressed] = useState(false);
 
-  // Scroll-aware hide/show: only on the homepage (not docs).
+  // Scroll-aware hide/show: only on the homepage (not docs or blog).
   // Hide when scrolling down past a threshold; reveal when scrolling up.
   const [isNavHidden, setIsNavHidden] = useState(false);
   const lastScrollY = useRef(0);
   const HIDE_THRESHOLD = 30;
 
+  const isHomePage = pathname === "/" || pathname === "";
+
   useEffect(() => {
-    // Only enable auto-hide on the homepage, not on docs pages.
-    if (typeof window === "undefined" || isDocsRoute) return;
+    // Only enable auto-hide on the homepage, not on docs or blog pages.
+    if (typeof window === "undefined" || !isHomePage) return;
 
     // Sync initial value so refreshing a scrolled page doesn't produce a giant delta.
     lastScrollY.current = window.scrollY;
@@ -127,7 +129,7 @@ export function FumadocsNavbar() {
       window.removeEventListener("scroll", onScroll);
       if (rafId) window.cancelAnimationFrame(rafId);
     };
-  }, [isDocsRoute]);
+  }, [isHomePage]);
 
   const navItems: NavHeaderItem[] = topNavLinks.flatMap((item) => {
     if (!("text" in item) || !("url" in item)) return [];

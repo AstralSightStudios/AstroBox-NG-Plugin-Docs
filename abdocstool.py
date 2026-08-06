@@ -36,6 +36,7 @@ SUBREPO_NAME = "AstroBox-NG-Plugin-Docs-Content"
 
 SYNC_PAIRS: list[tuple[str, str]] = [
     ("content/docs", "content/docs"),
+    ("content/blog", "content/blog"),
     ("public/assets/images/docs", "public/assets/images/docs"),
 ]
 

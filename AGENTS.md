@@ -12,9 +12,10 @@
 ### 内容仓库包含
 
 - `content/docs/` — 文档正文（MDX/MD）
+- `content/blog/` — 博客正文（MDX/MD）
 - `public/assets/images/docs/` — 文档图片资源
 
-这两个目录在主仓库中被 `.gitignore` **忽略**，本地文件通过 `abdocstool.py` 从内容仓库同步而来。
+这三个目录在主仓库中被 `.gitignore` **忽略**，本地文件通过 `abdocstool.py` 从内容仓库同步而来。
 
 ### 构建时的自动拉取
 
@@ -29,9 +30,10 @@
 | 站点代码（`src/`、`scripts/`、配置文件等） | 主仓库 | `git commit` 或 `abdocstool.py` 的 Commit |
 | 依赖（`package.json`、`pnpm-lock.yaml`） | 主仓库 | `git commit` |
 | 文档正文（`content/docs/` 下的 `.mdx`/`.md`） | **内容仓库** | `abdocstool.py commit`（自动同步到 `.subrepo/` 后提交） |
+| 博客正文（`content/blog/` 下的 `.mdx`/`.md`） | **内容仓库** | `abdocstool.py commit`（同上） |
 | 文档图片（`public/assets/images/docs/`） | **内容仓库** | `abdocstool.py commit`（同上） |
 
-> **核心规则：** 只要修改了 `content/docs/` 或 `public/assets/images/docs/` 下的文件，就必须通过 `abdocstool.py` 提交到内容仓库，不能只提交主仓库。
+> **核心规则：** 只要修改了 `content/docs/`、`content/blog/` 或 `public/assets/images/docs/` 下的文件，就必须通过 `abdocstool.py` 提交到内容仓库，不能只提交主仓库。
 
 ---
 
@@ -48,7 +50,7 @@ python abdocstool.py
 | 菜单项 | 作用 |
 |--------|------|
 | `Init` | 首次初始化：clone 内容仓库 → 同步内容 → `pnpm install` |
-| `Commit` | **分别提交两个仓库：** 先问主仓库提交信息，再将 `content/docs` 同步到 `.subrepo/` 后提交到内容仓库 |
+| `Commit` | **分别提交两个仓库：** 先问主仓库提交信息，再将 `content/docs`、`content/blog` 同步到 `.subrepo/` 后提交到内容仓库 |
 | `Sync` | 从远程拉取内容仓库最新内容，覆盖本地 `content/docs` |
 | `Push` | 分别推送两个仓库到远程 |
 | `Status` | 显示主仓库和内容仓库的当前状态、差异统计 |
@@ -80,9 +82,9 @@ python abdocstool.py
 
 ## agent 操作指南
 
-### 当你需要修改文档内容时
+### 当你需要修改文档或博客内容时
 
-1. 直接编辑 `content/docs/` 或 `public/assets/images/docs/` 下的文件
+1. 直接编辑 `content/docs/`、`content/blog/` 或 `public/assets/images/docs/` 下的文件
 2. 提醒用户运行 `python abdocstool.py` 并选择 `Commit` 来提交内容仓库
 3. 不要手动在 `.subrepo/` 目录中操作 — 始终通过 `abdocstool.py` 同步
 

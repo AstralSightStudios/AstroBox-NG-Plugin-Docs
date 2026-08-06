@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { HomeLayout } from "fumadocs-ui/layouts/home";
 import { baseOptions } from "@/lib/layout.shared";
 import { blogSource } from "@/lib/blog-source";
@@ -72,39 +73,62 @@ export default function BlogPage() {
             {posts.map((post) => {
               const data = getBlogData(post);
               const tags = data.tags ?? [];
+              const hasCover = Boolean(data.cover);
 
               return (
                 <Link
                   key={post.url}
                   href={post.url}
-                  className="group flex flex-col overflow-hidden rounded-3xl border border-fd-border/60 bg-fd-card/50 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-fd-primary/50 hover:bg-fd-primary/5 hover:shadow-xl hover:shadow-fd-primary/10"
+                  className="group flex flex-col overflow-hidden rounded-3xl border border-fd-border/60 bg-fd-card transition-all duration-300 hover:-translate-y-1 hover:border-fd-primary/50 hover:bg-fd-primary/5 hover:shadow-xl hover:shadow-fd-primary/10"
                 >
-                  <div className="mb-4 flex flex-wrap items-center gap-2 text-xs text-fd-muted-foreground">
-                    <span className="inline-flex items-center gap-1">
-                      <CalendarBlankIcon className="size-3.5" weight="bold" />
-                      {formatDate(data.date)}
-                    </span>
-                    {tags.length > 0 && (
-                      <span className="inline-flex items-center gap-1">
-                        <span className="text-fd-border">·</span>
-                        <TagIcon className="size-3.5" weight="bold" />
-                        {tags.join(" / ")}
-                      </span>
+                  <div className="relative aspect-[16/10] overflow-hidden">
+                    {hasCover ? (
+                      <>
+                        <Image
+                          src={data.cover as string}
+                          alt={data.title}
+                          fill
+                          className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                        <div className="absolute bottom-0 left-0 right-0 p-5">
+                          <h2 className="text-xl font-bold tracking-tight text-white md:text-2xl">
+                            {data.title}
+                          </h2>
+                        </div>
+                      </>
+                    ) : (
+                      <div className="flex h-full items-center justify-center bg-gradient-to-br from-fd-primary/10 to-fd-primary/5">
+                        <span className="text-4xl font-bold text-fd-primary/30">{data.title.charAt(0)}</span>
+                      </div>
                     )}
                   </div>
 
-                  <h2 className="mb-3 text-xl font-bold tracking-tight text-fd-foreground transition-colors group-hover:text-fd-primary md:text-2xl">
-                    {data.title}
-                  </h2>
+                  <div className="flex flex-1 flex-col p-6">
+                    <div className="mb-3 flex flex-wrap items-center gap-2 text-xs text-fd-muted-foreground">
+                      <span className="inline-flex items-center gap-1">
+                        <CalendarBlankIcon className="size-3.5" weight="bold" />
+                        {formatDate(data.date)}
+                      </span>
+                      {tags.length > 0 && (
+                        <span className="inline-flex items-center gap-1">
+                          <span className="text-fd-border">·</span>
+                          <TagIcon className="size-3.5" weight="bold" />
+                          {tags.join(" / ")}
+                        </span>
+                      )}
+                    </div>
 
-                  {data.description && (
-                    <p className="line-clamp-3 flex-1 text-sm leading-relaxed text-fd-muted-foreground">
-                      {data.description}
-                    </p>
-                  )}
+                    {data.description && (
+                      <p className="line-clamp-2 flex-1 text-sm leading-relaxed text-fd-muted-foreground">
+                        {data.description}
+                      </p>
+                    )}
 
-                  <div className="mt-6 text-sm font-medium text-fd-primary opacity-80 transition-opacity group-hover:opacity-100">
-                    阅读全文
+                    <div className="mt-4 text-sm font-medium text-fd-primary opacity-80 transition-opacity group-hover:opacity-100">
+                      阅读全文
+                    </div>
                   </div>
                 </Link>
               );

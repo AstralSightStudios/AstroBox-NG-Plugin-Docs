@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import type { ComponentType } from "react";
 import { HomeLayout } from "fumadocs-ui/layouts/home";
@@ -104,41 +105,96 @@ export default async function BlogPostPage({
 
   return (
     <HomeLayout {...baseOptions()} className="bg-fd-background">
-      <article className="mx-auto w-full max-w-3xl px-6 py-16 md:py-24">
-        <header className="mb-10 md:mb-14">
-          <Link
-            href="/blog"
-            className="mb-6 inline-flex items-center gap-1.5 text-sm text-fd-muted-foreground transition-colors hover:text-fd-primary"
-          >
-            <ArrowLeftIcon className="size-4" weight="bold" />
-            返回博客
-          </Link>
-
-          <h1 className="mb-4 text-3xl font-semibold tracking-tight text-fd-foreground md:text-5xl">
-            {data.title}
-          </h1>
-
-          <div className="flex flex-wrap items-center gap-3 text-sm text-fd-muted-foreground">
-            <span className="inline-flex items-center gap-1.5">
-              <CalendarBlankIcon className="size-4" weight="bold" />
-              {formatDate(data.date)}
-            </span>
-            {data.author && (
-              <span className="inline-flex items-center gap-1.5">
-                <span className="text-fd-border">·</span>
-                <UserIcon className="size-4" weight="bold" />
-                {data.author}
-              </span>
-            )}
-            {tags.length > 0 && (
-              <span className="inline-flex items-center gap-1.5">
-                <span className="text-fd-border">·</span>
-                <TagIcon className="size-4" weight="bold" />
-                {tags.join(" / ")}
-              </span>
-            )}
+      {data.cover && (
+        <section className="relative w-full">
+          <div className="relative aspect-[21/9] w-full overflow-hidden md:aspect-[21/8] lg:aspect-[21/7]">
+            <Image
+              src={data.cover}
+              alt={data.title}
+              fill
+              priority
+              className="object-cover"
+              sizes="100vw"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10" />
           </div>
-        </header>
+
+          <div className="absolute inset-x-0 bottom-0">
+            <div className="mx-auto w-full max-w-3xl px-6 pb-8 pt-24 md:pb-12 md:pt-32">
+              <Link
+                href="/blog"
+                className="mb-4 inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1.5 text-sm text-white/90 backdrop-blur-sm transition-colors hover:bg-white/20"
+              >
+                <ArrowLeftIcon className="size-4" weight="bold" />
+                返回博客
+              </Link>
+
+              <h1 className="mb-4 text-3xl font-semibold tracking-tight text-white md:text-5xl lg:text-6xl">
+                {data.title}
+              </h1>
+
+              <div className="flex flex-wrap items-center gap-3 text-sm text-white/80">
+                <span className="inline-flex items-center gap-1.5">
+                  <CalendarBlankIcon className="size-4" weight="bold" />
+                  {formatDate(data.date)}
+                </span>
+                {data.author && (
+                  <span className="inline-flex items-center gap-1.5">
+                    <span>·</span>
+                    <UserIcon className="size-4" weight="bold" />
+                    {data.author}
+                  </span>
+                )}
+                {tags.length > 0 && (
+                  <span className="inline-flex items-center gap-1.5">
+                    <span>·</span>
+                    <TagIcon className="size-4" weight="bold" />
+                    {tags.join(" / ")}
+                  </span>
+                )}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      <article className="mx-auto w-full max-w-3xl px-6 py-12 md:py-16">
+        {!data.cover && (
+          <header className="mb-10 md:mb-14">
+            <Link
+              href="/blog"
+              className="mb-6 inline-flex items-center gap-1.5 text-sm text-fd-muted-foreground transition-colors hover:text-fd-primary"
+            >
+              <ArrowLeftIcon className="size-4" weight="bold" />
+              返回博客
+            </Link>
+
+            <h1 className="mb-4 text-3xl font-semibold tracking-tight text-fd-foreground md:text-5xl">
+              {data.title}
+            </h1>
+
+            <div className="flex flex-wrap items-center gap-3 text-sm text-fd-muted-foreground">
+              <span className="inline-flex items-center gap-1.5">
+                <CalendarBlankIcon className="size-4" weight="bold" />
+                {formatDate(data.date)}
+              </span>
+              {data.author && (
+                <span className="inline-flex items-center gap-1.5">
+                  <span className="text-fd-border">·</span>
+                  <UserIcon className="size-4" weight="bold" />
+                  {data.author}
+                </span>
+              )}
+              {tags.length > 0 && (
+                <span className="inline-flex items-center gap-1.5">
+                  <span className="text-fd-border">·</span>
+                  <TagIcon className="size-4" weight="bold" />
+                  {tags.join(" / ")}
+                </span>
+              )}
+            </div>
+          </header>
+        )}
 
         <div className="prose prose-lg max-w-none">
           <MDX components={getMDXComponents()} />

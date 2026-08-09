@@ -318,7 +318,7 @@
   ],
   "thirdParty": {
     "title": "第三方社区作品",
-    "subtitle": "以下作品由第三方社区基于 AstroBox 内核或围绕 AstroBox 社区生态维护制作，与 AstroBox 团队无关",
+    "subtitle": "以下作品由第三方社区基于 AstroBox 内核或围绕 AstroBox 社区生态维护制作，与 AstroBox 团队无关。\n我们鼓励开源社区以符合开源协议规定的方式贡献、二创，期待与大家共同构建优质的穿戴设备生态",
     "items": [
       {
         "name": "Bandburg",
@@ -356,6 +356,26 @@
               {
                 "label": "AstroBooox Creator Console",
                 "href": "https://astrobooox-ng.waijade.cn/",
+                "linkLabel": "链接"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "OronBox",
+        "description": "衍生自 AstroBox-NG 的可穿戴设备管理软件。",
+        "badge": "第三方",
+        "badgeTooltip": "此版本为第三方社区衍生自 AstroBox-NG 制作，不代表官方团队",
+        "hasDownload": true,
+        "actionLabel": "前往",
+        "sources": [
+          {
+            "name": "zxor",
+            "downloads": [
+              {
+                "label": "OronBox",
+                "href": "https://oronbox.zxor.org/",
                 "linkLabel": "链接"
               }
             ]

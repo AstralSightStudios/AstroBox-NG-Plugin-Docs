@@ -99,7 +99,7 @@ export function ThirdPartyDownloads() {
         <h2 className="text-2xl font-bold tracking-wide text-fd-foreground md:text-3xl">
           {title}
         </h2>
-        <p className="mt-3 text-sm text-fd-muted-foreground md:text-base">
+        <p className="mt-3 text-sm whitespace-pre-line text-fd-muted-foreground md:text-base">
           {subtitle}
         </p>
       </div>

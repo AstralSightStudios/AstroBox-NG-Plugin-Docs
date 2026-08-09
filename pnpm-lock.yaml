@@ -15,16 +15,13 @@ overrides:
   fumadocs-mdx>picomatch: ^4.0.4
   js-yaml: ^4.2.0
 
-patchedDependencies:
-  '@claralight-design/abweb-navbar@0.3.0': 00dd6bea0716db89e4e824359cd55fb66aeed09bbc13d42e741bbc4aa4de368e
-
 importers:
 
   .:
     dependencies:
       '@claralight-design/abweb-navbar':
         specifier: ^0.3.0
-        version: 0.3.0(patch_hash=00dd6bea0716db89e4e824359cd55fb66aeed09bbc13d42e741bbc4aa4de368e)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        version: 0.3.0(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@orama/tokenizers':
         specifier: ^3.1.18
         version: 3.1.18
@@ -3534,7 +3531,7 @@ snapshots:
       '@babel/helper-string-parser': 7.29.7
       '@babel/helper-validator-identifier': 7.29.7
 
-  '@claralight-design/abweb-navbar@0.3.0(patch_hash=00dd6bea0716db89e4e824359cd55fb66aeed09bbc13d42e741bbc4aa4de368e)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
+  '@claralight-design/abweb-navbar@0.3.0(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
     dependencies:
       '@claralight-design/smooth-capsule': 0.1.1(react@19.2.4)
       '@phosphor-icons/react': 2.1.10(react-dom@19.2.4(react@19.2.4))(react@19.2.4)

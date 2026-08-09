@@ -81,24 +81,16 @@ export default function BlogPage() {
                   href={post.url}
                   className="group flex flex-col overflow-hidden rounded-3xl border border-fd-border/60 bg-fd-card transition-colors duration-300"
                 >
-                  <div className="relative aspect-[16/10] overflow-hidden">
+                  <div className="relative aspect-[64/27] overflow-hidden">
                     {hasCover ? (
-                      <>
-                        <Image
-                          src={data.cover as string}
-                          alt={data.title}
-                          fill
-                          className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                          loading={post === posts[0] ? "eager" : "lazy"}
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                        <div className="absolute bottom-0 left-0 right-0 p-5">
-                          <h2 className="text-xl font-bold tracking-tight text-white md:text-2xl">
-                            {data.title}
-                          </h2>
-                        </div>
-                      </>
+                      <Image
+                        src={data.cover as string}
+                        alt={data.title}
+                        fill
+                        className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        loading={post === posts[0] ? "eager" : "lazy"}
+                      />
                     ) : (
                       <div className="flex h-full items-center justify-center bg-gradient-to-br from-fd-primary/10 to-fd-primary/5">
                         <span className="text-4xl font-bold text-fd-primary/30">{data.title.charAt(0)}</span>
@@ -107,6 +99,10 @@ export default function BlogPage() {
                   </div>
 
                   <div className="flex flex-1 flex-col p-6">
+                    <h2 className="mb-3 text-xl font-semibold leading-tight tracking-tight text-fd-foreground md:text-2xl">
+                      {data.title}
+                    </h2>
+
                     <div className="mb-3 flex flex-wrap items-center gap-2 text-xs text-fd-muted-foreground">
                       <span className="inline-flex items-center gap-1">
                         <CalendarBlankIcon className="size-3.5" weight="bold" />

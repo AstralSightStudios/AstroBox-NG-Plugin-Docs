@@ -318,7 +318,7 @@
   ],
   "thirdParty": {
     "title": "第三方社区作品",
-    "subtitle": "以下作品由第三方社区基于 AstroBox 内核或围绕 AstroBox 社区生态维护制作，与 AstroBox 团队无关。\n我们鼓励开源社区以符合开源协议规定的方式贡献、二创，期待与大家共同构建优质的穿戴设备生态",
+    "subtitle": "以下作品由第三方社区基于 AstroBox 内核或围绕 AstroBox 社区生态维护制作，与 AstroBox 团队无关。\n我们鼓励开源社区以符合开源协议规定的方式贡献、二创，期待与大家共同构建优质的穿戴设备生态。",
     "items": [
       {
         "name": "Bandburg",

@@ -31,6 +31,13 @@ const TARGET_ASSETS = path.join(
   "images",
   "docs",
 );
+const TARGET_BLOG_ASSETS = path.join(
+  projectRoot,
+  "public",
+  "assets",
+  "images",
+  "blog",
+);
 
 const FORCE = process.env.FORCE_FETCH_DOCS === "1";
 
@@ -68,8 +75,15 @@ function main() {
   const contentExists = hasContent(TARGET_CONTENT);
   const blogExists = hasContent(TARGET_BLOG);
   const assetsExist = hasContent(TARGET_ASSETS);
+  const blogAssetsExist = hasContent(TARGET_BLOG_ASSETS);
 
-  if (contentExists && blogExists && assetsExist && !FORCE) {
+  if (
+    contentExists &&
+    blogExists &&
+    assetsExist &&
+    blogAssetsExist &&
+    !FORCE
+  ) {
     console.log(
       "  ↳ Local docs content already present. Skipping fetch.",
     );
@@ -116,6 +130,13 @@ function main() {
     "images",
     "docs",
   );
+  const sourceBlogAssets = path.join(
+    repoRoot,
+    "public",
+    "assets",
+    "images",
+    "blog",
+  );
 
   // Sync to project directories
   console.log("🔄 Syncing content/docs...");
@@ -126,6 +147,9 @@ function main() {
 
   console.log("🔄 Syncing public/assets/images/docs...");
   syncDir(sourceAssets, TARGET_ASSETS);
+
+  console.log("🔄 Syncing public/assets/images/blog...");
+  syncDir(sourceBlogAssets, TARGET_BLOG_ASSETS);
 
   // Cleanup
   rmrf(TMP_ZIP);

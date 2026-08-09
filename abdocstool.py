@@ -38,6 +38,7 @@ SYNC_PAIRS: list[tuple[str, str]] = [
     ("content/docs", "content/docs"),
     ("content/blog", "content/blog"),
     ("public/assets/images/docs", "public/assets/images/docs"),
+    ("public/assets/images/blog", "public/assets/images/blog"),
 ]
 
 # ── 路径工具 ──────────────────────────────────────────────────────

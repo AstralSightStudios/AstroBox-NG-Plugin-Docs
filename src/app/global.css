@@ -71,6 +71,39 @@ body {
     overflow-x: clip;
 }
 
+.blog-cover {
+    width: 100%;
+    border-radius: 1rem;
+}
+
+@keyframes blog-cover-collapse {
+    from {
+        width: 100%;
+        border-radius: 0;
+    }
+
+    to {
+        width: 94%;
+        border-radius: 1.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .blog-cover {
+        animation: blog-cover-collapse linear both;
+        animation-timeline: scroll(root block);
+        animation-range: 0 14.0625vw;
+    }
+}
+
+@media (min-width: 1024px) and (prefers-reduced-motion: reduce) {
+    .blog-cover {
+        width: 94%;
+        border-radius: 1.5rem;
+        animation: none;
+    }
+}
+
 code,
 kbd,
 pre,

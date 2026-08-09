@@ -90,6 +90,7 @@ export default function BlogPage() {
                           fill
                           className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          loading={post === posts[0] ? "eager" : "lazy"}
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                         <div className="absolute bottom-0 left-0 right-0 p-5">

@@ -30,6 +30,7 @@ public/sitemap.xml
 content/docs
 content/blog
 public/assets/images/docs
+public/assets/images/blog
 .docs-content-cache
 
 # local subrepo clone managed by abdocstool.py

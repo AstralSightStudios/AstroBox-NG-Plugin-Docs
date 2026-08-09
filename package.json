@@ -42,5 +42,10 @@
     "tailwindcss": "^4.2.1",
     "tsx": "^4.23.0",
     "typescript": "^5.9.3"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "@claralight-design/abweb-navbar@0.3.0": "patches/@claralight-design__abweb-navbar@0.3.0.patch"
+    }
   }
 }

@@ -382,6 +382,9 @@ def run_command(stdscr, title: str, fn: Callable[[], int]) -> int:
     curses.curs_set(0)
     if curses.has_colors():
         init_colors()
+
+    # 强制下一次 refresh 重绘整个屏幕，避免命令结束后残留旧画面
+    stdscr.redrawwin()
     
     return result
 
@@ -571,150 +574,178 @@ def main_tui(stdscr) -> int:
     curses.curs_set(0)
     stdscr.nodelay(False)
     stdscr.timeout(100)
-    
+
     if curses.has_colors():
         init_colors()
-    
+
     # 启用鼠标支持
     curses.mousemask(curses.ALL_MOUSE_EVENTS | curses.REPORT_MOUSE_POSITION)
-    
+
     selected = 0
-    
+    dirty = True  # 首次进入必须先绘制
+    last_size = (0, 0)
+
     # 首次启动收集状态
     main_status, sub_status = collect_status()
-    
+
+    def run_action(action: str) -> bool:
+        """执行菜单动作；返回 True 表示退出 TUI"""
+        nonlocal main_status, sub_status, dirty
+        if action == "exit":
+            return True
+        if action == "init":
+            run_command(stdscr, "🚀 Initialize Subrepo", do_init)
+        elif action == "commit":
+            run_command(stdscr, "📝 Commit Changes", do_commit)
+        elif action == "sync":
+            run_command(stdscr, "🔄 Sync from Remote", do_sync)
+        elif action == "push":
+            run_command(stdscr, "📤 Push to Remote", do_push)
+        elif action == "status":
+            run_command(stdscr, "📊 Detailed Status", do_status)
+
+        # 命令执行后重新收集状态
+        main_status, sub_status = collect_status()
+        dirty = True
+        return False
+
     while True:
-        stdscr.clear()
+        # 检测窗口尺寸变化（兼容不发送 KEY_RESIZE 的终端）
         height, width = stdscr.getmaxyx()
-        
-        # 最小尺寸检查
-        if height < 20 or width < 60:
-            stdscr.addstr(0, 0, "Terminal too small! Need at least 60x20")
+        if (height, width) != last_size:
+            last_size = (height, width)
+            dirty = True
+
+        # 只在状态变化（首次进入、按键、鼠标、resize）时重绘，
+        # 避免每 100ms 无条件清屏刷新导致的闪烁
+        if dirty:
+            stdscr.erase()
+
+            # 最小尺寸检查
+            if height < 20 or width < 60:
+                stdscr.addstr(0, 0, "Terminal too small! Need at least 60x20")
+            else:
+                # ═══════════════════════════════════════
+                # 上部：Logo + 状态
+                # ═══════════════════════════════════════
+
+                # Logo
+                logo_x = max(0, (width - len(ASCII_LOGO[0])) // 2)
+                for i, line in enumerate(ASCII_LOGO):
+                    if i < height:
+                        safe_addstr(stdscr, i, logo_x, line, curses.color_pair(CP_LOGO))
+
+                logo_height = len(ASCII_LOGO)
+
+                # 彩蛋问候
+                draw_easter_egg(stdscr)
+
+                # 状态卡片
+                card_y = logo_height + 1
+                card_width = min(35, (width - 6) // 2)
+                card_spacing = 4
+
+                total_cards_width = card_width * 2 + card_spacing
+                cards_start_x = max(0, (width - total_cards_width) // 2)
+
+                draw_repo_card(stdscr, card_y, cards_start_x, card_width, main_status)
+                draw_repo_card(stdscr, card_y, cards_start_x + card_width + card_spacing, card_width, sub_status)
+
+                # 分隔线
+                sep_y = card_y + 7
+                draw_horizontal_line(stdscr, sep_y, 2, width - 4)
+
+                # ═══════════════════════════════════════
+                # 下部：菜单
+                # ═══════════════════════════════════════
+
+                menu_y = sep_y + 1
+                menu_width = min(40, width - 4)
+                menu_x = max(0, (width - menu_width) // 2)
+
+                draw_menu(stdscr, menu_y, menu_x, menu_width, selected)
+
+                # 底部提示
+                draw_footer(stdscr)
+
             stdscr.refresh()
-            key = stdscr.getch()
-            if key == ord('q'):
-                break
-            continue
-        
-        # ═══════════════════════════════════════
-        # 上部：Logo + 状态
-        # ═══════════════════════════════════════
-        
-        # Logo
-        logo_x = max(0, (width - len(ASCII_LOGO[0])) // 2)
-        for i, line in enumerate(ASCII_LOGO):
-            if i < height:
-                safe_addstr(stdscr, i, logo_x, line, curses.color_pair(CP_LOGO))
-        
-        logo_height = len(ASCII_LOGO)
-        
-        # 彩蛋问候
-        draw_easter_egg(stdscr)
-        
-        # 状态卡片
-        card_y = logo_height + 1
-        card_width = min(35, (width - 6) // 2)
-        card_spacing = 4
-        
-        total_cards_width = card_width * 2 + card_spacing
-        cards_start_x = max(0, (width - total_cards_width) // 2)
-        
-        draw_repo_card(stdscr, card_y, cards_start_x, card_width, main_status)
-        draw_repo_card(stdscr, card_y, cards_start_x + card_width + card_spacing, card_width, sub_status)
-        
-        # 分隔线
-        sep_y = card_y + 7
-        draw_horizontal_line(stdscr, sep_y, 2, width - 4)
-        
-        # ═══════════════════════════════════════
-        # 下部：菜单
-        # ═══════════════════════════════════════
-        
-        menu_y = sep_y + 1
-        menu_width = min(40, width - 4)
-        menu_x = max(0, (width - menu_width) // 2)
-        
-        draw_menu(stdscr, menu_y, menu_x, menu_width, selected)
-        
-        # 底部提示
-        draw_footer(stdscr)
-        
-        # 刷新
-        stdscr.refresh()
-        
+            dirty = False
+
         # ═══════════════════════════════════════
         # 输入处理
         # ═══════════════════════════════════════
-        
+
         key = stdscr.getch()
-        
+
         if key == -1:
             continue
-        
+
+        if key == curses.KEY_RESIZE:
+            dirty = True
+            continue
+
         # 鼠标事件
         if key == curses.KEY_MOUSE:
             try:
                 _, mx, my, _, bstate = curses.getmouse()
-                
-                # 检查是否点击在菜单区域内
-                menu_start_y = menu_y + 1
-                menu_end_y = menu_y + 1 + len(MENU_ITEMS)
-                menu_start_x = menu_x + 3
-                menu_end_x = menu_x + menu_width - 3
-                
-                if menu_start_y <= my < menu_end_y and menu_start_x <= mx < menu_end_x:
-                    clicked_item = my - menu_start_y
-                    if 0 <= clicked_item < len(MENU_ITEMS):
-                        selected = clicked_item
-                        stdscr.refresh()
-                        
-                        # 如果是单击（左键）
-                        if bstate & curses.BUTTON1_CLICKED:
-                            # 执行选中的命令
-                            pass  # 继续到下面的 Enter 处理
-                
-                # 鼠标滚轮（兼容不同平台）
-                scroll_up = getattr(curses, "BUTTON4_PRESSED", 0)
-                scroll_down = getattr(curses, "BUTTON5_PRESSED", 0)
-                if scroll_up and bstate & scroll_up:
-                    selected = (selected - 1) % len(MENU_ITEMS)
-                elif scroll_down and bstate & scroll_down:
-                    selected = (selected + 1) % len(MENU_ITEMS)
-                    
+
+                # 窗口太小时忽略鼠标交互
+                if height >= 20 and width >= 60:
+                    # 检查是否点击在菜单区域内
+                    card_y = len(ASCII_LOGO) + 1
+                    sep_y = card_y + 7
+                    menu_y = sep_y + 1
+                    menu_width = min(40, width - 4)
+                    menu_x = max(0, (width - menu_width) // 2)
+                    menu_start_y = menu_y + 1
+                    menu_end_y = menu_y + 1 + len(MENU_ITEMS)
+                    menu_start_x = menu_x + 3
+                    menu_end_x = menu_x + menu_width - 3
+
+                    if menu_start_y <= my < menu_end_y and menu_start_x <= mx < menu_end_x:
+                        clicked_item = my - menu_start_y
+                        if 0 <= clicked_item < len(MENU_ITEMS):
+                            selected = clicked_item
+                            dirty = True
+
+                            # 单击左键执行选中的命令（与键盘 Enter 一致）
+                            if bstate & curses.BUTTON1_CLICKED:
+                                if run_action(MENU_ITEMS[selected][1]):
+                                    return 0
+                                continue
+
+                    # 鼠标滚轮（兼容不同平台）
+                    scroll_up = getattr(curses, "BUTTON4_PRESSED", 0)
+                    scroll_down = getattr(curses, "BUTTON5_PRESSED", 0)
+                    if scroll_up and bstate & scroll_up:
+                        selected = (selected - 1) % len(MENU_ITEMS)
+                        dirty = True
+                    elif scroll_down and bstate & scroll_down:
+                        selected = (selected + 1) % len(MENU_ITEMS)
+                        dirty = True
+
             except curses.error:
                 pass
-        
+
         # 键盘导航
         elif key in (curses.KEY_UP, ord('k')):
             selected = (selected - 1) % len(MENU_ITEMS)
+            dirty = True
         elif key in (curses.KEY_DOWN, ord('j')):
             selected = (selected + 1) % len(MENU_ITEMS)
+            dirty = True
         elif key == curses.KEY_HOME:
             selected = 0
+            dirty = True
         elif key == curses.KEY_END:
             selected = len(MENU_ITEMS) - 1
+            dirty = True
         elif key in (10, 13, curses.KEY_ENTER):  # Enter
-            action = MENU_ITEMS[selected][1]
-            
-            if action == "exit":
+            if run_action(MENU_ITEMS[selected][1]):
                 break
-            elif action == "init":
-                run_command(stdscr, "🚀 Initialize Subrepo", do_init)
-            elif action == "commit":
-                run_command(stdscr, "📝 Commit Changes", do_commit)
-            elif action == "sync":
-                run_command(stdscr, "🔄 Sync from Remote", do_sync)
-            elif action == "push":
-                run_command(stdscr, "📤 Push to Remote", do_push)
-            elif action == "status":
-                run_command(stdscr, "📊 Detailed Status", do_status)
-            
-            # 命令执行后重新收集状态
-            main_status, sub_status = collect_status()
-        
         elif key in (ord('q'), 27):  # q 或 ESC
             break
-    
+
     return 0
 
 

@@ -203,25 +203,19 @@
         {
           "icon": "WinIcon",
           "name": "WINDOWS 10 20H2+",
-          "version": "V1.2.0",
-          "hasDownload": false,
+          "version": "V0.2.1",
+          "hasDownload": true,
           "sources": [
-            {
-              "name": "iCloud",
-              "downloads": [
-                {
-                  "label": "Windows",
-                  "href": "https://www.123pan.com/s/creatorconsole-win",
-                  "password": "cc111w"
-                }
-              ]
-            },
             {
               "name": "GitHub Releases",
               "downloads": [
                 {
-                  "label": "Windows (x64)",
-                  "href": "https://github.com/your-org/creatorconsole/releases/download/v1.2.0/CreatorConsole-1.2.0-win-x64.exe"
+                  "label": "Windows (x64 .exe)",
+                  "href": "https://github.com/AstralSightStudios/AstroBoxCreatorConsole/releases/download/v0.2.1/AstroBoxCreatorConsole-0.2.1-x64.exe"
+                },
+                {
+                  "label": "Windows (x64 .msi)",
+                  "href": "https://github.com/AstralSightStudios/AstroBoxCreatorConsole/releases/download/v0.2.1/AstroBoxCreatorConsole-0.2.1-x64.msi"
                 }
               ]
             }
@@ -232,16 +226,15 @@
         {
           "icon": "MacIcon",
           "name": "MACOS SONOMA (14)+",
-          "version": "V1.2.0",
-          "hasDownload": false,
+          "version": "V0.2.1",
+          "hasDownload": true,
           "sources": [
             {
-              "name": "iCloud",
+              "name": "GitHub Releases",
               "downloads": [
                 {
-                  "label": "macOS",
-                  "href": "https://www.123pan.com/s/creatorconsole-mac",
-                  "password": "ccm"
+                  "label": "macOS（Apple Silicon）",
+                  "href": "https://github.com/AstralSightStudios/AstroBoxCreatorConsole/releases/download/v0.2.1/AstroBoxCreatorConsole-0.2.1-aarch64.dmg"
                 }
               ]
             }
@@ -251,22 +244,28 @@
         },
         {
           "icon": "LinuxIcon",
-          "name": "DEBIAN/REDHAT",
-          "version": "V1.2.0",
-          "hasDownload": false,
+          "name": "DEBIAN/REDHAT/ARCH",
+          "version": "V0.2.1",
+          "hasDownload": true,
           "sources": [
             {
-              "name": "iCloud",
+              "name": "GitHub Releases",
               "downloads": [
                 {
                   "label": "Debian (.deb)",
-                  "href": "https://www.123pan.com/s/creatorconsole-deb",
-                  "password": "ccd"
+                  "href": "https://github.com/AstralSightStudios/AstroBoxCreatorConsole/releases/download/v0.2.1/AstroBoxCreatorConsole-0.2.1-amd64.deb"
                 },
                 {
                   "label": "RedHat (.rpm)",
-                  "href": "https://www.123pan.com/s/creatorconsole-rpm",
-                  "password": "ccr"
+                  "href": "https://github.com/AstralSightStudios/AstroBoxCreatorConsole/releases/download/v0.2.1/AstroBoxCreatorConsole-0.2.1-x86_64.rpm"
+                },
+                {
+                  "label": "Arch (.pkg.tar.zst)",
+                  "href": "https://github.com/AstralSightStudios/AstroBoxCreatorConsole/releases/download/v0.2.1/AstroBoxCreatorConsole-0.2.1-x86_64.pkg.tar.zst"
+                },
+                {
+                  "label": "AppImage",
+                  "href": "https://github.com/AstralSightStudios/AstroBoxCreatorConsole/releases/download/v0.2.1/AstroBoxCreatorConsole-0.2.1-x86_64.AppImage"
                 }
               ]
             }
@@ -277,16 +276,15 @@
         {
           "icon": "AndroidIcon",
           "name": "Android 10+",
-          "version": "V1.2.0",
-          "hasDownload": false,
+          "version": "V0.2.1",
+          "hasDownload": true,
           "sources": [
             {
-              "name": "iCloud",
+              "name": "GitHub Releases",
               "downloads": [
                 {
-                  "label": "Android",
-                  "href": "https://www.123pan.com/s/creatorconsole-android",
-                  "password": "cca"
+                  "label": "Android（universal）",
+                  "href": "https://github.com/AstralSightStudios/AstroBoxCreatorConsole/releases/download/v0.2.1/AstroBoxCreatorConsole-0.2.1-universal.apk"
                 }
               ]
             }
@@ -297,8 +295,8 @@
         {
           "icon": "IosIcon",
           "name": "IOS/IPADOS 14+",
-          "version": "V1.2.0",
-          "hasDownload": false,
+          "version": "V0.2.1",
+          "hasDownload": true,
           "sources": [
             {
               "name": "App Store",

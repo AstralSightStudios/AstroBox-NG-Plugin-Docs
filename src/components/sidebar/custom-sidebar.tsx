@@ -53,6 +53,8 @@ function getSectionFromUrl(url: string | undefined): string | undefined {
       return "usage";
     case "facetory-usage":
       return "facetory";
+    case "canopus-usage":
+      return "canopus";
     default:
       return undefined;
   }

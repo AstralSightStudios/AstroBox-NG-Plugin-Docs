@@ -239,6 +239,7 @@ html[data-theme-transition="active"] #nd-page .prose :where(
     --creator-color: #f59e0b;
     --legacy-color: #171717;
     --facetory-color: #ff4800;
+    --canopus-color: #0891b2;
 }
 
 .dark {
@@ -254,6 +255,7 @@ html[data-theme-transition="active"] #nd-page .prose :where(
     --creator-color: #fbbf24;
     --legacy-color: #a3a3a3;
     --facetory-color: #ff6a33;
+    --canopus-color: #22d3ee;
 }
 
 /* Plugin 文档主题色 */
@@ -297,6 +299,19 @@ body.legacy {
 .dark body.legacy {
     --color-fd-primary-foreground: #e5e5e5;
     --color-fd-accent: color-mix(in srgb, var(--legacy-color) 15%, transparent);
+}
+
+/* Canopus 原生模块文档主题色 */
+body.canopus {
+    --color-fd-primary: var(--canopus-color);
+    --color-fd-primary-foreground: #ffffff;
+    --color-fd-accent: color-mix(in srgb, var(--canopus-color) 12%, transparent);
+    --color-fd-ring: var(--canopus-color);
+}
+
+.dark body.canopus {
+    --color-fd-primary-foreground: #083344;
+    --color-fd-accent: color-mix(in srgb, var(--canopus-color) 15%, transparent);
 }
 
 /* Facetory 用户文档主题色 */

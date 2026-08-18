@@ -19,9 +19,9 @@ pnpm-debug.log*
 .env.production
 
 # macOS-specific files
+.DS_Store
 tsconfig.tsbuildinfo
 *.tsbuildinfo
-.DS_Store
 
 # generated sitemap (auto-generated during build)
 public/sitemap.xml

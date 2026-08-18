@@ -299,7 +299,7 @@ body.legacy {
     --color-fd-accent: color-mix(in srgb, var(--legacy-color) 15%, transparent);
 }
 
-/* Facetofy 用户文档主题色 */
+/* Facetory 用户文档主题色 */
 body.facetory {
     --color-fd-primary: var(--facetory-color);
     --color-fd-primary-foreground: #ffffff;

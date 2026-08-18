@@ -3,7 +3,7 @@
  * - usage: 使用文档（默认主题色）
  * - plugin: 插件开发文档（plugin-dev, plugin-v1）
  * - creator: 创作者工具文档（creator-tools）
- * - facetory: Facetofy 用户文档（facetory-usage）
+ * - facetory: Facetory 用户文档（facetory-usage）
  */
 export function getSection(path: string | undefined): string | undefined {
   if (!path) return undefined;

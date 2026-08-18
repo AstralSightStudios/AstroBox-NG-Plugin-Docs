@@ -8,6 +8,7 @@ export interface DownloadItem {
   href: string;
   password?: string;
   linkLabel?: string;
+  disabled?: boolean;
 }
 
 export interface DownloadSource {
@@ -85,6 +86,27 @@ function DownloadItemCard({
   showGoButton?: boolean;
   onGo?: () => void;
 }) {
+  if (item.disabled) {
+    return (
+      <div className="rounded-xl border border-fd-border/60 bg-fd-accent/30 p-4 opacity-60">
+        <div className="text-xs font-medium text-fd-muted-foreground">{item.label}</div>
+        <div className="mt-2">
+          <div className="text-xs text-fd-muted-foreground">
+            {item.linkLabel ?? "下载链接"}
+          </div>
+          <div className="mt-1 flex items-center gap-2">
+            <span className="truncate text-sm text-fd-muted-foreground">
+              暂未提供下载链接
+            </span>
+          </div>
+        </div>
+        <div className="mt-3 border-t border-fd-border/50 pt-3 text-xs text-fd-muted-foreground/70">
+          敬请期待
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="rounded-xl border border-fd-border/60 bg-fd-accent/30 p-4">
       {/* 版本标签 */}
@@ -275,7 +297,7 @@ export function DownloadDialog({
 
         {/* 底部按钮 */}
         <div className="flex items-center justify-end gap-2 border-t border-fd-border/60 px-6 py-4">
-          {single && !hasCommand ? (
+          {single && !hasCommand && !single.disabled ? (
             <>
               <button
                 onClick={onClose}

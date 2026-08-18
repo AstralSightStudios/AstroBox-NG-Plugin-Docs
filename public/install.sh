@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# AstroBox NG 2.0.0 installer for Linux & macOS
+# AstroBox NG 2.1.0 installer for Linux & macOS
 
 set -euo pipefail
 
 REPO="AstralSightStudios/AstroBox-NG"
-VERSION="2.0.2"
+VERSION="2.1.0"
 RELEASE_URL="https://github.com/${REPO}/releases/download/v${VERSION}"
 
 AUTO_YES=false
@@ -51,11 +51,11 @@ esac
         fi
 
         if command -v apt-get &>/dev/null || command -v dpkg &>/dev/null; then
-            PKG="astrobox-ng_${VERSION}_amd64.deb"
+            PKG="AstroBox_${VERSION}_amd64.deb"
             INSTALLER=(sudo dpkg -i)
             POST_INSTALL=(sudo apt-get install -f -y)
         elif command -v dnf &>/dev/null || command -v yum &>/dev/null || command -v rpm &>/dev/null; then
-            PKG="astrobox-ng-${VERSION}-1.x86_64.rpm"
+            PKG="AstroBox-${VERSION}-1.x86_64.rpm"
             if command -v dnf &>/dev/null; then
                 INSTALLER=(sudo dnf install -y)
             elif command -v yum &>/dev/null; then
@@ -65,9 +65,8 @@ esac
             fi
             POST_INSTALL=()
         elif command -v pacman &>/dev/null; then
-            PKG="astrobox-ng-${VERSION}-1-x86_64.pkg.tar.zst"
-            INSTALLER=(sudo pacman -U --noconfirm)
-            POST_INSTALL=()
+            echo "Sorry, AstroBox NG ${VERSION} does not provide an Arch Linux package yet."
+            exit 1
         else
             echo "No supported package manager found (apt/dpkg, dnf/yum/rpm, or pacman)."
             exit 1
@@ -76,9 +75,9 @@ esac
 
     Darwin)
         if [[ "${ARCH}" == "arm64" ]]; then
-            PKG="AstroBox_${VERSION}_aarch64.dmg"
+            PKG="AstroBox_${VERSION}_aarch64-unsigned.dmg"
         else
-            PKG="AstroBox_${VERSION}_x86_64.dmg"
+            PKG="AstroBox_${VERSION}_x86-unsigned.dmg"
         fi
         ;;
 

@@ -207,7 +207,7 @@
         {
           "icon": "WinIcon",
           "name": "WINDOWS 10 20H2+",
-          "version": "V0.2.1",
+          "version": "V0.3.0",
           "hasDownload": true,
           "sources": [
             {
@@ -215,11 +215,11 @@
               "downloads": [
                 {
                   "label": "Windows (x64 .exe)",
-                  "href": "https://github.com/AstralSightStudios/AstroBoxCreatorConsole/releases/download/v0.2.1/AstroBoxCreatorConsole-0.2.1-x64.exe"
+                  "href": "https://github.com/AstralSightStudios/AstroBoxCreatorConsole/releases/download/v0.3.0/AstroBoxCreatorConsole-0.3.0-x64.exe"
                 },
                 {
                   "label": "Windows (x64 .msi)",
-                  "href": "https://github.com/AstralSightStudios/AstroBoxCreatorConsole/releases/download/v0.2.1/AstroBoxCreatorConsole-0.2.1-x64.msi"
+                  "href": "https://github.com/AstralSightStudios/AstroBoxCreatorConsole/releases/download/v0.3.0/AstroBoxCreatorConsole-0.3.0-x64.msi"
                 }
               ]
             }
@@ -230,7 +230,7 @@
         {
           "icon": "MacIcon",
           "name": "MACOS SONOMA (14)+",
-          "version": "V0.2.1",
+          "version": "V0.3.0",
           "hasDownload": true,
           "sources": [
             {
@@ -238,7 +238,7 @@
               "downloads": [
                 {
                   "label": "macOS（Apple Silicon）",
-                  "href": "https://github.com/AstralSightStudios/AstroBoxCreatorConsole/releases/download/v0.2.1/AstroBoxCreatorConsole-0.2.1-aarch64.dmg"
+                  "href": "https://github.com/AstralSightStudios/AstroBoxCreatorConsole/releases/download/v0.3.0/AstroBoxCreatorConsole-0.3.0-aarch64.dmg"
                 }
               ]
             }
@@ -249,7 +249,7 @@
         {
           "icon": "LinuxIcon",
           "name": "DEBIAN/REDHAT/ARCH",
-          "version": "V0.2.1",
+          "version": "V0.3.0",
           "hasDownload": true,
           "sources": [
             {
@@ -257,19 +257,19 @@
               "downloads": [
                 {
                   "label": "Debian (.deb)",
-                  "href": "https://github.com/AstralSightStudios/AstroBoxCreatorConsole/releases/download/v0.2.1/AstroBoxCreatorConsole-0.2.1-amd64.deb"
+                  "href": "https://github.com/AstralSightStudios/AstroBoxCreatorConsole/releases/download/v0.3.0/AstroBoxCreatorConsole-0.3.0-amd64.deb"
                 },
                 {
                   "label": "RedHat (.rpm)",
-                  "href": "https://github.com/AstralSightStudios/AstroBoxCreatorConsole/releases/download/v0.2.1/AstroBoxCreatorConsole-0.2.1-x86_64.rpm"
+                  "href": "https://github.com/AstralSightStudios/AstroBoxCreatorConsole/releases/download/v0.3.0/AstroBoxCreatorConsole-0.3.0-x86_64.rpm"
                 },
                 {
                   "label": "Arch (.pkg.tar.zst)",
-                  "href": "https://github.com/AstralSightStudios/AstroBoxCreatorConsole/releases/download/v0.2.1/AstroBoxCreatorConsole-0.2.1-x86_64.pkg.tar.zst"
+                  "href": "https://github.com/AstralSightStudios/AstroBoxCreatorConsole/releases/download/v0.3.0/AstroBoxCreatorConsole-0.3.0-x86_64.pkg.tar.zst"
                 },
                 {
                   "label": "AppImage",
-                  "href": "https://github.com/AstralSightStudios/AstroBoxCreatorConsole/releases/download/v0.2.1/AstroBoxCreatorConsole-0.2.1-x86_64.AppImage"
+                  "href": "https://github.com/AstralSightStudios/AstroBoxCreatorConsole/releases/download/v0.3.0/AstroBoxCreatorConsole-0.3.0-x86_64.AppImage"
                 }
               ]
             }
@@ -280,7 +280,7 @@
         {
           "icon": "AndroidIcon",
           "name": "Android 10+",
-          "version": "V0.2.1",
+          "version": "V0.3.0",
           "hasDownload": true,
           "sources": [
             {
@@ -288,7 +288,7 @@
               "downloads": [
                 {
                   "label": "Android（universal）",
-                  "href": "https://github.com/AstralSightStudios/AstroBoxCreatorConsole/releases/download/v0.2.1/AstroBoxCreatorConsole-0.2.1-universal.apk"
+                  "href": "https://github.com/AstralSightStudios/AstroBoxCreatorConsole/releases/download/v0.3.0/AstroBoxCreatorConsole-0.3.0-universal.apk"
                 }
               ]
             }
@@ -299,7 +299,7 @@
         {
           "icon": "IosIcon",
           "name": "IOS/IPADOS 14+",
-          "version": "V0.2.1",
+          "version": "V0.3.0",
           "hasDownload": true,
           "sources": [
             {

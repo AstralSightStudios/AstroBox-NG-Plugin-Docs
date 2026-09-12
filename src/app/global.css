@@ -5,6 +5,7 @@
  * register the directory so className utilities in MDX files are generated.
  */
 @source "../../content/docs";
+@source "../../content/blog";
 @import "fumadocs-ui/css/neutral.css";
 @import "fumadocs-ui/css/preset.css";
 
@@ -71,37 +72,9 @@ body {
     overflow-x: clip;
 }
 
-.blog-cover {
-    width: 100%;
-    border-radius: 1rem;
-}
-
-@keyframes blog-cover-collapse {
-    from {
-        width: 100%;
-        border-radius: 0;
-    }
-
-    to {
-        width: 94%;
-        border-radius: 1.5rem;
-    }
-}
-
-@media (min-width: 1024px) {
-    .blog-cover {
-        animation: blog-cover-collapse linear both;
-        animation-timeline: scroll(root block);
-        animation-range: 0 14.0625vw;
-    }
-}
-
-@media (min-width: 1024px) and (prefers-reduced-motion: reduce) {
-    .blog-cover {
-        width: 94%;
-        border-radius: 1.5rem;
-        animation: none;
-    }
+/* 博客正文锚点：为固定导航栏预留滚动偏移 */
+[data-blog-article] .prose :where(h1, h2, h3, h4, h5, h6) {
+    scroll-margin-top: calc(var(--fd-nav-height, 64px) + 1.5rem);
 }
 
 code,

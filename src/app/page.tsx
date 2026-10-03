@@ -52,7 +52,7 @@ const docEntries = [
     title: "插件开发文档",
     desc: "探索基于 WIT + WASI 的多语言、原生级插件开发与极速分发。",
     icon: PlugIcon,
-    href: "/docs/plugin-dev",
+    href: "/docs/plugin-development",
   },
   {
     title: "创作者工具使用文档",

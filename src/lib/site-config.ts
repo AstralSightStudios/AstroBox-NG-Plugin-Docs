@@ -59,7 +59,7 @@ export function resolvePageDescription(
 
 export const topNavLinks: MainItemType[] = [
   { text: "使用教程", url: "/docs/usage", active: "nested-url" },
-  { text: "插件开发", url: "/docs/plugin-dev", active: "nested-url" },
+  { text: "插件开发", url: "/docs/plugin-development", active: "nested-url" },
   { text: "创作者工具", url: "/docs/creator-tools", active: "nested-url" },
   { text: "博客", url: "/blog", active: "nested-url" },
 ];

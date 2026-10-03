@@ -86,8 +86,10 @@ python abdocstool.py
 ```
 ├── content/docs/           ← 文档正文（.gitignore，从内容仓库拉取）
 │   ├── usage/              使用文档（面向普通用户）
-│   ├── plugin-dev/         插件开发文档（NG 版）
-│   ├── plugin-v1/          插件开发文档（旧版 v1，归档）
+│   ├── plugin-development/ 插件开发文档（按 V4、V2、V1 排列）
+│   │   ├── v4/             V4 插件开发
+│   │   ├── v2/             V2 插件开发
+│   │   └── v1/             V1 插件开发（过时）
 │   └── creator-tools/      创作者工具文档
 ├── public/assets/images/docs/   ← 文档图片（.gitignore，从内容仓库拉取）
 ├── src/app/                Next.js App Router 入口
@@ -99,7 +101,7 @@ python abdocstool.py
 └── .subrepo/               本地内容仓库克隆（.gitignore）
 ```
 
-以上 `content/docs/` 下的目录均为 Fumadocs 的 root folder，可在侧边栏顶部切换。
+`content/docs/` 下配置为 Fumadocs root folder 的目录可在侧边栏顶部切换；V4、V2、V1 作为同一「插件开发」目录下的子目录显示。
 
 ---
 

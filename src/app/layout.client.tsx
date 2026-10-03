@@ -25,7 +25,7 @@ function useMode(): string | undefined {
 
   // 只在 /docs/... 路由下生效
   if (Array.isArray(slug)) {
-    return getSection(slug[0]);
+    return getSection(slug);
   }
 
   return undefined;

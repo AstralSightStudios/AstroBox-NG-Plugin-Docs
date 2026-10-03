@@ -22,7 +22,7 @@ const CORE_PAGE_KEYWORDS = [
   "quickstart",
   "getting-started",
   "usage",
-  "plugin-dev",
+  "plugin-development",
   "creator-tools",
 ];
 

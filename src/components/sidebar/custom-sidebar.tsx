@@ -43,10 +43,8 @@ function getSectionFromUrl(url: string | undefined): string | undefined {
   const [dir] = path.split("/", 1);
   if (!dir) return undefined;
   switch (dir) {
-    case "plugin-dev":
+    case "plugin-development":
       return "plugin";
-    case "plugin-v1":
-      return "legacy";
     case "creator-tools":
       return "creator";
     case "usage":

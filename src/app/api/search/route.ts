@@ -1,7 +1,7 @@
 import { createFromSource } from "fumadocs-core/search/server";
 import { loader, multiple, update } from "fumadocs-core/source";
-import { createTokenizer } from "@orama/tokenizers/mandarin";
 import { blog, docs } from "fumadocs-mdx:collections/server";
+import { createCaseInsensitiveMandarinTokenizer } from "@/lib/search-tokenizer";
 
 const searchSource = loader(
   update(
@@ -29,7 +29,7 @@ export const { GET } = createFromSource(searchSource, {
   localeMap: {
     "zh-CN": {
       components: {
-        tokenizer: createTokenizer(),
+        tokenizer: createCaseInsensitiveMandarinTokenizer(),
       },
       search: {
         threshold: 0,

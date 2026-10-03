@@ -182,19 +182,13 @@
         }
       ],
       "supportedDevices": [
-        { "name": "小米手环 10 Pro", "status": "supported", "note": "—" },
-        { "name": "小米手环 10 系列", "status": "supported", "note": "—" },
-        { "name": "小米手环 9 Pro", "status": "supported", "note": "—" },
-        { "name": "小米手环 9 系列", "status": "supported", "note": "—" },
-        { "name": "小米手环 8 系列", "status": "unsupported", "note": "过时设备" },
-        { "name": "REDMI Watch 6", "status": "supported", "note": "—" },
-        { "name": "REDMI Watch 5 eSIM", "status": "supported", "note": "—" },
-        { "name": "REDMI Watch 5", "status": "supported", "note": "—" },
-        { "name": "REDMI Watch 4 及更老机型", "status": "unsupported", "note": "过时设备" },
-        { "name": "小米 Watch S5", "status": "supported", "note": "—" },
-        { "name": "小米 Watch S4", "status": "supported", "note": "—" },
-        { "name": "小米 Watch S3", "status": "supported", "note": "—" },
-        { "name": "小米 Watch S2 及更老机型", "status": "unsupported", "note": "协议版本不支持" },
+        { "name": "小米手环 9 及未来系列设备", "status": "supported", "note": "—" },
+        { "name": "小米手环 9 Pro 及未来系列设备", "status": "supported", "note": "—" },
+        { "name": "小米手环 8 及更老系列设备", "status": "unsupported", "note": "—" },
+        { "name": "REDMI Watch 5 及未来系列设备", "status": "supported", "note": "iOS 设备连接安装快应用前需要进行安卓伪装" },
+        { "name": "REDMI Watch 4 及更老系列设备", "status": "unsupported", "note": "—" },
+        { "name": "小米 Watch S3 及未来系列设备", "status": "supported", "note": "iOS 设备连接安装快应用前需要进行安卓伪装" },
+        { "name": "小米 Watch S2 及更老系列设备", "status": "unsupported", "note": "—" },
         { "name": "REDMI 手环 / Active 系列", "status": "unsupported", "note": "协议版本不支持" },
         { "name": "vivo Watch GT 系列", "status": "experimental", "note": "部分功能可能不稳定" }
       ]

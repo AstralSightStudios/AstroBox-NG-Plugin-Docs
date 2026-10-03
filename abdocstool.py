@@ -12,6 +12,7 @@ AstroBox Docs Tool — 交互式 TUI 双仓库管理器 / CLI
 
 命令行模式:
     python abdocstool.py commit -m "提交信息" --push
+    python abdocstool.py commit -m "提交信息" --content-files content/blog/post.mdx,public/assets/images/blog/cover.jpg
     python abdocstool.py push
     python abdocstool.py status
     python abdocstool.py sync
@@ -26,6 +27,7 @@ import os
 import shutil
 import subprocess
 import sys
+import tempfile
 import time
 from pathlib import Path
 from typing import Callable
@@ -66,6 +68,15 @@ def git_has_changes(cwd: Path) -> bool:
         capture_output=True, text=True, check=True
     )
     return bool(result.stdout.strip())
+
+
+def git_has_staged_changes(cwd: Path) -> bool:
+    result = subprocess.run(
+        ["git", "diff", "--cached", "--quiet"], cwd=cwd, check=False
+    )
+    if result.returncode not in (0, 1):
+        raise subprocess.CalledProcessError(result.returncode, result.args)
+    return result.returncode == 1
 
 
 def git_branch(cwd: Path) -> str:
@@ -111,6 +122,87 @@ def sync_subrepo_to_main(subrepo: Path, main_repo: Path) -> None:
         dst = main_repo / main_rel
         if src.exists():
             copy_tree(src, dst)
+
+
+def validate_content_files(content_files: list[str]) -> list[str]:
+    """Return unique, normalized file paths within the managed content roots."""
+    if not content_files:
+        raise ValueError("至少指定一个内容文件路径")
+
+    roots = tuple(main_rel for main_rel, _ in SYNC_PAIRS)
+    normalized: list[str] = []
+    seen: set[str] = set()
+    for raw_path in content_files:
+        candidate = raw_path.strip().replace("\\", "/")
+        parts = candidate.split("/")
+        if not candidate or candidate.startswith("/") or any(
+            part in ("", ".", "..") for part in parts
+        ):
+            raise ValueError(f"无效的相对文件路径：{raw_path!r}")
+        if not any(candidate.startswith(f"{root}/") for root in roots):
+            raise ValueError(f"路径不属于受管理的内容目录：{candidate}")
+        if candidate not in seen:
+            normalized.append(candidate)
+            seen.add(candidate)
+    return normalized
+
+
+def _has_symlink_component(root: Path, relative_path: str) -> bool:
+    if root.is_symlink():
+        return True
+    current = root
+    for part in relative_path.split("/"):
+        current = current / part
+        if current.is_symlink():
+            return True
+    return False
+
+
+def validate_selected_content_paths(
+    main_repo: Path, subrepo: Path, content_files: list[str]
+) -> list[str]:
+    files = validate_content_files(content_files)
+    try:
+        subrepo_relative = subrepo.relative_to(main_repo).as_posix()
+    except ValueError as error:
+        raise ValueError("内容仓库必须位于主仓库目录内") from error
+    if _has_symlink_component(main_repo, subrepo_relative):
+        raise ValueError("内容仓库路径包含符号链接")
+
+    for relative_path in files:
+        source = main_repo / relative_path
+        if _has_symlink_component(main_repo, relative_path) or not source.is_file():
+            raise ValueError(f"内容文件不存在或不是普通文件：{relative_path}")
+        if _has_symlink_component(
+            main_repo, f"{subrepo_relative}/{relative_path}"
+        ):
+            raise ValueError(f"目标路径包含符号链接：{relative_path}")
+    return files
+
+
+def sync_selected_content(
+    main_repo: Path, subrepo: Path, content_files: list[str]
+) -> list[str]:
+    """Copy only selected content files, leaving every other path untouched."""
+    files = validate_selected_content_paths(main_repo, subrepo, content_files)
+    for relative_path in files:
+        source = main_repo / relative_path
+        destination = subrepo / relative_path
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        with tempfile.NamedTemporaryFile(
+            dir=destination.parent,
+            prefix=f".{destination.name}.",
+            suffix=".tmp",
+            delete=False,
+        ) as temporary_file:
+            temporary_path = Path(temporary_file.name)
+        try:
+            shutil.copy2(source, temporary_path)
+            os.replace(temporary_path, destination)
+        finally:
+            if temporary_path.exists():
+                temporary_path.unlink()
+    return files
 
 
 # ── TUI 常量 ──────────────────────────────────────────────────────
@@ -424,24 +516,63 @@ def do_init() -> int:
     return 0
 
 
-def do_commit(main_message: str | None = None, content_message: str | None = None, auto_push: bool = False, main_files: list[str] | None = None) -> int:
+def do_commit(
+    main_message: str | None = None,
+    content_message: str | None = None,
+    auto_push: bool = False,
+    main_files: list[str] | None = None,
+    content_files: list[str] | None = None,
+) -> int:
     main_repo = get_main_repo()
     subrepo = get_subrepo_dir(main_repo)
-    
+
     if not subrepo.exists():
         print("❌ Subrepo not initialized. Please run 'Init' first.")
         return 1
-    
+
+    if main_files is not None and not main_files:
+        print("❌ --main-files requires at least one file path.")
+        return 1
+
+    if content_files is not None:
+        try:
+            content_files = validate_selected_content_paths(
+                main_repo, subrepo, content_files
+            )
+        except ValueError as error:
+            print(f"❌ {error}")
+            return 1
+        if content_message is None:
+            print("❌ Selective content commits require a commit message.")
+            return 1
+        if git_has_staged_changes(subrepo):
+            print("❌ Content repo has staged changes; selective commit aborted.")
+            return 1
+        if main_message is not None and main_files is None:
+            print("❌ Use --main-files to scope a main-repo commit with --content-files.")
+            return 1
+        if main_message is not None and git_has_staged_changes(main_repo):
+            print("❌ Main repo has staged changes; selective commit aborted.")
+            return 1
+    elif main_message is not None and main_files is not None:
+        if git_has_staged_changes(main_repo):
+            print("❌ Main repo has staged changes; selective commit aborted.")
+            return 1
+
     print("📝 Commit Wizard\n")
-    
+
     # Main repo
-    if git_has_changes(main_repo):
+    if content_files is not None and main_message is None:
+        print("⏭️  Main repo skipped (selective content mode)")
+    elif git_has_changes(main_repo):
         print("📦 Main repo has changes:")
         run_git(["status", "-sb"], cwd=main_repo)
         if main_message is not None:
             if main_files:
-                for f in main_files:
-                    run_git(["add", f], cwd=main_repo)
+                run_git(
+                    ["add", "--", *[f":(literal){path}" for path in main_files]],
+                    cwd=main_repo,
+                )
             else:
                 run_git(["add", "-A"], cwd=main_repo)
             run_git(["commit", "-m", main_message], cwd=main_repo)
@@ -456,27 +587,53 @@ def do_commit(main_message: str | None = None, content_message: str | None = Non
                     print("✅ Main repo committed")
     else:
         print("✅ Main repo: clean")
-    
+
     # Content repo
-    sync_main_to_subrepo(main_repo, subrepo)
-    if git_has_changes(subrepo):
-        print("\n📄 Content repo has changes:")
-        run_git(["status", "-sb"], cwd=subrepo)
-        if content_message is not None:
-            run_git(["add", "-A"], cwd=subrepo)
+    if content_files is None:
+        sync_main_to_subrepo(main_repo, subrepo)
+        if git_has_changes(subrepo):
+            print("\n📄 Content repo has changes:")
+            run_git(["status", "-sb"], cwd=subrepo)
+            if content_message is not None:
+                run_git(["add", "-A"], cwd=subrepo)
+                run_git(["commit", "-m", content_message], cwd=subrepo)
+                print("✅ Content repo committed")
+            else:
+                ans = input("\nCommit content repo? [y/N] ").strip().lower()
+                if ans in ("y", "yes"):
+                    msg = input("Commit message: ").strip()
+                    if msg:
+                        run_git(["add", "-A"], cwd=subrepo)
+                        run_git(["commit", "-m", msg], cwd=subrepo)
+                        print("✅ Content repo committed")
+        else:
+            print("✅ Content repo: clean")
+    else:
+        sync_selected_content(main_repo, subrepo, content_files)
+        run_git(
+            ["add", "--", *[f":(literal){path}" for path in content_files]],
+            cwd=subrepo,
+        )
+        staged_files = set(
+            run_git(
+                ["diff", "--cached", "--name-only"], cwd=subrepo, capture=True
+            ).splitlines()
+        )
+        unexpected_files = staged_files - set(content_files)
+        if unexpected_files:
+            print(
+                "❌ Selective content commit staged unexpected paths: "
+                + ", ".join(sorted(unexpected_files))
+            )
+            return 1
+        if staged_files:
+            print("\n📄 Content repo selected paths:")
+            run_git(["status", "-sb"], cwd=subrepo)
             run_git(["commit", "-m", content_message], cwd=subrepo)
             print("✅ Content repo committed")
         else:
-            ans = input("\nCommit content repo? [y/N] ").strip().lower()
-            if ans in ("y", "yes"):
-                msg = input("Commit message: ").strip()
-                if msg:
-                    run_git(["add", "-A"], cwd=subrepo)
-                    run_git(["commit", "-m", msg], cwd=subrepo)
-                    print("✅ Content repo committed")
-    else:
-        print("✅ Content repo: clean")
-    
+            print("✅ Content repo: selected paths have no changes")
+
     if auto_push:
         return do_push(auto_confirm=True)
     return 0
@@ -760,14 +917,21 @@ def build_parser() -> argparse.ArgumentParser:
     commit_parser = subparsers.add_parser("commit", help="分别提交主仓库和内容仓库")
     commit_parser.add_argument(
         "-m", "--message",
-        help="提交信息（同时用于主仓库和内容仓库，可被 --main-message / --content-message 覆盖）",
+        help="提交信息（默认用于两个仓库；使用 --content-files 时用于内容仓库）",
     )
-    commit_parser.add_argument("--main-message", help="主仓库提交信息")
+    commit_parser.add_argument(
+        "--main-message",
+        help="主仓库提交信息；与 --content-files 同用时必须提供 --main-files",
+    )
     commit_parser.add_argument("--content-message", help="内容仓库提交信息")
     commit_parser.add_argument("--push", action="store_true", help="提交后自动推送")
     commit_parser.add_argument(
         "--main-files",
         help="主仓库仅提交指定文件，逗号分隔（默认全部）",
+    )
+    commit_parser.add_argument(
+        "--content-files",
+        help="内容仓库仅同步并提交指定文件，逗号分隔；默认跳过主仓库",
     )
 
     subparsers.add_parser("push", help="推送两个仓库到远程")
@@ -781,16 +945,26 @@ def build_parser() -> argparse.ArgumentParser:
 def run_cli(args: argparse.Namespace) -> int:
     """运行命令行模式"""
     if args.command == "commit":
-        main_msg = args.main_message or args.message
-        content_msg = args.content_message or args.message
+        if args.content_files is not None:
+            main_msg = args.main_message
+            content_msg = args.content_message or args.message
+            content_files = [path.strip() for path in args.content_files.split(",")]
+        else:
+            main_msg = args.main_message or args.message
+            content_msg = args.content_message or args.message
+            content_files = None
         main_files = None
-        if args.main_files:
-            main_files = [f.strip() for f in args.main_files.split(",") if f.strip()]
+        if args.main_files is not None:
+            main_files = [f.strip() for f in args.main_files.split(",")]
+            if not main_files or any(not path for path in main_files):
+                print("❌ --main-files requires one or more non-empty file paths.")
+                return 1
         return do_commit(
             main_message=main_msg,
             content_message=content_msg,
             auto_push=args.push,
             main_files=main_files,
+            content_files=content_files,
         )
     elif args.command == "push":
         return do_push(auto_confirm=True)

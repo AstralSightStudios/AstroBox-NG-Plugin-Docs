@@ -1,8 +1,31 @@
 import { createFromSource } from "fumadocs-core/search/server";
+import { loader, multiple, update } from "fumadocs-core/source";
 import { createTokenizer } from "@orama/tokenizers/mandarin";
-import { source } from "@/lib/source";
+import { blog, docs } from "fumadocs-mdx:collections/server";
 
-export const { GET } = createFromSource(source, {
+const searchSource = loader(
+  update(
+    multiple({
+      docs: docs.toFumadocsSource(),
+      blog: blog.toFumadocsSource(),
+    }),
+  )
+    .page((page) => ({
+      ...page,
+      path: `${page.data.type}/${page.path}`,
+    }))
+    .build(),
+  {
+    baseUrl: "/",
+    i18n: {
+      defaultLanguage: "zh-CN",
+      languages: ["zh-CN"],
+      hideLocale: "always",
+    },
+  },
+);
+
+export const { GET } = createFromSource(searchSource, {
   localeMap: {
     "zh-CN": {
       components: {

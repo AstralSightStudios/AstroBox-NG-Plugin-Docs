@@ -97,42 +97,26 @@ export default function OpenPage({
         <QRCodeClient caption={copy.qrCaption} />
       </div>
       <style jsx global>{`
-        @font-face {
-          font-family: "Geist";
-          src: url("https://astrobox-statics.waterflames.cn/Geist-VariableFont.ttf");
-          font-display: swap;
-        }
-
-        @font-face {
-          font-family: "Sarasa Mono SC";
-          src: url("https://astrobox-statics.waterflames.cn//SarasaMonoSC-Regular.woff2")
-            format("woff2");
-          font-weight: 100 500;
-        }
-
-        @font-face {
-          font-family: "Sarasa Mono SC";
-          src: url("https://astrobox-statics.waterflames.cn//SarasaMonoSC-SemiBold.woff2")
-            format("woff2");
-          font-weight: 600 900;
-        }
-
         [data-open-page] {
-          --color-primary: #b3d5ff;
+          --color-primary: var(--color-fd-primary);
           --color-primary-markdown: color-mix(
             in srgb,
             var(--color-brand) 80%,
             var(--color-text)
           );
-          --color-brand: #1781ff;
-          --color-secondary: var(--color-brand);
-          --color-tertiary: #0b407f;
+          --color-brand: var(--color-fd-primary);
+          --color-secondary: var(--color-fd-primary);
+          --color-tertiary: color-mix(
+            in srgb,
+            var(--color-fd-primary) 24%,
+            var(--color-fd-background)
+          );
           --color-green: #203c25;
           --color-yellow: #664019;
           --color-danger: #641723;
-          --color-text: #000;
-          --color-main-background: #ffffff;
-          --color-gray-background: #f5f5f8;
+          --color-text: var(--color-fd-foreground);
+          --color-main-background: var(--color-fd-background);
+          --color-gray-background: var(--color-fd-muted);
           --radius-root-base: 64px;
           --radius-5xl-base: 64px;
           --radius-4xl-base: 56px;
@@ -155,21 +139,24 @@ export default function OpenPage({
           --radius-sm: calc(var(--radius-sm-base) / 2);
           --radius-xs: calc(var(--radius-xs-base) / 2);
           --radius-2xs: calc(var(--radius-2xs-base) / 2);
-          --font-family: "Geist", "MiSans", "MiSans Chinese", MiSans, system-ui,
-            miui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-            Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+          --font-family: var(--font-sans);
           --font-family-flex: var(--font-family);
-          --font-family-serif: "Clara Serif Pro Med", serif;
-          --font-family-mono: "Sarasa Mono SC", "Courier New", Courier,
-            "Geist", "MiSans", "MiSans Chinese", MiSans, system-ui, miui,
-            -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-            Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", monospace,
-            sans-serif;
+          --font-family-serif: var(--font-family);
+          --font-family-mono: var(--font-mono);
           -webkit-tap-highlight-color: transparent;
           font-feature-settings: "liga" 1, "calt" 1, "ss07" 1, "ss08" 1,
             "cv01" 1, "cv03" 1, "cv04" 1, "cv10" 1;
           --qr-background-color: transparent;
-          --qr-border-color: #00000065;
+          --qr-border-color: color-mix(
+            in srgb,
+            var(--color-fd-foreground) 35%,
+            transparent
+          );
+        }
+
+        .dark [data-open-page] {
+          --qr-background-color: white;
+          --qr-border-color: transparent;
         }
 
         @supports (corner-shape: superellipse(2)) {
@@ -189,18 +176,8 @@ export default function OpenPage({
         }
 
         [data-open-page] {
-          --color-primary: #0b407f;
-          --color-tertiary: #b3d5ff;
-          --color-green: #65ba74;
-          --color-yellow: #e9c162;
-          --color-danger: #eb8e90;
-          --color-text: #fff !important;
-          --color-main-background: #101010 !important;
-          --color-gray-background: #1b1b1d !important;
-          --qr-background-color: white;
-          --qr-border-color: transparent;
           color: var(--color-text);
-          background-color: #101010;
+          background-color: var(--color-main-background);
         }
 
         [data-open-page] * {
@@ -224,21 +201,14 @@ export default function OpenPage({
         }
 
         [data-open-page] h1 {
-          background-image: linear-gradient(
-            to top,
-            var(--color-text),
-            color-mix(in srgb, var(--color-text) 50%, transparent)
-          );
-          -webkit-background-clip: text;
-          color: transparent;
-          font-family: var(--font-family-serif);
-          font-size: clamp(2.75rem, 2.386rem + 1.82vw, 3rem);
-          font-weight: 400;
+          color: var(--color-text);
+          font-family: var(--font-family);
+          font-size: 2.25rem;
+          font-weight: 600;
           margin: 0;
-          line-height: calc(
-            clamp(2.875rem, 0.722rem + 0.45vw, 3.125rem) * 1.4
-          );
-          letter-spacing: -2px;
+          line-height: 1.25;
+          letter-spacing: -0.025em;
+          word-break: keep-all;
         }
 
         [data-open-page] h2 {
@@ -290,9 +260,8 @@ export default function OpenPage({
           border-radius: var(--radius-5xl);
           background: color-mix(in srgb, var(--color-text) 10%, transparent);
           color: var(--color-text);
-          font-family: "MiSans VF", "MiSans", var(--font-family) !important;
           font-size: 15px;
-          font-weight: 520;
+          font-weight: 500;
           text-decoration: none;
           border: solid 1px
             color-mix(in srgb, var(--color-text) 0%, transparent);
@@ -362,14 +331,24 @@ export default function OpenPage({
           word-break: break-all;
         }
 
-        @media (prefers-color-scheme: dark) {
-          [data-open-page] .btnContainer > *:hover {
-            box-shadow: 0 4px 12px 0 rgb(0 0 0 / 30%);
+        @media (min-width: 640px) {
+          [data-open-page] h1 {
+            font-size: 3rem;
           }
+        }
 
-          [data-open-page] .btnContainer > *:active {
-            box-shadow: 0 2px 6px 0 rgb(0 0 0 / 30%);
+        @media (min-width: 768px) {
+          [data-open-page] h1 {
+            font-size: 3.75rem;
           }
+        }
+
+        .dark [data-open-page] .btnContainer > *:hover {
+          box-shadow: 0 4px 12px 0 rgb(0 0 0 / 30%);
+        }
+
+        .dark [data-open-page] .btnContainer > *:active {
+          box-shadow: 0 2px 6px 0 rgb(0 0 0 / 30%);
         }
 
         @media (max-width: 568px) {

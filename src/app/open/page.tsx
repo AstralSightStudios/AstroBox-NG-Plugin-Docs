@@ -170,7 +170,10 @@ export default async function Page({
     debugParam !== null && ["1", "true", "yes", "on"].includes(debugParam);
 
   return (
-    <HomeLayout {...baseOptions()} className="bg-[#101010]">
+    <HomeLayout
+      {...baseOptions()}
+      className="bg-fd-background text-fd-foreground"
+    >
       <OpenPage
         isDebugPage={isDebugPage}
         homePath="/"

@@ -120,7 +120,7 @@ export default async function BlogPostPage({
         className="mx-auto w-full max-w-7xl px-6 py-10 md:py-14"
       >
         <div className="grid gap-8 lg:grid-cols-2 lg:items-start lg:gap-12">
-          <div className="min-w-0">
+          <div className="order-2 min-w-0 lg:order-1">
             <BlogBreadcrumb
               items={[
                 { label: "首页", href: "/" },
@@ -139,18 +139,11 @@ export default async function BlogPostPage({
               </p>
             )}
 
-            <Link
-              href="/docs/usage"
-              className="mt-7 inline-flex items-center rounded-full bg-fd-foreground/10 px-5 py-2.5 text-sm font-medium text-fd-foreground transition-colors hover:bg-fd-foreground/15"
-            >
-              开始使用 AstroBox
-            </Link>
-
             <p className="mt-6 text-sm text-fd-muted-foreground">{metaText}</p>
           </div>
 
           {data.cover && (
-            <div className="relative aspect-[64/27] overflow-hidden rounded-2xl bg-fd-foreground/5">
+            <div className="relative order-1 aspect-[64/27] overflow-hidden rounded-2xl bg-fd-foreground/5 lg:order-2">
               <Image
                 src={data.cover}
                 alt={data.title}

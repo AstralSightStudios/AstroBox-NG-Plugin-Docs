@@ -33,6 +33,10 @@ export function sortBlogItems(items: BlogListItem[]): BlogListItem[] {
   return [...items].sort((a, b) => toTime(b.date) - toTime(a.date));
 }
 
+export function getLatestBlogItems(items: BlogListItem[]): BlogListItem[] {
+  return sortBlogItems(items).slice(0, 3);
+}
+
 export function collectBlogTags(items: BlogListItem[]): string[] {
   const tags = new Set<string>();
   for (const item of items) {

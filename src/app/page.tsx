@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import {
   BookOpenIcon,
   ArrowRight,
@@ -14,6 +15,8 @@ import { HeroTyping } from "@/components/hero-typing";
 import { DownloadCards } from "@/components/download-cards";
 import { ThirdPartyDownloads } from "@/components/third-party-downloads";
 import { Footer } from "@/components/footer";
+import { blogSource } from "@/lib/blog-source";
+import { getLatestBlogItems, toBlogListItem } from "@/lib/blog-utils";
 import {
   siteDescription,
   siteKeywords,
@@ -63,6 +66,10 @@ const docEntries = [
 ];
 
 export default function HomePage() {
+  const latestPosts = getLatestBlogItems(
+    blogSource.getPages().map(toBlogListItem),
+  );
+
   return (
     <>
       <HomeLayout
@@ -178,6 +185,66 @@ export default function HomePage() {
           <div className="mt-12 md:mt-16">
             <DownloadCards />
           </div>
+
+          {/* 最新博客 */}
+          <section className="mx-auto mt-16 w-full max-w-5xl px-4 sm:px-6 md:mt-24">
+            <h2 className="mb-8 text-center text-3xl font-semibold tracking-tight text-fd-foreground">
+              最新博客
+            </h2>
+
+            {latestPosts.length > 0 ? (
+              <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+                {latestPosts.map((post, index) => (
+                  <Link
+                    key={post.url}
+                    href={post.url}
+                    className="group flex flex-col"
+                  >
+                    <div className="relative aspect-[64/27] overflow-hidden rounded-2xl bg-fd-foreground/5">
+                      {post.cover ? (
+                        <Image
+                          src={post.cover}
+                          alt={post.title}
+                          fill
+                          className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          loading={index === 0 ? "eager" : "lazy"}
+                        />
+                      ) : (
+                        <div className="flex h-full items-center justify-center bg-gradient-to-br from-fd-primary/10 to-fd-primary/5">
+                          <span className="text-4xl font-bold text-fd-primary/30">
+                            {post.title.charAt(0)}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+
+                    <h3 className="mt-5 text-lg font-semibold leading-snug tracking-tight text-fd-foreground md:text-xl">
+                      {post.title}
+                    </h3>
+                    {post.description && (
+                      <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-fd-muted-foreground">
+                        {post.description}
+                      </p>
+                    )}
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <p className="text-fd-muted-foreground">
+                暂无博客文章，敬请期待。
+              </p>
+            )}
+
+            <div className="mt-8 flex justify-center">
+              <Link
+                href="/blog"
+                className="inline-flex items-center text-sm tracking-wide text-fd-foreground transition-colors hover:text-fd-primary"
+              >
+                全部博客 <CaretRightIcon className="ml-0.5 size-4" />
+              </Link>
+            </div>
+          </section>
 
           {/* 第三方社区版 */}
           <div className="mt-16 md:mt-24">

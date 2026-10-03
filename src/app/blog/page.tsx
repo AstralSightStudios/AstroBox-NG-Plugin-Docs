@@ -36,7 +36,7 @@ export default function BlogPage() {
 
   return (
     <HomeLayout {...baseOptions()} className="bg-fd-background">
-      <div className="mx-auto w-full max-w-7xl px-6 py-12 md:py-16">
+      <div className="mx-auto w-full max-w-5xl px-4 py-12 sm:px-6 md:py-16">
         <BlogBreadcrumb
           items={[{ label: "首页", href: "/" }, { label: "博客" }]}
         />

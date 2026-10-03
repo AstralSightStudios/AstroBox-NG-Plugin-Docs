@@ -85,8 +85,9 @@ python abdocstool.py
 ### 当你需要修改文档或博客内容时
 
 1. 直接编辑 `content/docs/`、`content/blog/` 或 `public/assets/images/docs/` 下的文件
-2. 提醒用户运行 `python abdocstool.py` 并选择 `Commit` 来提交内容仓库
-3. 不要手动在 `.subrepo/` 目录中操作 — 始终通过 `abdocstool.py` 同步
+2. 默认提醒用户运行 `python abdocstool.py` 并选择 `Commit` 来提交内容仓库
+3. 若用户在当次明确授权 Agent 直接 Git 提交，可在 `.subrepo/AstroBox-NG-Plugin-Docs-Content/` 中直接同步、暂存和提交；操作前检查两仓状态与差异，只提交本次授权的文件，并在提交前复核 `git diff --cached --name-status`
+4. 除非用户当次明确授权，不推送任何仓库；用户要求中文提交信息时使用中文
 
 ### 当你需要修改站点代码时
 

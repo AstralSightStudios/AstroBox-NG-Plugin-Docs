@@ -193,12 +193,12 @@ export default function HomePage() {
             </h2>
 
             {latestPosts.length > 0 ? (
-              <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="grid grid-cols-1 gap-x-6 gap-y-10 md:grid-cols-3">
                 {latestPosts.map((post, index) => (
                   <Link
                     key={post.url}
                     href={post.url}
-                    className="group flex flex-col"
+                    className="group mx-auto flex w-full max-w-2xl flex-col md:max-w-none"
                   >
                     <div className="relative aspect-[64/27] overflow-hidden rounded-2xl bg-fd-foreground/5">
                       {post.cover ? (
@@ -207,7 +207,7 @@ export default function HomePage() {
                           alt={post.title}
                           fill
                           className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          sizes="(max-width: 767px) 100vw, 33vw"
                           loading={index === 0 ? "eager" : "lazy"}
                         />
                       ) : (

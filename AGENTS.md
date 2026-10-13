@@ -14,8 +14,9 @@
 - `content/docs/` — 文档正文（MDX/MD）
 - `content/blog/` — 博客正文（MDX/MD）
 - `public/assets/images/docs/` — 文档图片资源
+- `public/assets/images/blog/` — 博客图片资源
 
-这三个目录在主仓库中被 `.gitignore` **忽略**，本地文件通过 `abdocstool.py` 从内容仓库同步而来。
+上述四个目录在主仓库中被 `.gitignore` **忽略**，本地文件通过 `abdocstool.py` 与内容仓库同步。
 
 ### 构建时的自动拉取
 
@@ -32,8 +33,9 @@
 | 文档正文（`content/docs/` 下的 `.mdx`/`.md`） | **内容仓库** | `abdocstool.py commit`（自动同步到 `.subrepo/` 后提交） |
 | 博客正文（`content/blog/` 下的 `.mdx`/`.md`） | **内容仓库** | `abdocstool.py commit`（同上） |
 | 文档图片（`public/assets/images/docs/`） | **内容仓库** | `abdocstool.py commit`（同上） |
+| 博客图片（`public/assets/images/blog/`） | **内容仓库** | `abdocstool.py commit`（同上） |
 
-> **核心规则：** 只要修改了 `content/docs/`、`content/blog/` 或 `public/assets/images/docs/` 下的文件，就必须通过 `abdocstool.py` 提交到内容仓库，不能只提交主仓库。
+> **核心规则：** 修改上述任一内容目录时，必须核对并提交到内容仓库，不能只提交主仓库；按 `.opencode/skills/abdocs-dual-repo-commit/SKILL.md` 执行精确路径流程。
 
 ---
 
@@ -88,6 +90,8 @@ python abdocstool.py
 2. 默认提醒用户运行 `python abdocstool.py` 并选择 `Commit` 来提交内容仓库
 3. 若用户在当次明确授权 Agent 直接 Git 提交，可在 `.subrepo/AstroBox-NG-Plugin-Docs-Content/` 中直接同步、暂存和提交；操作前检查两仓状态与差异，只提交本次授权的文件，并在提交前复核 `git diff --cached --name-status`
 4. 除非用户当次明确授权，不推送任何仓库；用户要求中文提交信息时使用中文
+5. 使用原生 Git 命令或现有 `abdocstool.py`；不得为提交另写一次性脚本
+6. 默认排除 `.DS_Store`、`Thumbs.db` 等系统副产物，除非它们本身是本次明确目标
 
 ### 当你需要修改站点代码时
 

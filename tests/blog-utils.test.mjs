@@ -20,3 +20,26 @@ test("getLatestBlogItems returns at most three posts in newest-first order", () 
   );
   assert.deepEqual(posts.map((post) => post.title), ["old", "newest", "third", "second"]);
 });
+
+test("getFeaturedBlogItems preserves curated order without filling missing posts", () => {
+  assert.equal(typeof blogUtils.getFeaturedBlogItems, "function");
+
+  const posts = [
+    { url: "/blog/newer", title: "newer", date: "2026-10-20", tags: [] },
+    { url: "/blog/2p0", title: "2.0", date: "2026-06-28", tags: [] },
+    { url: "/blog/2p2", title: "2.2", date: "2026-10-03", tags: [] },
+    { url: "/blog/2p1", title: "2.1", date: "2026-08-18", tags: [] },
+  ];
+
+  const featured = blogUtils.getFeaturedBlogItems(posts, [
+    "/blog/2p2",
+    "/blog/2p1",
+    "/blog/2p0",
+    "/blog/not-published",
+  ]);
+
+  assert.deepEqual(
+    featured.map((post) => post.url),
+    ["/blog/2p2", "/blog/2p1", "/blog/2p0"],
+  );
+});

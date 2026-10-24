@@ -16,7 +16,7 @@ import { DownloadCards } from "@/components/download-cards";
 import { ThirdPartyDownloads } from "@/components/third-party-downloads";
 import { Footer } from "@/components/footer";
 import { blogSource } from "@/lib/blog-source";
-import { getLatestBlogItems, toBlogListItem } from "@/lib/blog-utils";
+import { getFeaturedBlogItems, toBlogListItem } from "@/lib/blog-utils";
 import {
   siteDescription,
   siteKeywords,
@@ -66,8 +66,9 @@ const docEntries = [
 ];
 
 export default function HomePage() {
-  const latestPosts = getLatestBlogItems(
+  const featuredPosts = getFeaturedBlogItems(
     blogSource.getPages().map(toBlogListItem),
+    ["/blog/2p2", "/blog/2p1", "/blog/2p0"],
   );
 
   return (
@@ -192,9 +193,9 @@ export default function HomePage() {
               最新博客
             </h2>
 
-            {latestPosts.length > 0 ? (
+            {featuredPosts.length > 0 ? (
               <div className="grid grid-cols-1 gap-x-6 gap-y-10 md:grid-cols-3">
-                {latestPosts.map((post, index) => (
+                {featuredPosts.map((post, index) => (
                   <Link
                     key={post.url}
                     href={post.url}

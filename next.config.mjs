@@ -43,6 +43,11 @@ const config = {
         destination: "/docs/plugin-development/v1/:path*",
         permanent: true,
       },
+      {
+        source: "/docs/creator-tools/resource-std/cover",
+        destination: "/blog/resource-cover-guide",
+        permanent: true,
+      },
     ];
   },
   env: {

@@ -78,9 +78,16 @@ function BlogCard({
   priority: boolean;
 }) {
   return (
-    <Link href={post.url} className="group flex flex-col">
-      <div className="relative aspect-[64/27] overflow-hidden rounded-2xl bg-fd-foreground/5">
-        {post.cover ? (
+    <Link
+      href={post.url}
+      className={
+        post.cover
+          ? "group flex flex-col"
+          : "group flex flex-col rounded-2xl border border-fd-border bg-fd-foreground/[0.02] p-5 transition-colors hover:border-fd-primary/40 hover:bg-fd-primary/5"
+      }
+    >
+      {post.cover && (
+        <div className="relative aspect-[64/27] overflow-hidden rounded-2xl bg-fd-foreground/5">
           <Image
             src={post.cover}
             alt={post.title}
@@ -89,16 +96,10 @@ function BlogCard({
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             loading={priority ? "eager" : "lazy"}
           />
-        ) : (
-          <div className="flex h-full items-center justify-center bg-gradient-to-br from-fd-primary/10 to-fd-primary/5">
-            <span className="text-4xl font-bold text-fd-primary/30">
-              {post.title.charAt(0)}
-            </span>
-          </div>
-        )}
-      </div>
+        </div>
+      )}
 
-      <h2 className="mt-5 text-lg font-semibold leading-snug tracking-tight text-fd-foreground md:text-xl">
+      <h2 className={`${post.cover ? "mt-5 " : ""}text-lg font-semibold leading-snug tracking-tight text-fd-foreground md:text-xl`}>
         {post.title}
       </h2>
 

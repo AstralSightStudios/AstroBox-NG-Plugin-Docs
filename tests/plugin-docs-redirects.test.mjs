@@ -11,6 +11,10 @@ const expectedRedirects = [
   ["/docs/plugin-dev/:path*", "/docs/plugin-development/v2/:path*"],
   ["/docs/plugin-v1", "/docs/plugin-development/v1"],
   ["/docs/plugin-v1/:path*", "/docs/plugin-development/v1/:path*"],
+  [
+    "/docs/creator-tools/resource-std/cover",
+    "/blog/resource-cover-guide",
+  ],
 ];
 
 test("legacy plugin doc URLs redirect permanently to their new version paths", async () => {

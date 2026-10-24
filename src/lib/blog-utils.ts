@@ -37,6 +37,15 @@ export function getLatestBlogItems(items: BlogListItem[]): BlogListItem[] {
   return sortBlogItems(items).slice(0, 3);
 }
 
+export function getFeaturedBlogItems(
+  items: BlogListItem[],
+  featuredUrls: string[],
+): BlogListItem[] {
+  return featuredUrls
+    .map((url) => items.find((item) => item.url === url))
+    .filter((item): item is BlogListItem => item !== undefined);
+}
+
 export function collectBlogTags(items: BlogListItem[]): string[] {
   const tags = new Set<string>();
   for (const item of items) {

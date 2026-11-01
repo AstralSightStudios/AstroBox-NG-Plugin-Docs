@@ -15,7 +15,7 @@ import { test } from "node:test";
 
 const installScript = new URL("../public/install.sh", import.meta.url);
 const releaseBase =
-  "https://github.com/AstralSightStudios/AstroBox-NG/releases/download/v2.2.0";
+  "https://github.com/AstralSightStudios/AstroBox-NG/releases/download/v2.2.5";
 
 function runInstaller({
   packageManager,
@@ -84,33 +84,33 @@ function runInstaller({
   }
 }
 
-test("downloads the v2.2.0 Debian package", () => {
+test("downloads the v2.2.5 Debian package", () => {
   runInstaller({
     packageManager: "apt-get",
-    expectedUrl: `${releaseBase}/AstroBox-2.2.0_amd64.deb`,
+    expectedUrl: `${releaseBase}/AstroBox-2.2.5_amd64.deb`,
     expectedInstall: "dpkg -i",
   });
 });
 
-test("downloads the v2.2.0 RedHat package", () => {
+test("downloads the v2.2.5 RedHat package", () => {
   runInstaller({
     packageManager: "dnf",
-    expectedUrl: `${releaseBase}/AstroBox-2.2.0_x86_64.rpm`,
+    expectedUrl: `${releaseBase}/AstroBox-2.2.5_x86_64.rpm`,
     expectedInstall: "dnf install -y",
   });
 });
 
-test("downloads and installs the v2.2.0 Arch package", () => {
+test("downloads and installs the v2.2.5 Arch package", () => {
   runInstaller({
     packageManager: "pacman",
-    expectedUrl: `${releaseBase}/AstroBox-2.2.0-1_x86_64.pkg.tar.zst`,
+    expectedUrl: `${releaseBase}/AstroBox-2.2.5-1_x86_64.pkg.tar.zst`,
     expectedInstall: "pacman -U --noconfirm",
   });
 });
 
-test("downloads the v2.2.0 Apple Silicon macOS package", () => {
+test("downloads the v2.2.5 Apple Silicon macOS package", () => {
   runInstaller({
-    expectedUrl: `${releaseBase}/AstroBox_2.2.0_aarch64.dmg`,
+    expectedUrl: `${releaseBase}/AstroBox_2.2.5_aarch64.dmg`,
     os: "Darwin",
     arch: "arm64",
     abortDownload: true,
@@ -118,9 +118,9 @@ test("downloads the v2.2.0 Apple Silicon macOS package", () => {
   });
 });
 
-test("downloads the v2.2.0 Intel macOS package", () => {
+test("downloads the v2.2.5 Intel macOS package", () => {
   runInstaller({
-    expectedUrl: `${releaseBase}/AstroBox_2.2.0_x64.dmg`,
+    expectedUrl: `${releaseBase}/AstroBox_2.2.5_x86.dmg`,
     os: "Darwin",
     arch: "x86_64",
     abortDownload: true,

@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# AstroBox NG 2.2.0 installer for Linux & macOS
+# AstroBox NG 2.2.5 installer for Linux & macOS
 
 set -euo pipefail
 
 REPO="AstralSightStudios/AstroBox-NG"
-VERSION="2.2.0"
+VERSION="2.2.5"
 RELEASE_URL="https://github.com/${REPO}/releases/download/v${VERSION}"
 
 AUTO_YES=false
@@ -78,7 +78,7 @@ esac
         if [[ "${ARCH}" == "arm64" ]]; then
             PKG="AstroBox_${VERSION}_aarch64.dmg"
         else
-            PKG="AstroBox_${VERSION}_x64.dmg"
+            PKG="AstroBox_${VERSION}_x86.dmg"
         fi
         ;;
 

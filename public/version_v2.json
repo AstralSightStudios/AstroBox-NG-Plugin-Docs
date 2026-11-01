@@ -1,7 +1,7 @@
 {
-  "version": "2.2.0",
-  "time": "Mon, 21 Sep 2026 00:00:00 GMT",
+  "version": "2.2.5",
+  "time": "Mon, 19 Oct 2026 00:00:00 GMT",
   "url": "https://abox.run/#quick-start",
   "changelog": "",
-  "changelogHtml": "<strong>欢迎各位更新到 AstroBox 2.2 版本！如果说 2.0 是全新的起点，2.1 是交互逻辑的补足，那么 2.2 就是一个在此基础上进行大幅优化并加入数项重磅功能的版本。</strong>详细的更新日志请前往应用内探索页中查看～"
+  "changelogHtml": "<strong>欢迎各位更新到 AstroBox 2.2.5 版本！</strong>详细的更新日志请前往应用内探索页中查看～请注意，如果你要使用新版 Canopus 模块，这可能是你必须升级的一个版本。"
 }

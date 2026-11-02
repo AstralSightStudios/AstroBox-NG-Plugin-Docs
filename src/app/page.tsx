@@ -68,7 +68,7 @@ const docEntries = [
 export default function HomePage() {
   const featuredPosts = getFeaturedBlogItems(
     blogSource.getPages().map(toBlogListItem),
-    ["/blog/2p2p5", "/blog/2p2", "/blog/2p1"],
+    ["/blog/2p2p5", "/blog/2p1", "/blog/2p0"],
   );
 
   return (

@@ -7,3 +7,7 @@ test("maps versioned plugin route segments to their section", () => {
   assert.equal(getSection(["plugin-development", "v2"]), "plugin");
   assert.equal(getSection(["plugin-development", "v4"]), "plugin");
 });
+
+test("maps Canopus developer docs to the Canopus section", () => {
+  assert.equal(getSection(["canopus-dev"]), "canopus");
+});

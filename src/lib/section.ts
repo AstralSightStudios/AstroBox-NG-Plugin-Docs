@@ -5,7 +5,7 @@
  * - legacy: 旧版插件文档（plugin-development/v1）
  * - creator: 创作者工具文档（creator-tools）
  * - facetory: Facetory 用户文档（facetory-usage）
- * - canopus: Canopus 原生模块文档（canopus-usage）
+ * - canopus: Canopus 模块文档（canopus-dev、canopus-usage）
  */
 export function getSection(
   path: string | string[] | undefined,
@@ -23,6 +23,7 @@ export function getSection(
       return "usage";
     case "facetory-usage":
       return "facetory";
+    case "canopus-dev":
     case "canopus-usage":
       return "canopus";
     default:

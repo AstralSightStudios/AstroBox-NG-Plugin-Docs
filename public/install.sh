@@ -103,13 +103,14 @@ echo "Detected: ${OS} ${ARCH}"
 if [[ "${AUTO_YES}" != true ]]; then
     if [[ -t 0 ]]; then
         read -rp "Ready to install AstroBox NG ${VERSION} on ${OS} ${ARCH}? [Y/n] " CONFIRM || CONFIRM=""
-    else
+    elif (: </dev/tty) 2>/dev/null; then
         # When stdin is piped (e.g. curl | bash), read from the controlling
-        # terminal instead. If no terminal is available, default to yes.
-        if ! ( read -rp "Ready to install AstroBox NG ${VERSION} on ${OS} ${ARCH}? [Y/n] " CONFIRM </dev/tty ) 2>/dev/null; then
-            CONFIRM=""
-            echo "No terminal detected; proceeding with installation."
-        fi
+        # terminal instead.
+        read -rp "Ready to install AstroBox NG ${VERSION} on ${OS} ${ARCH}? [Y/n] " CONFIRM </dev/tty || CONFIRM=""
+    else
+        # If no terminal is available, default to yes.
+        CONFIRM=""
+        echo "No terminal detected; proceeding with installation."
     fi
 
     if [[ -n "${CONFIRM}" && "${CONFIRM}" != [yY] ]]; then
@@ -121,7 +122,7 @@ fi
 echo "Downloading ${PKG}..."
 
 if command -v curl &>/dev/null; then
-    curl -fsSL --progress-bar -o "${TMP_DIR}/${PKG}" "${URL}"
+    curl -fL --progress-bar -o "${TMP_DIR}/${PKG}" "${URL}"
 elif command -v wget &>/dev/null; then
     wget --show-progress -q -O "${TMP_DIR}/${PKG}" "${URL}"
 else

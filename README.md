@@ -81,6 +81,21 @@ python abdocstool.py
 
 ---
 
+## Canopus 的 Aeris UI 组件库
+
+组件文档位于内容仓库的 `content/docs/canopus-dev/ui-gallery/`。设备交互预览和主题生成器共用主仓库的 `public/assets/canopus/ui-gallery/preview.html`，随文档站发布。
+
+更新设备预览时，将独立的 `Aeris-UI` 源码目录放在 `Canopus-App-AerisTimer` 旁边，在后者的根目录编译，再将产物复制到文档站。三个仓库位于同一目录时：
+
+```bash
+sh scripts/build-gallery-web.sh --wasm-only
+cp apps/gallery-web/build/public/preview.html ../AstroBox-NG-Plugin-Docs/public/assets/canopus/ui-gallery/preview.html
+```
+
+文档站的 `pnpm build` 直接使用这份静态产物，构建机无需安装 Rust、Emscripten 或 LVGL。
+
+---
+
 ## 目录结构
 
 ```

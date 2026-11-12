@@ -381,6 +381,11 @@ header+div:has(aside#nd-sidebar) {
     --fd-layout-width: 1920px;
 }
 
+/* 组件目录不随右侧目录栏的收起逐帧调整列宽 */
+#nd-docs-layout:has([data-aeris-catalog]) {
+    transition-property: none;
+}
+
 /* 目录激活状态优化 */
 #nd-toc .data-\[active\=true\]\:text-fd-primary[data-active="true"],
 #nd-toc [data-active="true"] {

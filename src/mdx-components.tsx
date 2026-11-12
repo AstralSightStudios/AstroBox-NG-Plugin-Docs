@@ -5,6 +5,9 @@ import { CodeBlock, Pre } from "fumadocs-ui/components/codeblock";
 import { DeviceSupportList } from "@/components/device-support-list";
 import { DocImage } from "@/components/doc-image";
 import { DocVideo } from "@/components/doc-video";
+import { AerisComponentCatalog } from "@/components/aeris/component-catalog";
+import { AerisPreview } from "@/components/aeris/preview";
+import { AerisThemeGenerator } from "@/components/aeris/theme-generator";
 
 function getSrc(src: any): string {
   if (typeof src === "string") return src;
@@ -40,5 +43,8 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     ...components,
     DeviceSupportList,
     DocVideo,
+    AerisComponentCatalog,
+    AerisPreview,
+    AerisThemeGenerator,
   };
 }

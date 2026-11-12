@@ -9,6 +9,16 @@ const config = {
   async redirects() {
     return [
       {
+        source: "/docs/canopus-dev/ui-gallery/card-menu",
+        destination: "/docs/canopus-dev/ui-gallery/menu",
+        permanent: true,
+      },
+      {
+        source: "/docs/canopus-dev/ui-gallery/detail-time",
+        destination: "/docs/canopus-dev/ui-gallery/rolling-time",
+        permanent: true,
+      },
+      {
         source: "/docs/plugin-development",
         destination: "/docs/plugin-development/v4",
         permanent: true,

@@ -15,6 +15,7 @@ export function AerisPreview({
 }) {
   const [height, setHeight] = useState<number>();
   const [settings, setSettings] = useState<{ option: number; color?: string; firstStage?: number; firstTap?: string }>();
+  const [pendingSettings, setPendingSettings] = useState<typeof settings>();
   const iframe = useRef<HTMLIFrameElement>(null);
   const params = new URLSearchParams({ component });
   const hasControls = hasPreviewOptions(component);
@@ -44,9 +45,15 @@ export function AerisPreview({
     return () => window.removeEventListener("message", resize);
   }, []);
 
+  useEffect(() => {
+    if (!pendingSettings) return;
+    const timeout = window.setTimeout(() => setSettings(pendingSettings), 250);
+    return () => window.clearTimeout(timeout);
+  }, [pendingSettings]);
+
   const frame = (
-    <div className={`relative w-full max-w-[336px] overflow-hidden${height === 480
-      ? " rounded-[44px] after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:border after:border-white/20"
+    <div className={`relative w-full overflow-hidden ${component === "theme" ? "max-w-[336px]" : "max-w-[168px]"}${height === 480
+      ? " rounded-[20px] after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:border after:border-white/20"
       : ""}`}>
       <iframe
         ref={iframe}
@@ -66,11 +73,11 @@ export function AerisPreview({
 
   return (
     <div data-theme="dark"
-      className={`not-prose rounded-xl border border-white/10 bg-[var(--aeris-panel-background,#191919)] text-white [color-scheme:dark]${hasControls ? "" : " overflow-hidden"}`}>
-      <div className={`grid justify-items-center rounded-t-[inherit] bg-black p-4 sm:p-8${hasControls ? "" : " rounded-b-[inherit]"}`}>
+      className={`aeris-preview-controls dark not-prose rounded-xl border border-fd-border bg-[var(--aeris-panel-background,#191919)] text-fd-foreground [color-scheme:dark]${hasControls ? "" : " overflow-hidden"}`}>
+      <div className={`grid justify-items-center rounded-t-[calc(var(--radius-xl)-1px)] bg-black p-4 sm:p-8${hasControls ? "" : " rounded-b-[calc(var(--radius-xl)-1px)]"}`}>
         {frame}
       </div>
-      <PreviewOptions component={component} onChange={(option, color, firstStage, firstTap) => setSettings({ option, color, firstStage, firstTap })} />
+      <PreviewOptions component={component} onChange={(option, color, firstStage, firstTap) => setPendingSettings({ option, color, firstStage, firstTap })} />
     </div>
   );
 }

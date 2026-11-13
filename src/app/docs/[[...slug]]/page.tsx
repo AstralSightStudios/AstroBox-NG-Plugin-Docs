@@ -91,6 +91,9 @@ export default async function DocPage({
   };
   const MDX = pageData.body;
   const title = pageData.title ?? siteTitle;
+  const [section, gallery, entry] = page.slugs;
+  const isAerisComponent = section === "canopus-dev" && gallery === "ui-gallery" && entry !== undefined
+    && !["getting-started", "components", "theme", "linoval-sans"].includes(entry);
 
   return (
     <DocsPage
@@ -99,9 +102,10 @@ export default async function DocPage({
       tableOfContent={{ component: <RoundedTableOfContent /> }}
       tableOfContentPopover={{ component: <RoundedTableOfContentPopover /> }}
       footer={{ children: <Footer /> }}
+      className={isAerisComponent ? "aeris-component-doc" : undefined}
     >
-      <DocsTitle>{title}</DocsTitle>
-      <DocsDescription>{pageData.description}</DocsDescription>
+      <DocsTitle className={isAerisComponent ? "text-3xl font-bold sm:text-4xl" : undefined}>{title}</DocsTitle>
+      <DocsDescription className={isAerisComponent ? "mb-4" : undefined}>{pageData.description}</DocsDescription>
       <DocsBody>
         <MDX
           components={getMDXComponents({

@@ -491,6 +491,29 @@ header+div:has(aside#nd-sidebar) {
     max-width: min(1280px, 100%);
 }
 
+#nd-page.aeris-component-doc {
+    --aeris-panel-background: #191919;
+    --aeris-panel-radius: var(--radius-xl);
+
+    @apply max-w-4xl;
+}
+
+.aeris-component-doc figure.shiki {
+    --color-fd-border: #303030;
+    --color-fd-muted-foreground: #b3b3b3;
+    --color-fd-accent-foreground: #fafafa;
+
+    background-color: var(--aeris-panel-background);
+    border-radius: var(--aeris-panel-radius);
+    color: var(--shiki-dark, #fafafa);
+    color-scheme: dark;
+}
+
+.aeris-component-doc figure.shiki code span {
+    color: var(--shiki-dark);
+    font-style: var(--shiki-dark-font-style);
+}
+
 @media (max-width: 767px) {
     #nd-docs-layout {
         --fd-header-height: 56px;

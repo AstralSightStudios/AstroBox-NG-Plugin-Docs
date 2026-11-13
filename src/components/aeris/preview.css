@@ -4,6 +4,7 @@
 @import "@heroui/styles/components/label.css" layer(components);
 @import "@heroui/styles/components/select.css" layer(components);
 @import "@heroui/styles/components/list-box.css" layer(components);
+@import "@heroui/styles/components/list-box-item.css" layer(components);
 @import "@heroui/styles/components/color-picker.css" layer(components);
 @import "@heroui/styles/components/color-area.css" layer(components);
 @import "@heroui/styles/components/color-slider.css" layer(components);
@@ -13,3 +14,111 @@
 @import "@heroui/styles/utilities";
 @import "@heroui/styles/variants";
 @reference "../../app/global.css";
+
+.aeris-preview-controls,
+.aeris-preview-popover {
+  --field-background: var(--color-fd-secondary);
+  --field-foreground: var(--color-fd-secondary-foreground);
+  --field-border: var(--color-fd-border);
+  --field-border-hover: var(--color-fd-muted-foreground);
+  --field-border-focus: var(--color-fd-ring);
+  --field-focus: var(--color-fd-secondary);
+  --field-radius: var(--radius-md);
+  --border-width-field: 1px;
+  --default: var(--color-fd-accent);
+  --default-foreground: var(--color-fd-accent-foreground);
+  --overlay: var(--color-fd-popover);
+  --overlay-foreground: var(--color-fd-popover-foreground);
+  --focus: var(--color-fd-ring);
+  --border: var(--color-fd-border);
+}
+
+.aeris-preview-controls :is(.button, .color-picker__trigger) {
+  border-radius: var(--field-radius);
+}
+
+.aeris-preview-popover:is(.select__popover, .color-picker__popover) {
+  border: 1px solid var(--color-fd-border);
+  border-radius: var(--radius-xl);
+  color: var(--overlay-foreground);
+}
+
+.aeris-preview-popover .list-box-item {
+  border-radius: calc(var(--radius-xl) - var(--spacing) - 1px);
+}
+
+.aeris-preview-popover.color-picker__popover {
+  pointer-events: auto;
+  min-width: 0;
+  width: min(calc(var(--spacing) * 62), calc(100vw - var(--spacing) * 8));
+  padding: calc(var(--spacing) * 3);
+}
+
+.aeris-preview-popover.color-picker__popover .color-area {
+  max-width: none;
+}
+
+.aeris-preview-popover.color-picker__popover :is(.color-area, .input) {
+  border-radius: var(--radius-sm);
+}
+
+.aeris-color-wheel {
+  display: grid;
+  width: calc(var(--spacing) * 6);
+  height: calc(var(--spacing) * 6);
+  place-items: center;
+  border-radius: 50%;
+  background: conic-gradient(#f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00);
+}
+
+.aeris-color-wheel .color-swatch {
+  border: 2px solid var(--field-background);
+  border-radius: 50%;
+  width: calc(var(--spacing) * 4.5);
+  height: calc(var(--spacing) * 4.5);
+}
+
+.aeris-preview-controls :is(.number-field__group, .select__trigger, .color-picker__trigger) {
+  height: calc(var(--spacing) * 9);
+}
+
+.aeris-preview-controls .color-picker__trigger {
+  border: 1px solid var(--field-border);
+  background-color: var(--field-background);
+  color: var(--field-foreground);
+}
+
+.aeris-preview-controls .color-picker__trigger:is(:hover, :focus-visible, [aria-expanded="true"]) {
+  border-color: var(--field-border-focus);
+}
+
+.aeris-preview-controls .select__trigger {
+  align-items: center;
+  padding-block: 0;
+}
+
+.aeris-preview-controls .number-field__group {
+  grid-template-rows: minmax(0, 1fr);
+  align-items: stretch;
+}
+
+.aeris-preview-controls .number-field__input {
+  min-height: 0;
+  padding-block: 0;
+}
+
+.aeris-preview-controls .number-field__group button {
+  height: auto;
+  min-height: 0;
+  padding-block: 0;
+  border-width: 0;
+  border-radius: 0;
+}
+
+.aeris-preview-controls .number-field__decrement-button {
+  border-inline-end-width: 1px;
+}
+
+.aeris-preview-controls .number-field__increment-button {
+  border-inline-start-width: 1px;
+}

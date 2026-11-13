@@ -94,7 +94,7 @@ export function PreviewOptions({ component, onChange }: {
     }) : [];
 
   return (
-    <div className="space-y-3 border-t border-fd-border p-4">
+    <div className="space-y-3 border-b border-fd-border p-4">
       <div className={controlsClass}>
         {option.select ? (
           <SelectField label={option.label} items={items} value={String(draft)} onChange={(value) => {

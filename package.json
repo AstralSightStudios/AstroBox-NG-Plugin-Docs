@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "pnpm fetch-docs && pnpm sitemap:generate && next build",
+    "postbuild": "node scripts/prune-standalone.mjs",
     "start": "next start",
     "lint": "eslint .",
     "types:check": "fumadocs-mdx && next typegen && tsc --noEmit",

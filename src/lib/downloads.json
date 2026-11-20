@@ -8,7 +8,7 @@
         {
           "icon": "WinIcon",
           "name": "WINDOWS 10 20H2+",
-          "version": "V2.2.5",
+          "version": "V2.2.6",
           "hasDownload": true,
           "sources": [
             {
@@ -16,7 +16,7 @@
               "downloads": [
                 {
                   "label": "Windows (x64)",
-                  "href": "https://www.icloud.com/iclouddrive/0a3xvY5XHyCO7JZc-l1r99TJQ#AstroBox%5F2.2.5%5Fx64%5Fzh-CN"
+                  "href": "https://www.icloud.com/iclouddrive/0a7W93waq6jn-jHXIMN_4Q-tQ#AstroBox%5F2.2.6%5Fx64%5Fzh-CN"
                 }
               ]
             },
@@ -25,7 +25,7 @@
               "downloads": [
                 {
                   "label": "Windows",
-                  "href": "https://github.com/AstralSightStudios/AstroBox-NG/releases/download/v2.2.5/AstroBox_2.2.5_x64_zh-CN.msi"
+                  "href": "https://github.com/AstralSightStudios/AstroBox-NG/releases/download/v2.2.6/AstroBox_2.2.6_x64_zh-CN.msi"
                 }
               ]
             }
@@ -36,7 +36,7 @@
         {
           "icon": "MacIcon",
           "name": "MACOS SONOMA (14)+",
-          "version": "V2.2.5",
+          "version": "V2.2.6",
           "hasDownload": true,
           "sources": [
             {
@@ -48,11 +48,11 @@
               "downloads": [
                 {
                   "label": "MacOS（arm64）",
-                  "href": "https://www.icloud.com/iclouddrive/0f9jwRpulXbB5bM6CZLMkqQUQ#AstroBox%5F2.2.5%5Faarch64"
+                  "href": "https://www.icloud.com/iclouddrive/00ajPESdfWu-xh9OQ3CAXYNDg#AstroBox-2.2.6-macos-arm64"
                 },
                 {
                   "label": "MacOS（x86_64）",
-                  "href": "https://www.icloud.com/iclouddrive/0af5tbNPhHyGFOfk4B50pvdUg#AstroBox%5F2.2.5%5Fx86"
+                  "href": "https://www.icloud.com/iclouddrive/028X9JNrzXDcqQQHhZvr-UFEw#AstroBox-2.2.6-macos-x86%5F64"
                 }
               ]
             },
@@ -61,11 +61,11 @@
               "downloads": [
                 {
                   "label": "MacOS（arm64）",
-                  "href": "https://github.com/AstralSightStudios/AstroBox-NG/releases/download/v2.2.5/AstroBox_2.2.5_aarch64.dmg"
+                  "href": "https://github.com/AstralSightStudios/AstroBox-NG/releases/download/v2.2.6/AstroBox-2.2.6-macos-arm64.dmg"
                 },
                 {
                   "label": "MacOS（x86_64）",
-                  "href": "https://github.com/AstralSightStudios/AstroBox-NG/releases/download/v2.2.5/AstroBox_2.2.5_x86.dmg"
+                  "href": "https://github.com/AstralSightStudios/AstroBox-NG/releases/download/v2.2.6/AstroBox-2.2.6-macos-x86_64.dmg"
                 }
               ]
             }
@@ -76,7 +76,7 @@
         {
           "icon": "LinuxIcon",
           "name": "DEBIAN/REDHAT/ARCH",
-          "version": "V2.2.5",
+          "version": "V2.2.6",
           "hasDownload": true,
           "sources": [
             {
@@ -88,15 +88,15 @@
               "downloads": [
                 {
                   "label": "Debian (.deb)",
-                  "href": "https://www.icloud.com/iclouddrive/047gSwnEu0aIQufd_ERP3sfyg#AstroBox-2.2.5%5Famd64"
+                  "href": "https://www.icloud.com/iclouddrive/0e6m4XCCv7J9CyOisy2sr-lZw#AstroBox-2.2.6%5Famd64"
                 },
                 {
                   "label": "RedHat (.rpm)",
-                  "href": "https://www.icloud.com/iclouddrive/09dAl2somlc0Lers-e_NmJ79g#AstroBox-2.2.5%5Fx86%5F64"
+                  "href": "https://www.icloud.com/iclouddrive/0dbTMvqc979iQCGc3Nx1zVMRg#AstroBox-2.2.6%5Fx86%5F64"
                 },
                 {
                   "label": "Arch (.pkg.tar)",
-                  "href": "https://www.icloud.com/iclouddrive/0c6TW1uI8uQwzADQon-jkR3eg#AstroBox-2.2.5-1%5Fx86%5F64.pkg.tar"
+                  "href": "https://www.icloud.com/iclouddrive/0d1c0i4JbFBG0vGjMwhvUgTig#AstroBox-2.2.6-1%5Fx86%5F64.pkg.tar"
                 }
               ]
             },
@@ -105,15 +105,15 @@
               "downloads": [
                 {
                   "label": "Debian (.deb)",
-                  "href": "https://github.com/AstralSightStudios/AstroBox-NG/releases/download/v2.2.5/AstroBox-2.2.5_amd64.deb"
+                  "href": "https://github.com/AstralSightStudios/AstroBox-NG/releases/download/v2.2.6/AstroBox-2.2.6_amd64.deb"
                 },
                 {
                   "label": "RedHat (.rpm)",
-                  "href": "https://github.com/AstralSightStudios/AstroBox-NG/releases/download/v2.2.5/AstroBox-2.2.5_x86_64.rpm"
+                  "href": "https://github.com/AstralSightStudios/AstroBox-NG/releases/download/v2.2.6/AstroBox-2.2.6_x86_64.rpm"
                 },
                 {
                   "label": "Arch (.pkg.tar.zst)",
-                  "href": "https://github.com/AstralSightStudios/AstroBox-NG/releases/download/v2.2.5/AstroBox-2.2.5-1_x86_64.pkg.tar.zst"
+                  "href": "https://github.com/AstralSightStudios/AstroBox-NG/releases/download/v2.2.6/AstroBox-2.2.6-1_x86_64.pkg.tar.zst"
                 }
               ]
             }
@@ -124,7 +124,7 @@
         {
           "icon": "AndroidIcon",
           "name": "Android 10+",
-          "version": "V2.2.5",
+          "version": "V2.2.6",
           "hasDownload": true,
           "sources": [
             {
@@ -132,11 +132,11 @@
               "downloads": [
                 {
                   "label": "Android（标准版）",
-                  "href": "https://www.icloud.com/iclouddrive/0b3A-bY7FyuOqViBwpygXMXPg#AstroBox%5F2.2.5"
+                  "href": "https://www.icloud.com/iclouddrive/002HUbLRo9ffB9fqHDmpzOCKA#AstroBox-2.2.6-android-arm64-main"
                 },
                 {
                   "label": "Android（带 Webview 版本，标准版闪退可用）",
-                  "href": "https://www.icloud.com/iclouddrive/0e5drJqoMgcJlGZ2H33sYX6vQ#AstroBox%5F2.2.5%5Fwebview"
+                  "href": "https://www.icloud.com/iclouddrive/0ddJmRR6ys_94AD0rRgm8FInQ#AstroBox-2.2.6-android-arm64-builtin-webview"
                 }
               ]
             },
@@ -145,11 +145,11 @@
               "downloads": [
                 {
                   "label": "Android（标准版）",
-                  "href": "https://github.com/AstralSightStudios/AstroBox-NG/releases/download/v2.2.5/AstroBox_2.2.5.apk"
+                  "href": "https://github.com/AstralSightStudios/AstroBox-NG/releases/download/v2.2.6/AstroBox-2.2.6-android-arm64-main.apk"
                 },
                 {
                   "label": "Android（带 Webview 版本，标准版闪退可用）",
-                  "href": "https://github.com/AstralSightStudios/AstroBox-NG/releases/download/v2.2.5/AstroBox_2.2.5_webview.apk"
+                  "href": "https://github.com/AstralSightStudios/AstroBox-NG/releases/download/v2.2.6/AstroBox-2.2.6-android-arm64-builtin-webview.apk"
                 }
               ]
             }
@@ -159,8 +159,8 @@
         },
         {
           "icon": "IosIcon",
-          "name": "IOS/IPADOS 16.5+",
-          "version": "V2.2.5",
+          "name": "IOS/IPADOS 26.1+",
+          "version": "V2.2.6",
           "hasDownload": true,
           "sources": [
             {
@@ -177,7 +177,7 @@
               "downloads": [
                 {
                   "label": "iOS / iPadOS（IPA）",
-                  "href": "https://www.icloud.com/iclouddrive/026_jDrWMV0iuTWbIfR-6cVRw#AstroBox"
+                  "href": "https://www.icloud.com/iclouddrive/0acFGnVeRxCYse8q2IXDgL1cg#AstroBox%5F2.2.6"
                 }
               ]
             },
@@ -186,7 +186,7 @@
               "downloads": [
                 {
                   "label": "iOS / iPadOS（IPA）",
-                  "href": "https://github.com/AstralSightStudios/AstroBox-NG/releases/download/v2.2.5/AstroBox.ipa"
+                  "href": "https://github.com/AstralSightStudios/AstroBox-NG/releases/download/v2.2.6/AstroBox_2.2.6.ipa"
                 }
               ]
             }

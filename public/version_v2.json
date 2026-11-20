@@ -1,7 +1,7 @@
 {
-  "version": "2.2.5",
-  "time": "Mon, 19 Oct 2026 00:00:00 GMT",
+  "version": "2.2.6",
+  "time": "Tue, 10 Nov 2026 18:24:18 GMT",
   "url": "https://abox.run/#quick-start",
-  "changelog": "",
-  "changelogHtml": "<strong>欢迎各位更新到 AstroBox 2.2.5 版本！</strong>详细的更新日志请前往应用内探索页中查看～请注意，如果你要使用新版 Canopus 模块，这可能是你必须升级的一个版本。"
+  "changelog": "1. 改善了探索页的浏览体验\n2. 在插件API Level 4中新增了WebSocket接口，并提供了原始Mass数据发送和Queue操控功能\n3. 修复了iOS/iPad OS上插件无法使用应用内浏览器的问题\n4. 修复了插件Queue接口可能导致崩溃的问题 (https://github.com/AstralSightStudios/AstroBox-NG-Module-PluginSystem/pull/1 by @OctopusCat101)\n5. 继续优化了移动端设备连接的流程体验\n\n也包含此前已通过热更新下发到2.2.5的功能：\n1. 改善了插件页的浏览体验\n2. 新增了探索页快捷操作按钮自定义",
+  "changelogHtml": "<ol><li>改善了探索页的浏览体验</li><li>在插件API Level 4中新增了WebSocket接口，并提供了原始Mass数据发送和Queue操控功能</li><li>修复了iOS/iPad OS上插件无法使用应用内浏览器的问题</li><li>修复了插件Queue接口可能导致崩溃的问题 (<a href=\"https://github.com/AstralSightStudios/AstroBox-NG-Module-PluginSystem/pull/1\">https://github.com/AstralSightStudios/AstroBox-NG-Module-PluginSystem/pull/1</a> by @OctopusCat101)</li><li>继续优化了移动端设备连接的流程体验</li></ol><p>也包含此前已通过热更新下发到2.2.5的功能：</p><ol><li>改善了插件页的浏览体验</li><li>新增了探索页快捷操作按钮自定义</li></ol>"
 }
